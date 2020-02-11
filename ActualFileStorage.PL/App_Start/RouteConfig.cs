@@ -16,9 +16,16 @@ namespace ActualFileStorage.PL
             routes.MapRoute(
                 name: "ShortLink",
                 url: "s/{id}",
-                defaults: new { controller = "Shortener", action = "Unpack", id = "111111111111" },
+                defaults: new { controller = "Shortener", action = "Unpack", id = UrlParameter.Optional },
                 constraints: new { id = @"\w{12}" }
             );
+
+            //routes.MapRoute(
+            //    name: "InvalidShortLink",
+            //    url: "s/{id}",
+            //    defaults: new { controller = "Home", action = "Index"}
+            //);
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
