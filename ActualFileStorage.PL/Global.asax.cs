@@ -15,10 +15,10 @@ namespace ActualFileStorage.PL
     {
         protected void Application_Start()
         {
-            IUnityContainer cont = new UnityContainer();
+            /*I*/UnityContainer cont = new UnityContainer();
             cont.RegisterType<ILinkResolver, MockLink>();
-
-            DIControllerFactory factory = new DIControllerFactory(cont);
+            //cont.RegisterInstance<IUnityContainer>(cont);
+            DIControllerFactory factory = new DIControllerFactory(cont); //cont.Resolve<DIControllerFactory>();
             ControllerBuilder.Current.SetControllerFactory(factory);
             
             AreaRegistration.RegisterAllAreas();
