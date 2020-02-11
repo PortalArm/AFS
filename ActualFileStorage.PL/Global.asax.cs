@@ -1,3 +1,4 @@
+using ActualFileStorage.BLL.Links;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Unity;
 
 namespace ActualFileStorage.PL
 {
@@ -13,6 +15,12 @@ namespace ActualFileStorage.PL
     {
         protected void Application_Start()
         {
+            IUnityContainer cont = new UnityContainer();
+            cont.RegisterType<ILinkResolver, MockLink>();
+
+            DIControllerFactory factory = new DIControllerFactory(cont);
+            ControllerBuilder.Current.SetControllerFactory(factory);
+            
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
