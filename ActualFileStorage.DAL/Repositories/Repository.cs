@@ -9,14 +9,23 @@ using System.Threading.Tasks;
 
 namespace ActualFileStorage.DAL.Repositories
 {
-    public class Repository
+    public class Repository<T> : IRepository<T> where T : class
     {
         protected IAdapter _adapter;
-
         public Repository(IAdapter adapter)
         {
-            _adapter = adapter;
+            _adapter = adapter.LoadType<T>();
         }
+
+        public void Add(T obj) => _adapter.Add(obj);
+
+        public IEnumerable<T> GetAll() => _adapter.FindAll().Cast<T>();
+        public T GetById(int id) => _adapter.Find(id) as T;
+
+        public IEnumerable<T> GetByPredicate(Func<T, bool> pred) { throw new NotImplementedException(); }// => _adapter.
+
+        public void Remove(T obj) => _adapter.Remove(obj);
+
     }
     //class Repository<T> : IRepository<T> where T : class
     //{
