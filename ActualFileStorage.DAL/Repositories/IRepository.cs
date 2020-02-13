@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ActualFileStorage.DAL.Repositories
 {
-    interface IRepository<T>  where T : class
+    interface IRepository<T> where T : class
     {
         IEnumerable<T> GetAll();
         IEnumerable<T> GetByPredicate(Func<T,bool> pred);
