@@ -31,6 +31,10 @@ namespace ActualFileStorage.DAL.Configurations
             Property(u => u.BirthDate)
                 .IsOptional();
 
+            Property(u => u.Salt)
+                .IsRequired()
+                .HasMaxLength(64);
+
             HasRequired(u => u.Folder)
                 .WithOptional(f => f.User)
                 .Map(t => t.MapKey("FolderId"));

@@ -10,7 +10,8 @@ namespace ActualFileStorage.DAL.Models
         public string SecondName { get; set; }
         public DateTime BirthDate { get; set; }
 
-        public string PassHash { get; set; }
+        public string Salt { get; set; }
+        public string PassHash { get; set; } //  => Hash(Operation(Password, Salt))
         public string Email { get; set; }
 
         //public int FolderId { get; set; }
