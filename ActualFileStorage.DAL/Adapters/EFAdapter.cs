@@ -24,6 +24,7 @@ namespace ActualFileStorage.DAL.Adapters
         public object Remove(object entity) => _context.Set(_type).Remove(entity);
         public IEnumerable RemoveRange(IEnumerable entities) => _context.Set(_type).RemoveRange(entities);
         public IAdapter LoadType(Type type) { _type = type; return this; }
+        public IAdapter LoadType<T>() => LoadType(typeof(T));
         public IEnumerable FindAll() => _context.Set(_type);
     }
 }

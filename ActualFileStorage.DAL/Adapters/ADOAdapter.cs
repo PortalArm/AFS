@@ -6,7 +6,7 @@ namespace ActualFileStorage.DAL.Adapters
 {
     public class ADOAdapter : IAdapter
     {
-        DbConnection _connection;
+        private DbConnection _connection;
         private string _type;
         //private static void DisplayData(System.Data.DataTable table)
         //{
@@ -20,6 +20,8 @@ namespace ActualFileStorage.DAL.Adapters
         //    }
         //}
 
+
+        // ?
         public ADOAdapter(DbConnection connection)
         {
             _connection = connection;
@@ -67,10 +69,17 @@ namespace ActualFileStorage.DAL.Adapters
             _type = SimpleMapper.Get(type);
             return this;
         }
+        public IAdapter LoadType<T>()
+        {
+            throw new NotImplementedException();
+        }
+
 
         public IEnumerable FindAll()
         {
             throw new NotImplementedException();
         }
+
+
     }
 }

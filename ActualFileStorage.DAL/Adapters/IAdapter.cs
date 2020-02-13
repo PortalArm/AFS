@@ -29,6 +29,7 @@ namespace ActualFileStorage.DAL.Adapters
 
     public interface IAdapter
     {
+        IAdapter LoadType<T>();
         IAdapter LoadType(Type type); 
         object Add(object entity);
         IEnumerable AddRange(IEnumerable entities);
