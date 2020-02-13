@@ -43,13 +43,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Passwords\IPasswordHasher.cs" />
+    <Compile Include="Passwords\PasswordHasher.cs" />
+    <Compile Include="Salts\ISaltResolver.cs" />
     <Compile Include="Links\CustomLink.cs" />
     <Compile Include="Links\ILinkResolver.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Salts\SaltResolver.cs" />
+    <Compile Include="Services\Interfaces\IRoleGenerateSalt.cs" />
+    <Compile Include="Services\RegistrationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
