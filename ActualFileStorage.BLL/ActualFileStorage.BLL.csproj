@@ -51,6 +51,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Salts\SaltResolver.cs" />
+    <Compile Include="Services\Interfaces\IRoleGeneratePassHash.cs" />
     <Compile Include="Services\Interfaces\IRoleGenerateSalt.cs" />
     <Compile Include="Services\RegistrationService.cs" />
   </ItemGroup>

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ActualFileStorage.BLL.Services
 {
-    class RegistrationService // : IRoleSaltGen, IRolePassHashGen
+    public class RegistrationService  //: IRoleGenerateSalt, IRoleGeneratePassHash
     {
         private ISaltResolver _saltGen;
         private IPasswordHasher _passHasher;
