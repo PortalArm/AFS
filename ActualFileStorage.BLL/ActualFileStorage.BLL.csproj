@@ -43,6 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileHandlers\IFileRoutine.cs" />
+    <Compile Include="FileHandlers\IFileDownload.cs" />
+    <Compile Include="FileHandlers\IFileUpload.cs" />
+    <Compile Include="FileHandlers\LocalServerStorage.cs" />
     <Compile Include="Passwords\IPasswordHasher.cs" />
     <Compile Include="Passwords\PasswordHasher.cs" />
     <Compile Include="Salts\ISaltResolver.cs" />
@@ -58,6 +62,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ActualFileStorage.DAL\ActualFileStorage.DAL.csproj">
+      <Project>{C49E58F8-735F-4D97-90F8-B66917157073}</Project>
+      <Name>ActualFileStorage.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

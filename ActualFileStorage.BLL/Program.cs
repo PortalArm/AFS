@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ActualFileStorage.BLL.FileHandlers;
 using ActualFileStorage.BLL.Passwords;
 using ActualFileStorage.BLL.Salts;
 
@@ -38,9 +39,18 @@ namespace ActualFileStorage.BLL
         //convert to dll
         static void Main(string[] args)
         {
-            IPasswordHasher ph = new PasswordHasher();
-            string d = ph.HashPass("aaaab", "bbbb");
-            Console.WriteLine(d);
+            LocalServerStorage lss = new LocalServerStorage(AppDomain.CurrentDomain.BaseDirectory);
+            DAL.Models.User u = new DAL.Models.User() { Login = "HelloC" };
+            DAL.Models.Folder f = new DAL.Models.Folder() { Id = 55, Name = u.Login };
+            DAL.Models.File file = new DAL.Models.File() { Id = 2, Name="file1",Ext = ".txt", CreationTime = DateTime.Now, Hash = "43we56t4eredxy"};
+            u.Folder = f;
+
+            lss.UploadFile( u, file, new byte[] { 12, 13, 14, 15, 16, 17, 18, 19 } );
+            foreach(byte b in lss.DownloadFile(u, file))
+                Console.WriteLine(b);
+            //IPasswordHasher ph = new PasswordHasher();
+            //string d = ph.HashPass("aaaab", "bbbb");
+            //Console.WriteLine(d);
 
             //var sr = new SaltResolver();
             //HashSet<string> tt = new HashSet<string>();
