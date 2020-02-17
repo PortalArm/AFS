@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,5 +38,6 @@ namespace ActualFileStorage.DAL.Adapters
         IEnumerable FindAll();
         object Remove(object entity);
         IEnumerable RemoveRange(IEnumerable entities);
+        void ExecuteSql(string sql, params SqlParameter[] pars);
     }
 }

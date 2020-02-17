@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Data.Entity;
+using System.Data.SqlClient;
 
 namespace ActualFileStorage.DAL.Adapters
 {
@@ -26,5 +27,7 @@ namespace ActualFileStorage.DAL.Adapters
         public IAdapter LoadType(Type type) { _type = type; return this; }
         public IAdapter LoadType<T>() => LoadType(typeof(T));
         public IEnumerable FindAll() => _context.Set(_type);
+        public void ExecuteSql(string sql, params SqlParameter[] pars) => _context.Set(_type).SqlQuery(sql, pars);
+
     }
 }

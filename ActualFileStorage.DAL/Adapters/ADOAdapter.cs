@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Data.Common;
+using System.Data.SqlClient;
 
 namespace ActualFileStorage.DAL.Adapters
 {
@@ -69,10 +70,7 @@ namespace ActualFileStorage.DAL.Adapters
             _type = SimpleMapper.Get(type);
             return this;
         }
-        public IAdapter LoadType<T>()
-        {
-            throw new NotImplementedException();
-        }
+        public IAdapter LoadType<T>() => LoadType(typeof(T));
 
 
         public IEnumerable FindAll()
@@ -80,6 +78,9 @@ namespace ActualFileStorage.DAL.Adapters
             throw new NotImplementedException();
         }
 
-
+        public void ExecuteSql(string sql, params SqlParameter[] pars)
+        {
+            
+        }
     }
 }
