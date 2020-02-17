@@ -9,7 +9,7 @@ using ActualFileStorage.DAL.Adapters;
 using ActualFileStorage.DAL.Models;
 namespace ActualFileStorage.DAL.Repositories
 {
-    class UserRepository : Repository, IUserRepository
+    class UserRepository : Repository<User>, IUserRepository
     {
 
         public UserRepository(IAdapter context) : base(context)
@@ -17,25 +17,25 @@ namespace ActualFileStorage.DAL.Repositories
             
         }
 
-        public void Add(User obj)
-        {
-            throw new NotImplementedException();
-        }
+        //public void Add(User obj)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public IEnumerable<User> GetAll()
-        {
-            throw new NotImplementedException();
-        }
+        //public IEnumerable<User> GetAll()
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public User GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
+        //public User GetById(int id)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public IEnumerable<User> GetByPredicate(Func<User, bool> pred)
-        {
-            throw new NotImplementedException();
-        }
+        //public IEnumerable<User> GetByPredicate(Func<User, bool> pred)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public UserCredential GetUserCredsById(int id)
         {
@@ -49,9 +49,9 @@ namespace ActualFileStorage.DAL.Repositories
             };
         }
 
-        public void Remove(User obj)
-        {
-            throw new NotImplementedException();
-        }
+        //public void Remove(User obj)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

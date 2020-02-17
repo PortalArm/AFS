@@ -21,8 +21,9 @@ namespace ActualFileStorage.DAL.Repositories
 
         public IEnumerable<T> GetAll() => _adapter.FindAll().Cast<T>();
         public T GetById(int id) => _adapter.Find(id) as T;
-
-        public IEnumerable<T> GetByPredicate(Func<T, bool> pred) { throw new NotImplementedException(); }// => _adapter.
+        
+        //??
+        //public IEnumerable<T> GetByPredicate(Func<T, bool> pred) { throw new NotImplementedException(); }// => _adapter.
 
         public void Remove(T obj) => _adapter.Remove(obj);
 
