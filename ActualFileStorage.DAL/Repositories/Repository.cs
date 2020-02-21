@@ -12,21 +12,24 @@ namespace ActualFileStorage.DAL.Repositories
     public class Repository<T> : IRepository<T> where T : class
     {
         protected IAdapter _adapter;
+        protected IAdapter Adapter { get => _adapter.LoadType(_type); }
+        protected Type _type;
         public Repository(IAdapter adapter)
         {
-            _adapter = adapter.LoadType<T>();
+            _type = typeof(T);
+            _adapter = adapter;//.LoadType<T>();
         }
 
-        public void Add(T obj) => _adapter.Add(obj);
+        public void Add(T obj) => Adapter.Add(obj);
 
-        public IEnumerable<T> GetAll() => _adapter.FindAll().Cast<T>();
-        public T GetById(int id) => _adapter.Find(id) as T;
+        public IEnumerable<T> GetAll() => Adapter.FindAll().Cast<T>();
+        public T GetById(int id) => Adapter.Find(id) as T;
         
         //??
         //public IEnumerable<T> GetByPredicate(Func<T, bool> pred) { throw new NotImplementedException(); }// => _adapter.
 
-        public void Remove(T obj) => _adapter.Remove(obj);
-
+        public void Remove(T obj) => Adapter.Remove(obj);
+        public void SaveChanges() => Adapter.SaveChanges();
     }
     //class Repository<T> : IRepository<T> where T : class
     //{

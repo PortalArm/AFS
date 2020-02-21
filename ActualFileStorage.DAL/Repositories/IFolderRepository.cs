@@ -7,11 +7,7 @@ using System.Threading.Tasks;
 
 namespace ActualFileStorage.DAL.Repositories
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IFolderRepository : IRepository<Folder>
     {
-        UserCredential GetUserCredsById(int id);
-
-        // под вопросом
-        Folder GetRootFolderById(int id);
     }
 }
