@@ -14,6 +14,7 @@ namespace ActualFileStorage.DAL.Models
         public int FolderId { get; set; }
         public FileAccess Visibility { get; set; }
         public DateTime CreationTime { get; set; }
+        public string ShortLink { get; set; }
 
         public virtual Folder Folder { get; set; }
     }
