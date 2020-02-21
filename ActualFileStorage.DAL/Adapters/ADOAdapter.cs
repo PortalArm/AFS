@@ -82,5 +82,10 @@ namespace ActualFileStorage.DAL.Adapters
         {
             
         }
+
+        public void SaveChanges()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

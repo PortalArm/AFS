@@ -39,5 +39,6 @@ namespace ActualFileStorage.DAL.Adapters
         object Remove(object entity);
         IEnumerable RemoveRange(IEnumerable entities);
         void ExecuteSql(string sql, params SqlParameter[] pars);
+        void SaveChanges();
     }
 }

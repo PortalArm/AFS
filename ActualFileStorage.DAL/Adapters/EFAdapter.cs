@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 
 namespace ActualFileStorage.DAL.Adapters
 {
-    public class EFAdapter : IAdapter
+    public class EFAdapter : IAdapter, IDisposable
     {
         private Type _type;
         private DbContext _context;
@@ -28,6 +28,8 @@ namespace ActualFileStorage.DAL.Adapters
         public IAdapter LoadType<T>() => LoadType(typeof(T));
         public IEnumerable FindAll() => _context.Set(_type);
         public void ExecuteSql(string sql, params SqlParameter[] pars) => _context.Set(_type).SqlQuery(sql, pars);
+        public void SaveChanges() => _context.SaveChanges();
+        public void Dispose() => _context.Dispose();
 
     }
 }
