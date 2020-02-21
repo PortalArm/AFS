@@ -6,7 +6,7 @@ namespace ActualFileStorage.BLL.Passwords
 {
     public class PasswordHasher : IPasswordHasher
     {
-        //!!!!
+        // !!!encoding!!!
         private Encoding _enc = Encoding.ASCII;
         public string HashPass(string password, string salt)
         {

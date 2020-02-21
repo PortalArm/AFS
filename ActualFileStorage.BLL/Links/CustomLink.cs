@@ -24,8 +24,6 @@ namespace ActualFileStorage.BLL.Links
     public class MockLink : ILinkResolver
     {
         public string Decode(string shortString) => shortString.Substring(shortString.Length / 2);
-
-
         public string Encode(string fullString) => string.Concat(fullString, fullString);
 
     }
