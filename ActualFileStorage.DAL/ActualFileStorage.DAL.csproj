@@ -60,6 +60,8 @@
     <Compile Include="Configurations\ConfigurationGetter.cs" />
     <Compile Include="Configurations\FolderConfiguration.cs" />
     <Compile Include="Configurations\FileConfiguration.cs" />
+    <Compile Include="Configurations\FileShortLinkConfiguration.cs" />
+    <Compile Include="Configurations\FolderShortLinkConfiguration.cs" />
     <Compile Include="Configurations\UserConfiguration.cs" />
     <Compile Include="Migrations\202001270643207_initial.cs" />
     <Compile Include="Migrations\202001270643207_initial.designer.cs">
@@ -69,19 +71,37 @@
     <Compile Include="Migrations\202001270648018_addedmapkey.designer.cs">
       <DependentUpon>202001270648018_addedmapkey.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202002202035553_passsalt.cs" />
+    <Compile Include="Migrations\202002202035553_passsalt.designer.cs">
+      <DependentUpon>202002202035553_passsalt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002210728331_shortlinks.cs" />
+    <Compile Include="Migrations\202002210728331_shortlinks.designer.cs">
+      <DependentUpon>202002210728331_shortlinks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202002210756069_indexedlinks.cs" />
+    <Compile Include="Migrations\202002210756069_indexedlinks.designer.cs">
+      <DependentUpon>202002210756069_indexedlinks.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\FileAccess.cs" />
     <Compile Include="Models\FileStorageContext.cs" />
     <Compile Include="Models\Folder.cs" />
+    <Compile Include="Models\ShortLink.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserCredential.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\FolderRepository.cs" />
+    <Compile Include="Repositories\IFolderRepository.cs" />
+    <Compile Include="Repositories\RepoFactory.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Units Of Work\BasicUOW.cs" />
+    <Compile Include="Units Of Work\IUnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -96,6 +116,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001270648018_addedmapkey.resx">
       <DependentUpon>202001270648018_addedmapkey.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002202035553_passsalt.resx">
+      <DependentUpon>202002202035553_passsalt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002210728331_shortlinks.resx">
+      <DependentUpon>202002210728331_shortlinks.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202002210756069_indexedlinks.resx">
+      <DependentUpon>202002210756069_indexedlinks.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
