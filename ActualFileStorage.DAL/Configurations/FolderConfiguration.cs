@@ -17,7 +17,12 @@ namespace ActualFileStorage.DAL.Configurations
                 .Property(f => f.Id)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
+            Property(f => f.ShortLink)
+                .IsOptional()
+                .HasMaxLength(64);
 
+            HasIndex(f => f.ShortLink)
+                .IsUnique();
         }
     }
 }

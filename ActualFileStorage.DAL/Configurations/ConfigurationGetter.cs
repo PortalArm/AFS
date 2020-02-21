@@ -10,7 +10,7 @@ namespace ActualFileStorage.DAL.Configurations
 {
     public static class ConfigurationGetter
     {
-        private static Dictionary<Type, object> _dict { get; } = new Dictionary<Type, object>();
+        private static Dictionary<Type, object> _dict = new Dictionary<Type, object>();
         private static readonly string _namespace = typeof(ConfigurationGetter).Namespace;
         public static EntityTypeConfiguration<T> GetConfig<T>() where T : class
         {

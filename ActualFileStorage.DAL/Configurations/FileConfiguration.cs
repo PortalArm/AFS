@@ -23,6 +23,13 @@ namespace ActualFileStorage.DAL.Configurations
             Property(t => t.Ext)
                 .IsOptional();
 
+            Property(f => f.ShortLink)
+                .IsOptional()
+                .HasMaxLength(64);
+
+            HasIndex(f => f.ShortLink)
+                .IsUnique();
+
             Property(t => t.Name)
                 .IsRequired();
 
@@ -33,6 +40,8 @@ namespace ActualFileStorage.DAL.Configurations
                 .IsRequired();
 
             HasRequired(t => t.Folder);
+
+
         }
     }
 }
