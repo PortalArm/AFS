@@ -16,11 +16,11 @@ namespace ActualFileStorage.PL.Controllers
     {
         private ILinkResolver _link;
         private IUnitOfWork _uow;
-        public ShortenerController(ILinkResolver resolver)//, IUnitOfWork unitOfWork)
+        public ShortenerController(ILinkResolver resolver, IUnitOfWork unitOfWork)
         {
             System.IO.File.AppendAllLines(Properties.Resources.logfile, new[] { $"Constructor of {GetType()} controller invoked" });
             _link = resolver;
-            //_uow = unitOfWork;
+            _uow = unitOfWork;
         }
         // GET: Shortener
         public ActionResult Unpack(object id)
@@ -31,13 +31,12 @@ namespace ActualFileStorage.PL.Controllers
             SimpleViewModel svm = new SimpleViewModel() {
                 id = id
             };
-            using (IUnitOfWork uow = new BasicUOW(new EFAdapter(new FileStorageContext())))
-            {
-                IRepository<Folder> repo = uow.GetRepo<Folder>();
-                //(repo as Repository<Folder>).ChangeType<Folder>();
-                svm.single = repo.GetById(1);
-                svm.hello = repo.GetAll().ToList();
-            }
+
+            IRepository<Folder> repo = _uow.GetRepo<Folder>();
+            //(repo as Repository<Folder>).ChangeType<Folder>();
+            svm.single = repo.GetById(1);
+            svm.hello = repo.GetAll().ToList();
+
             return View(svm);
         }
 
