@@ -1,6 +1,7 @@
 ﻿using ActualFileStorage.BLL.Passwords;
 using ActualFileStorage.BLL.Salts;
 using ActualFileStorage.BLL.Services.Interfaces;
+using ActualFileStorage.DAL.Adapters;
 using ActualFileStorage.DAL.Models;
 using ActualFileStorage.DAL.UOW;
 using System;
@@ -22,9 +23,14 @@ namespace ActualFileStorage.BLL.Services
             _passHasher = passHasher;
             _uow = uow;
         }
-        public string GenerateSalt(int size) => _saltGen.GetSalt(size);
-        public string GenerateHash(string pass, string salt) => _passHasher.HashPass(pass, salt);
-        public Folder CreateRootFolder(User u, FileAccess vis = FileAccess.Private) =>
+        private string GenerateSalt(int size) => _saltGen.GetSalt(size);
+        private string GenerateHash(string pass, string salt) => _passHasher.HashPass(pass, salt);
+        public void Register(User u)
+        {
+            Folder privateFolder = CreateRootFolder(u);
+            
+        }
+        private Folder CreateRootFolder(User u, FileAccess vis = FileAccess.Private) =>
             new Folder() { Name = u.Login, User = u, Visibility = vis, CreationTime = DateTime.Now };
 
     }
