@@ -16,8 +16,8 @@ namespace ActualFileStorage.PL
             routes.MapRoute(
                 name: "ShortLink",
                 url: "s/{id}",
-                defaults: new { controller = "Shortener", action = "Unpack", id = UrlParameter.Optional },
-                constraints: new { id = @"\w{12}" }
+                defaults: new { controller = "Shortener", action = "Unpack", id = UrlParameter.Optional }//,
+                //constraints: new { id = @"\w{12}" }
             );
 
             //routes.MapRoute(
