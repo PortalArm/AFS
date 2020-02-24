@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ActualFileStorage.DAL.Repositories
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<T> : IDisposable where T : class
     {
         IEnumerable<T> GetAll();
         //IEnumerable<T> GetByPredicate(Func<T,bool> pred);
@@ -15,6 +15,8 @@ namespace ActualFileStorage.DAL.Repositories
         void Add(T obj);
         void Remove(T obj);
         void SaveChanges();
+        //void ChangeType<TOut>();
+        //void ChangeType(Type tout);
 
     }
 }

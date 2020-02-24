@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ActualFileStorage.DAL.Repositories
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class 
     {
         protected IAdapter _adapter;
         protected IAdapter Adapter { get => _adapter.LoadType(_type); }
@@ -30,6 +30,21 @@ namespace ActualFileStorage.DAL.Repositories
 
         public void Remove(T obj) => Adapter.Remove(obj);
         public void SaveChanges() => Adapter.SaveChanges();
+        public void Dispose() => Adapter.Dispose();
+
+        //public void ChangeType<TOut>()
+        //{
+        //    ChangeType(typeof(TOut));
+        //}
+        //public void ChangeType(Type tout)
+        //{
+        //    _type = tout;
+        //}
+
+        //public void GG()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
     //class Repository<T> : IRepository<T> where T : class
     //{

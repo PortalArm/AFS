@@ -28,7 +28,7 @@ namespace ActualFileStorage.DAL.Adapters
         }
     }
 
-    public interface IAdapter
+    public interface IAdapter : IDisposable
     {
         IAdapter LoadType<T>();
         IAdapter LoadType(Type type); 

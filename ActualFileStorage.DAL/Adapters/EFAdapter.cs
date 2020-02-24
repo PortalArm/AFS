@@ -5,12 +5,13 @@ using System.Data.SqlClient;
 
 namespace ActualFileStorage.DAL.Adapters
 {
-    public class EFAdapter : IAdapter, IDisposable
+    public class EFAdapter : IAdapter
     {
         private Type _type;
         private DbContext _context;
         public EFAdapter(DbContext context)
         {
+            System.IO.File.AppendAllLines(@"C:\Users\Tom\Desktop\Проект_EPAM\logs\log.txt", new[] { $"Constructor of {GetType()} adapter invoked" });
             _context = context;
         }
         public object Add(object entity) => _context.Set(_type).Add(entity);
