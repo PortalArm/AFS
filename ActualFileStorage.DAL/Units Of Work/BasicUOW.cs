@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ActualFileStorage.DAL.UOW
 {
-    class BasicUOW : IUnitOfWork
+    public class BasicUOW : IUnitOfWork
     {
         private Dictionary<Type, object> _dict = new Dictionary<Type, object>();
         //private IUserRepository _users;
@@ -18,13 +18,15 @@ namespace ActualFileStorage.DAL.UOW
         public BasicUOW(IAdapter adapter)
         {
             _adapter = adapter;
+            System.IO.File.AppendAllLines(@"C:\Users\Tom\Desktop\Проект_EPAM\logs\log.txt", new[] { $"Constructor of {GetType()} UOW invoked" });
+
         }
         //public BasicUOW(IUserRepository userRepo, IFolderRepository folderRepo)
         //{
         //    _users = userRepo;
         //    _folders = folderRepo;
         //}
-        
+
         public void SaveChanges()
         {
             // TODO: Придумать что-то получше
@@ -48,7 +50,11 @@ namespace ActualFileStorage.DAL.UOW
             if (!disposedValue)
             {
                 if (disposing)
+                {
                     SaveChanges();
+                    foreach (IDisposable v in _dict.Values)
+                        v?.Dispose();
+                }
                 disposedValue = true;
             }
         }

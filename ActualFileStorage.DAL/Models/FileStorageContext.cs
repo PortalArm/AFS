@@ -8,6 +8,7 @@ namespace ActualFileStorage.DAL.Models
     {
         public FileStorageContext() : base("FileStorageDB")
         {
+            System.IO.File.AppendAllLines(@"C:\Users\Tom\Desktop\Проект_EPAM\logs\log.txt", new[] { $"Constructor of {GetType()} context invoked" });
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -18,6 +19,11 @@ namespace ActualFileStorage.DAL.Models
             //modelBuilder.Configurations.Add(ConfigurationGetter.GetConfig<Folder>());
             //modelBuilder.Configurations.Add(ConfigurationGetter.GetConfig<FileShortLink>());
             //modelBuilder.Configurations.Add(ConfigurationGetter.GetConfig<FolderShortLink>());
+        }
+
+        ~FileStorageContext()
+        {
+            System.IO.File.AppendAllLines(@"C:\Users\Tom\Desktop\Проект_EPAM\logs\log.txt", new[] { $"Destructor of {GetType()} context invoked" });
         }
         public DbSet<User> Users { get; set; }
         public DbSet<File> Files { get; set; }

@@ -1,7 +1,9 @@
 ﻿using ActualFileStorage.BLL.Links;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -23,6 +25,7 @@ namespace ActualFileStorage.PL
         public DIControllerFactory(IUnityContainer c) => _container = c;
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
         {
+            File.AppendAllLines(Properties.Resources.logfile,new[] { $"Creating {controllerType} controller" });
             if (controllerType == null)
                 return null;
             // request context?
