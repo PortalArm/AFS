@@ -18,32 +18,39 @@ namespace ActualFileStorage.DAL
         //convert to dll
         static void Main(string[] args)
         {
-            FileStorageContext context = new FileStorageContext();
-
-            using (BasicUOW uow = new BasicUOW(new EFAdapter(context)))
+            using (IUnitOfWork uow = new BasicUOW(new EFAdapter(new FileStorageContext())))
             {
-                var cntx1 = uow.GetRepo<User>(); 
-                var cntx2 = uow.GetRepo<Folder>();
-                var cred = (cntx1 as IUserRepository).GetUserCredsById(1);
-                User newUser = new User() { BirthDate = DateTime.Now, Email="simpleemail@mail.ru", FirstName="helkl", Login="reeoodd", PassHash="54756", Salt="364ydfcxhtf" };
-                Folder newFolder = new Folder() {  CreationTime=DateTime.Now, Name=newUser.Login, User = newUser, Visibility = FileAccess.Private, ShortLink="shortedcustomlink" };
-                cntx1.Add(newUser);
-                cntx2.Add(newFolder);
-                Console.WriteLine("Creds: {0}, {1}, {2}", cred.Login, cred.Email, cred.PassHash);
-                foreach (var val in cntx2.GetAll())
-                    Console.WriteLine(val.Name + " " + val.User.FirstName);
+                IRepository<Folder> repo = uow.GetRepo<Folder>();
+                //(repo as Repository<Folder>).ChangeType<Folder>();
+                Console.WriteLine(repo.GetById(1).CreationTime);
+                foreach(var l in repo.GetAll().ToList())
+                    Console.WriteLine($"{l.Id} {l.Name} {l.ShortLink}");
             }
+            //using (IUnitOfWork uow = new BasicUOW(new EFAdapter(context)))
+            //{
+            //    var cntx1 = uow.GetRepo<User>(); 
+            //    var cntx2 = uow.GetRepo<Folder>();
+            //    var cred = (cntx1 as IUserRepository).GetUserCredsById(1);
+            //    User newUser = new User() { BirthDate = DateTime.Now, Email="simpleemail@mail.ru", FirstName="helkl", Login="reeoodd", PassHash="54756", Salt="364ydfcxhtf" };
+            //    Folder newFolder = new Folder() {  CreationTime=DateTime.Now, Name=newUser.Login, User = newUser, Visibility = FileAccess.Private, ShortLink="shortedcustomlink" };
+            //    cntx1.Add(newUser);
+            //    cntx2.Add(newFolder);
+            //    Console.WriteLine("Creds: {0}, {1}, {2}", cred.Login, cred.Email, cred.PassHash);
+            //    foreach (var val in cntx2.GetAll())
+            //        Console.WriteLine(val.Name + " " + val.User.FirstName);
+            //}
 
-            using (BasicUOW uow = new BasicUOW(new EFAdapter(context)))
-            {
-                var cntx1 = uow.GetRepo<User>();
-                var cntx2 = uow.GetRepo<Folder>();
-
-                var cred = (cntx1 as IUserRepository).GetUserCredsById(1);
-                Console.WriteLine("Creds: {0}, {1}, {2}", cred.Login, cred.Email, cred.PassHash);
-                foreach (var val in cntx2.GetAll())
-                    Console.WriteLine(val.Name + " " + val.User.FirstName);
-            }
+            //using (IUnitOfWork uow = new BasicUOW(new EFAdapter(context)))
+            //{
+            //    var cntx1 = uow.GetRepo<User>();
+            //    var cntx2 = uow.GetRepo<Folder>();
+            //    User usr = cntx1.GetById(1);
+            //    Console.WriteLine("{0} {1}", usr.BirthDate, usr.FirstName);
+            //    var cred = (cntx1 as IUserRepository).GetUserCredsById(1);
+            //    Console.WriteLine("Creds: {0}, {1}, {2}", cred.Login, cred.Email, cred.PassHash);
+            //    foreach (var val in cntx2.GetAll())
+            //        Console.WriteLine(val.Name + " " + val.User.FirstName);
+            //}
 
             //using (var context = new FileStorageContext())
             //{
