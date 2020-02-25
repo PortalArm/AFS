@@ -12,13 +12,11 @@ namespace ActualFileStorage.DAL.Models
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Configurations.AddFromAssembly(typeof(FileStorageContext).Assembly);
-            //modelBuilder.Configurations.Add(ConfigurationGetter.GetConfig<User>());
-            //modelBuilder.Configurations.Add(ConfigurationGetter.GetConfig<File>());
-            ////modelBuilder.Configurations.Add(ConfigurationGetter.GetConfig<LoginInfo>());
-            //modelBuilder.Configurations.Add(ConfigurationGetter.GetConfig<Folder>());
-            //modelBuilder.Configurations.Add(ConfigurationGetter.GetConfig<FileShortLink>());
-            //modelBuilder.Configurations.Add(ConfigurationGetter.GetConfig<FolderShortLink>());
+            //modelBuilder.Configurations.AddFromAssembly(typeof(FileStorageContext).Assembly);
+            modelBuilder.Configurations.Add(ConfigurationGetter.GetConfig<User>());
+            modelBuilder.Configurations.Add(ConfigurationGetter.GetConfig<File>());
+            modelBuilder.Configurations.Add(ConfigurationGetter.GetConfig<Folder>());
+
         }
 
         ~FileStorageContext()

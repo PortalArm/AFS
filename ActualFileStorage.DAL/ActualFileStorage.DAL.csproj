@@ -63,8 +63,6 @@
     <Compile Include="Configurations\ConfigurationGetter.cs" />
     <Compile Include="Configurations\FolderConfiguration.cs" />
     <Compile Include="Configurations\FileConfiguration.cs" />
-    <Compile Include="Configurations\FileShortLinkConfiguration.cs" />
-    <Compile Include="Configurations\FolderShortLinkConfiguration.cs" />
     <Compile Include="Configurations\UserConfiguration.cs" />
     <Compile Include="Migrations\202001270643207_initial.cs" />
     <Compile Include="Migrations\202001270643207_initial.designer.cs">
