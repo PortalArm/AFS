@@ -18,7 +18,7 @@ namespace ActualFileStorage.PL.Controllers
         private IUnitOfWork _uow;
         public ShortenerController(ILinkResolver resolver, IUnitOfWork unitOfWork)
         {
-            System.IO.File.AppendAllLines(Properties.Resources.logfile, new[] { $"Constructor of {GetType()} controller invoked" });
+            //System.IO.File.AppendAllLines(Properties.Resources.logfile, new[] { $"Constructor of {GetType()} controller invoked" });
             _link = resolver;
             _uow = unitOfWork;
         }

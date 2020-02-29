@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ActualFileStorage.BLL.Services
 {
-    public class RegistrationService //: ISaltResolver, IPasswordHasher OR : IRoleGenerateSalt, IRoleGeneratePassHash
+    public class RegistrationService  //: ISaltResolver, IPasswordHasher OR : IRoleGenerateSalt, IRoleGeneratePassHash
     {
         private ISaltResolver _saltGen;
         private IPasswordHasher _passHasher;
@@ -25,9 +25,18 @@ namespace ActualFileStorage.BLL.Services
         }
         private string GenerateSalt(int size) => _saltGen.GetSalt(size);
         private string GenerateHash(string pass, string salt) => _passHasher.HashPass(pass, salt);
-        public void Register(User u)
+        public void Register(User u, string password)
         {
+            var users = _uow.GetRepo<User>();
+            var folders = _uow.GetRepo<Folder>();
+            string salt = GenerateSalt(64);
+            string hash = GenerateHash(password, salt);
+            u.Salt = salt;
+            u.PassHash = hash;
             Folder privateFolder = CreateRootFolder(u);
+            users.Add(u);
+            folders.Add(privateFolder);
+            _uow.SaveChanges();
             
         }
         private Folder CreateRootFolder(User u, FileAccess vis = FileAccess.Private) =>

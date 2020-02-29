@@ -18,7 +18,7 @@ namespace ActualFileStorage.DAL.UOW
         public BasicUOW(IAdapter adapter)
         {
             _adapter = adapter;
-            System.IO.File.AppendAllLines(@"C:\Users\Tom\Desktop\Проект_EPAM\logs\log.txt", new[] { $"Constructor of {GetType()} UOW invoked" });
+            //System.IO.File.AppendAllLines(@"C:\Users\Tom\Desktop\Проект_EPAM\logs\log.txt", new[] { $"Constructor of {GetType()} UOW invoked" });
 
         }
         //public BasicUOW(IUserRepository userRepo, IFolderRepository folderRepo)
