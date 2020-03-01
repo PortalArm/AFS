@@ -22,3 +22,18 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.blocking-div {
+    position: absolute;
+    z-index: 1000;
+    background-color: #bbbbbb88;
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    padding-top: 50px;
+}
+form {
+    background-color: #ffffff;
+    width:auto;
+    border-radius: 2px;
+}

@@ -1,0 +1,50 @@
+﻿@helper CreateScript(string btnId, string formId, string url, string method = "POST", string callbackUrl = null)
+{
+    <script>
+        $(document).ready(function () {
+            $('#@btnId').on('click', function () {
+                event.preventDefault();
+                let form = $("#@formId");
+                if (form.valid())
+                    $.ajax({
+                        url: "@url",
+                        method: "@method",
+                        data: form.serialize(),
+                        success: function (data) {
+                            if ($("body > .blocking-div"))
+                                $("body > .blocking-div").remove();
+                            if (data.status != 'ok') {
+                                $("body").prepend("<div><h1>Ошибка есть</h1></div>");
+                                return;
+                            }
+                            @if (callbackUrl != null) {
+                                    @:window.location = "@callbackUrl";
+                            }
+                                //$("body").prepend("<div class='blocking-div container'><div class='container'>" + data.data + "</div></div>");
+                        }
+                    });
+            })});
+    </script>
+}
+
+@helper DatalessRequestOnClick(string btnId, string url, string method = "GET")
+{
+    <script>
+        $(document).ready(function () {
+            $('#@btnId').on('click', function () {
+                event.preventDefault();
+                $.ajax({
+                    url: "@url",
+                    data: null,
+                    method: "@method",
+                    success: function (data) {
+                        if ($("body > .blocking-div"))
+                            $("body > .blocking-div").remove();
+
+                        $("body").prepend("<div class='blocking-div container'><div class='container'>" + data + "</div></div>");
+                    }
+                })
+            })});
+    </script>
+}
+
