@@ -36,6 +36,7 @@ namespace ActualFileStorage.DAL.Repositories
             };
         }
 
+        public bool UserWithLoginExists(string login) => GetByPredicate(u => u.Login == login).Any();
 
     }
 }

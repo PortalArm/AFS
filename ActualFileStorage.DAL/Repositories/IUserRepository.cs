@@ -10,7 +10,8 @@ namespace ActualFileStorage.DAL.Repositories
     public interface IUserRepository : IRepository<User>
     {
         UserCredential GetUserCredsById(int id);
-
+        bool UserWithLoginExists(string login);
+        
         // под вопросом
         Folder GetRootFolderById(int id);
     }

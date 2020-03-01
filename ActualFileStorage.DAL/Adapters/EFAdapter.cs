@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Data.Entity;
 using System.Data.SqlClient;
-
+using System.Linq.Expressions;
+using ActualFileStorage.DAL.Extensions;
 namespace ActualFileStorage.DAL.Adapters
 {
     public class EFAdapter : IAdapter
@@ -11,7 +12,7 @@ namespace ActualFileStorage.DAL.Adapters
         private DbContext _context;
         public EFAdapter(DbContext context)
         {
-            System.IO.File.AppendAllLines(@"C:\Users\Tom\Desktop\Проект_EPAM\logs\log.txt", new[] { $"Constructor of {GetType()} adapter invoked" });
+            //System.IO.File.AppendAllLines(@"C:\Users\Tom\Desktop\Проект_EPAM\logs\log.txt", new[] { $"Constructor of {GetType()} adapter invoked" });
             _context = context;
         }
         public object Add(object entity) => _context.Set(_type).Add(entity);
@@ -31,6 +32,7 @@ namespace ActualFileStorage.DAL.Adapters
         public void ExecuteSql(string sql, params SqlParameter[] pars) => _context.Set(_type).SqlQuery(sql, pars);
         public void SaveChanges() => _context.SaveChanges();
         public void Dispose() => _context.Dispose();
+        public IEnumerable FindByPred<T>(Expression<Func<T, bool>> expr) where T : class => _context.Set<T>().FindPredicate(expr);
 
     }
 }
