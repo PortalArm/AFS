@@ -58,13 +58,15 @@
     <Compile Include="Services\Interfaces\IRoleGeneratePassHash.cs" />
     <Compile Include="Services\Interfaces\IRoleGenerateSalt.cs" />
     <Compile Include="Services\RegistrationService.cs" />
+    <Compile Include="Session\ISessionProvider.cs" />
+    <Compile Include="Session\SessionProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ActualFileStorage.DAL\ActualFileStorage.DAL.csproj">
-      <Project>{C49E58F8-735F-4D97-90F8-B66917157073}</Project>
+      <Project>{c49e58f8-735f-4d97-90f8-b66917157073}</Project>
       <Name>ActualFileStorage.DAL</Name>
     </ProjectReference>
   </ItemGroup>
