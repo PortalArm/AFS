@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace ActualFileStorage.DAL.Models
 {
@@ -14,6 +16,8 @@ namespace ActualFileStorage.DAL.Models
         public string PassHash { get; set; } //  => Hash(Operation(Password, Salt))
         public string Email { get; set; }
 
+        public virtual ICollection<WebRole> Roles { get; set; }
+        
         //public int FolderId { get; set; }
 
         //public int FolderId { get; set; } // req 
