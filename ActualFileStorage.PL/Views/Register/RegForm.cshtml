@@ -1,7 +1,7 @@
 ﻿@model ActualFileStorage.PL.Models.RegistrationUserViewModel
 @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")
-@AjaxHelper.CreateScript("submitRegButton", "regForm", Url.Action("RegAjaxForm"), "POST", Url.Action("Unpack", controllerName: "Shortener"))
+@AjaxHelper.CreateScript("submitRegButton", "regForm", Url.Action("RegAjaxForm"), "POST", Url.Action("", controllerName: "Adminpanel"))
 
 @using (Html.BeginForm("RegAjaxForm", "Register", FormMethod.Post, new { id = "regForm" }))
 {

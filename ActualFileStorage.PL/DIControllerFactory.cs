@@ -25,7 +25,7 @@ namespace ActualFileStorage.PL
         public DIControllerFactory(IUnityContainer c) => _container = c;
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
         {
-            File.AppendAllLines(Properties.Resources.logfile,new[] { $"Creating {controllerType} controller" });
+            //File.AppendAllLines(Properties.Resources.logfile,new[] { $"Creating {controllerType} controller" });
             if (controllerType == null)
                 return null;
             // request context?
