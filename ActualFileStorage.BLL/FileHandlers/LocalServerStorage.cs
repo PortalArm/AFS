@@ -9,10 +9,16 @@ using System.Threading.Tasks;
 
 namespace ActualFileStorage.BLL.FileHandlers
 {
-    class LocalServerStorage : IFileRoutine
+    public class LocalServerStorage : IFileRoutine
     {
         private string _root;
-        public LocalServerStorage(string root)
+        public LocalServerStorage()//(string root)
+        {
+            _root = @"F:\Server_Data\";
+           // _root = root;
+        }
+
+        public void SetRoot(string root)
         {
             _root = root;
         }
