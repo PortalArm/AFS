@@ -10,6 +10,7 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     @AjaxHelper.DatalessRequestOnClick("regLink", Url.Action("RegForm", "Register"))
+    @AjaxHelper.DatalessRequestOnClick("authLink", Url.Action("AuthForm", "Auth"))
     @*@AjaxHelper.CreateScript("regLink", null, Url.Action("RegForm", "Register"))*@
 </head>
 <body>
@@ -28,6 +29,7 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Admin panel", "", controllerName: "Adminpanel")</li>
                     
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -38,7 +40,7 @@
                     } else
                     {
                         <li>@Html.ActionLink("Register", "RegForm", "Register", null, new { id = "regLink" })</li>
-                        <li>@Html.ActionLink("Login", "Login", "Auth")</li>
+                        <li>@Html.ActionLink("Login", "AuthForm", "Auth", null, new { id = "authLink" })</li>
                     }
                     
                 </ul>
