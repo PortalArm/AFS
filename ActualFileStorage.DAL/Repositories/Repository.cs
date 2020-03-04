@@ -33,7 +33,12 @@ namespace ActualFileStorage.DAL.Repositories
         public void SaveChanges() => Adapter.SaveChanges();
         public void Dispose() => Adapter.Dispose();
 
-        public IEnumerable<T> GetByPredicate(Expression<Func<T, bool>> pred) => _adapter.FindByPred(pred).Cast<T>();
+        public IEnumerable<T> GetByPredicate(Expression<Func<T, bool>> pred) {
+            var list = _adapter.FindByPred(pred);
+            if (list == null)
+                return null;
+            return list.Cast<T>(); 
+        }
         //public void ChangeType<TOut>()
         //{
         //    ChangeType(typeof(TOut));

@@ -16,25 +16,28 @@ namespace ActualFileStorage.DAL.Repositories
 
         }
 
-        public Folder GetRootFolderById(int id)
-        {
+        public User GetUserByLogin(string login) => GetByPredicate(u => u.Login == login)?.First();
 
-            User obj = (User)Adapter.Find(id);
-            return obj.Folder;
-        }
 
-        public UserCredential GetUserCredsById(int id)
-        {
-            var tt = Adapter.Find(id);
-            User obj = (User)Adapter.Find(id);
+        //public Folder GetRootFolderById(int id)
+        //{
 
-            return new UserCredential() {
-                Email = obj.Email,
-                Login = obj.Login,
-                PassHash = obj.PassHash,
-                UserId = obj.Id
-            };
-        }
+        //    User obj = (User)Adapter.Find(id);
+        //    return obj.Folder;
+        //}
+
+        //public UserCredential GetUserCredsById(int id)
+        //{
+        //    var tt = Adapter.Find(id);
+        //    User obj = (User)Adapter.Find(id);
+
+        //    return new UserCredential() {
+        //        Email = obj.Email,
+        //        Login = obj.Login,
+        //        PassHash = obj.PassHash,
+        //        UserId = obj.Id
+        //    };
+        //}
 
         public bool UserWithLoginExists(string login) => GetByPredicate(u => u.Login == login).Any();
 
