@@ -47,7 +47,7 @@ namespace ActualFileStorage.PL.Controllers
             //    BirthDate = model.BirthDate,
             //    Email = model.Email,
             //    FirstName = model.FirstName,
-            //    Login = model.Login,
+            //    AuthForm = model.AuthForm,
             //    SecondName = model.SecondName
             //};
             DAL.Models.User u = _mapper.Map<DAL.Models.User>(model);

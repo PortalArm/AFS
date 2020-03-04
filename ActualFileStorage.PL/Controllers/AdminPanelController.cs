@@ -28,7 +28,7 @@ namespace ActualFileStorage.PL.Controllers
             //    Email = u.Email,
             //    FirstName = u.FirstName,
             //    Id = u.Id,
-            //    Login = u.Login,
+            //    AuthForm = u.AuthForm,
             //    RootFolderAccess = u.Folder.Visibility,
             //    SecondName = u.SecondName
             //});
