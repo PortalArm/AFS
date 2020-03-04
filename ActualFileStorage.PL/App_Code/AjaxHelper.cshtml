@@ -2,9 +2,16 @@
 {
     <script>
         $(document).ready(function () {
+            let form = $("#@formId");
+                form.validate({
+                    onsubmit: true,
+                    onkeyup: false,
+                    onclick: false,
+                    onfocusout: false
+                });
+
             $('#@btnId').on('click', function () {
                 event.preventDefault();
-                let form = $("#@formId");
                 if (form.valid())
                     $.ajax({
                         url: "@url",
@@ -14,7 +21,8 @@
                             if ($("body > .blocking-div"))
                                 $("body > .blocking-div").remove();
                             if (data.status != 'ok') {
-                                $("body").prepend("<div><h1>Ошибка есть</h1></div>");
+                                $("body").prepend("<div class='container blocking-div'>" + data.view + "</div>");
+                                //$("body").prepend("<div><h1>Ошибка есть</h1></div>");
                                 return;
                             }
                             @if (callbackUrl != null) {
@@ -41,10 +49,11 @@
                         if ($("body > .blocking-div"))
                             $("body > .blocking-div").remove();
 
-                        $("body").prepend("<div class='blocking-div container'><div class='container'>" + data + "</div></div>");
+                        $("body").prepend("<div class='container blocking-div'>" + data + "</div>");
                     }
                 })
             })});
     </script>
 }
+
 
