@@ -20,11 +20,11 @@ namespace ActualFileStorage.BLL.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<UserViewModel> GetUsers()
-        {
-            var users = _uow.GetRepo<User>();
-            return _mapper.Map<UserViewModel>(users.GetAll());
-        }
+        //public IEnumerable<UserViewModel> GetUsers()
+        //{
+        //    var users = _uow.GetRepo<User>();
+        //    return _mapper.Map<UserViewModel>(users.GetAll());
+        //}
 
 
     }
