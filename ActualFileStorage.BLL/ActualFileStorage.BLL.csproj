@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{8A7E4429-D634-4A48-9FE6-41F66DF95EB6}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>ActualFileStorage.BLL</RootNamespace>
     <AssemblyName>ActualFileStorage.BLL</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -32,6 +32,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
@@ -46,6 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\FileDTO.cs" />
+    <Compile Include="DTOs\FolderDTO.cs" />
+    <Compile Include="DTOs\ObjectBase.cs" />
     <Compile Include="FileHandlers\IFileRoutine.cs" />
     <Compile Include="FileHandlers\IFileDownload.cs" />
     <Compile Include="FileHandlers\IFileUpload.cs" />
@@ -59,9 +65,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Salts\SaltResolver.cs" />
     <Compile Include="Services\AdminService.cs" />
+    <Compile Include="Services\AuthService.cs" />
     <Compile Include="Services\Interfaces\IAdminService.cs" />
+    <Compile Include="Services\Interfaces\IAuthService.cs" />
+    <Compile Include="Services\Interfaces\IProfileService.cs" />
     <Compile Include="Services\Interfaces\IRoleGeneratePassHash.cs" />
     <Compile Include="Services\Interfaces\IRoleGenerateSalt.cs" />
+    <Compile Include="Services\ProfileService.cs" />
     <Compile Include="Services\RegistrationService.cs" />
     <Compile Include="Session\ISessionProvider.cs" />
     <Compile Include="Session\SessionProvider.cs" />
@@ -69,6 +79,8 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Snippets\DiCtor3.snippet" />
+    <None Include="Snippets\DiCtor2.snippet" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ActualFileStorage.DAL\ActualFileStorage.DAL.csproj">
@@ -77,8 +89,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DTOs\" />
     <Folder Include="ViewModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Snippets\DiCtor1.snippet" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -89,6 +89,14 @@
     <Compile Include="Migrations\202003011853414_addroles.designer.cs">
       <DependentUpon>202003011853414_addroles.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003040650021_addparentfolder.cs" />
+    <Compile Include="Migrations\202003040650021_addparentfolder.designer.cs">
+      <DependentUpon>202003040650021_addparentfolder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003041111358_removeFolderFKfromFile.cs" />
+    <Compile Include="Migrations\202003041111358_removeFolderFKfromFile.designer.cs">
+      <DependentUpon>202003041111358_removeFolderFKfromFile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\FileAccess.cs" />
@@ -134,6 +142,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202003011853414_addroles.resx">
       <DependentUpon>202003011853414_addroles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003040650021_addparentfolder.resx">
+      <DependentUpon>202003040650021_addparentfolder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003041111358_removeFolderFKfromFile.resx">
+      <DependentUpon>202003041111358_removeFolderFKfromFile.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
