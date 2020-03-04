@@ -3,23 +3,28 @@
     background-color: #808080bb;
     width: 100vw;
     height: 100vh;
-    margin: auto 0;
+    left:0;
+    right:0;
     z-index: 9999;
 }
 
-    .blocking-div form {
-        background-color: #ffffff;
-        border-radius: 15px;
-        box-shadow: #808080 2px 2px;
-        /*margin: 5px 33vw;*/
-        /*margin: 0 auto;*/
-        margin-top: 25px;
-        padding: 0px 0;
-        height: auto;
-        /*width:33%;*/
-    }
+.blocking-div form {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: #808080 2px 2px;
+    /*margin: 5px 33vw;*/
+    /*margin: 0 auto;*/
+    margin-top: 25px;
+    padding: 0 15px;
+    height: auto;
+    /*width:33%;*/
+}
 
-div {
+.my-auto-height {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+/*div {
     border-color: #ff0000;
     border-radius: 1px;
     border-width: 1.5px;
@@ -37,4 +42,4 @@ span {
     border-color: #00ff21;
     border-radius: 1px;
     border-style: solid;
-}
+}*/
