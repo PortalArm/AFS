@@ -9,6 +9,7 @@ namespace ActualFileStorage.BLL.Services.Interfaces
 {
     public interface IProfileService
     {
+        IEnumerable<FileDTO> GetFiles(int userId, int? folderId);
         IEnumerable<FolderDTO> GetFolders(int userId, int? folderId);
     }
 }

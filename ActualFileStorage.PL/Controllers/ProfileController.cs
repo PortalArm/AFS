@@ -22,9 +22,18 @@ namespace ActualFileStorage.PL.Controllers
         // GET: Profile
         public ActionResult Index()
         {
-            var fols = _service.GetFolders(3, null);
-            var folders = _mapper.Map<IEnumerable<FolderViewModel>>(fols);
-            return View(folders);
+            var serviceFolders = _service.GetFolders(3, null);
+            var serviceFiles = _service.GetFiles(3, null);
+            var serviceFilesYetAgain = _service.GetFiles(3, serviceFolders.ElementAt(0).Id);
+
+            var folders = _mapper.Map<IEnumerable<FolderViewModel>>(serviceFolders);
+            var files1 = _mapper.Map<IEnumerable<FileViewModel>>(serviceFiles);
+            var files2 = _mapper.Map<IEnumerable<FileViewModel>>(serviceFilesYetAgain);
+            var objects = new ObjectsViewModel() {
+                Folders = folders,
+                Files = files1.Concat(files2)
+            };
+            return View(objects);
         }
 
         

@@ -5,9 +5,11 @@ using System.Web;
 
 namespace ActualFileStorage.PL.Models
 {
-    public class FolderViewModel //: ObjectBaseViewModel
+    public class FileViewModel //: ObjectBaseViewModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Extension { get; set; }
+
     }
 }

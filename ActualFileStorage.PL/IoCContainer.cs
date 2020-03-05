@@ -38,7 +38,14 @@ namespace ActualFileStorage.PL
                 cfg.CreateMap<RegistrationUserViewModel, User>();
                 cfg.CreateMap<User, UserViewModel>().ForMember("RootFolderAccess", opt => opt.MapFrom(r => r.Folder.Visibility));
                 cfg.CreateMap<Folder, FolderDTO>();
+                cfg.CreateMap<File, FileDTO>();
+
+                //cfg.CreateMap<ObjectBase, ObjectBaseViewModel>();
+                    //.Include<FolderDTO, FolderViewModel>()
+                    //.Include<FileDTO, FileViewModel>();
+
                 cfg.CreateMap<FolderDTO, FolderViewModel>();
+                cfg.CreateMap<FileDTO, FileViewModel>();
             });
             
             IMapper mapper = config.CreateMapper();
@@ -55,6 +62,7 @@ namespace ActualFileStorage.PL
             this.RegisterType<IProfileService, ProfileService>();
             this.RegisterType<IUserRepository, UserRepository>();
             this.RegisterType<IFolderRepository, FolderRepository>();
+            this.RegisterType<IFileRepository, FileRepository>();
 
 
             //this.RegisterType<IRepository<User>, UserRepository>();

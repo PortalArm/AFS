@@ -178,7 +178,9 @@
     </Compile>
     <Compile Include="IoCContainer.cs" />
     <Compile Include="Models\AuthUserViewModel.cs" />
+    <Compile Include="Models\FileViewModel.cs" />
     <Compile Include="Models\FolderViewModel.cs" />
+    <Compile Include="Models\ObjectBaseViewModel.cs" />
     <Compile Include="Models\RegistrationUserViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
