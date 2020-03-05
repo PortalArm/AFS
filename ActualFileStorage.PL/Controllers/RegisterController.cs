@@ -42,8 +42,9 @@ namespace ActualFileStorage.PL.Controllers
         {
             if (!ModelState.IsValid)
                 return new JsonResult() { ContentType = "application/json", Data = new { status = "error" } };
-
-            //DAL.Models.User u = new DAL.Models.User() {
+            //System.IdentityModel.Tokens.Jwt.JwtSecurityToken jwtToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken();
+            //jwtToken.RawData
+            ////DAL.Models.User u = new DAL.Models.User() {
             //    BirthDate = model.BirthDate,
             //    Email = model.Email,
             //    FirstName = model.FirstName,

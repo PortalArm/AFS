@@ -3,27 +3,34 @@
     background-color: #808080bb;
     width: 100vw;
     height: 100vh;
-    left:0;
-    right:0;
-    z-index: 9999;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    /*overflow-y: scroll;*/
+}
+
+::-webkit-scrollbar {
+    display: none;
 }
 
 .blocking-div form {
     background-color: #ffffff;
     border-radius: 15px;
     box-shadow: #808080 2px 2px;
-    /*margin: 5px 33vw;*/
-    /*margin: 0 auto;*/
-    margin-top: 25px;
+    /*margin-top: 70px;*/
+    /*margin-bottom: auto;*/
     padding: 0 15px;
-    height: auto;
-    /*width:33%;*/
+    position: fixed;
+    top: 20%;
+    bottom: 20%;
+    overflow-y: scroll;
 }
 
 .my-auto-height {
     margin-top: auto;
     margin-bottom: auto;
 }
+
 /*div {
     border-color: #ff0000;
     border-radius: 1px;

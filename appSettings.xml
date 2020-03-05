@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<appSettings>
+  <add name="connectionString" value="Data Source=PortalArm;Initial Catalog=filestoragedb;Integrated Security=True;MultipleActiveResultSets=True" />
+</appSettings>

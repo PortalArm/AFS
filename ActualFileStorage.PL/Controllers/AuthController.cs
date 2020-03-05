@@ -31,20 +31,21 @@ namespace ActualFileStorage.PL.Controllers
         public ActionResult AuthAjaxForm(AuthUserViewModel model)
         {
             if (!ModelState.IsValid)
-                return Json("Ошибка!", JsonRequestBehavior.AllowGet);
+                return PartialView("AuthForm");//Json("Ошибка!", JsonRequestBehavior.AllowGet);
+
             var res = _service.Auth(model.Value, model.Password);
             if (!res)
             {
+                //не работает, во view передается объект [object Object], не строка с разметкой
                 ModelState.AddModelError("Password", "Не найдена комбинация логин/пароль");
-                return Json(new { status = "error", view = PartialView("AuthForm")},JsonRequestBehavior.AllowGet);
+                return PartialView("AuthForm");//Json(new { status = "error", view = PartialView("AuthForm")},JsonRequestBehavior.AllowGet);
             }
-            return Json(new {status = "ok" }, JsonRequestBehavior.AllowGet);
+            return Json(new { status = "ok" }, JsonRequestBehavior.AllowGet);
         }
         [Authorize]
         public ActionResult Logout()
         {
             return RedirectToAction("Index", controllerName: "Home");
-            
         }
 
     }
