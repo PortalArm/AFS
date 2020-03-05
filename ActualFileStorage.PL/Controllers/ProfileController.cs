@@ -22,6 +22,7 @@ namespace ActualFileStorage.PL.Controllers
         // GET: Profile
         public ActionResult Index()
         {
+            //test data
             var serviceFolders = _service.GetFolders(3, null);
             var serviceFiles = _service.GetFiles(3, null);
             var serviceFilesYetAgain = _service.GetFiles(3, serviceFolders.ElementAt(0).Id);
