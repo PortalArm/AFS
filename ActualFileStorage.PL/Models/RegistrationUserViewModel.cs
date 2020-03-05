@@ -14,7 +14,7 @@ namespace ActualFileStorage.PL.Models
         [Remote("IsLoginPresent", "Register")]
         public string Login { get; set; } // req 
         [Required]
-        [RegularExpression(@"\w+", ErrorMessage = "Enter your first name")]
+        [RegularExpression(@"\w+", ErrorMessage = "Enter valid first name")]
         public string FirstName { get; set; } // req 
         [RegularExpression(@"\w+", ErrorMessage = "Enter valid second name")]
         public string SecondName { get; set; }
