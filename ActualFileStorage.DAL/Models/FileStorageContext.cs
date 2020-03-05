@@ -19,10 +19,10 @@ namespace ActualFileStorage.DAL.Models
 
         }
 
-        ~FileStorageContext()
-        {
+        //~FileStorageContext()
+        //{
             //System.IO.File.AppendAllLines(@"C:\Users\Tom\Desktop\Проект_EPAM\logs\log.txt", new[] { $"Destructor of {GetType()} context invoked" });
-        }
+        //}
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<File> Files { get; set; }
         public virtual DbSet<Folder> Folders { get; set; }

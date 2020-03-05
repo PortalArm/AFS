@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - File Storage</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/modernizr")
+
+
     @RenderSection("scripts", required: false)
     @AjaxHelper.DatalessRequestOnClick("regLink", Url.Action("RegForm", "Register"))
     @AjaxHelper.DatalessRequestOnClick("authLink", Url.Action("AuthForm", "Auth"))
