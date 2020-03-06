@@ -180,7 +180,7 @@
     <Compile Include="Models\AuthUserViewModel.cs" />
     <Compile Include="Models\FileViewModel.cs" />
     <Compile Include="Models\FolderViewModel.cs" />
-    <Compile Include="Models\ObjectBaseViewModel.cs" />
+    <Compile Include="Models\ObjectViewModel.cs" />
     <Compile Include="Models\RegistrationUserViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -329,6 +329,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Auth\AuthForm.cshtml" />
+    <Content Include="Views\Profile\GetContent.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

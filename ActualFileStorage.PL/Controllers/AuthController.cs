@@ -34,12 +34,13 @@ namespace ActualFileStorage.PL.Controllers
                 return PartialView("AuthForm");//Json("Ошибка!", JsonRequestBehavior.AllowGet);
 
             var res = _service.Auth(model.Value, model.Password);
-            if (!res)
+            if (res == null)
             {
-                //не работает, во view передается объект [object Object], не строка с разметкой
+                
                 ModelState.AddModelError("Password", "Не найдена комбинация логин/пароль");
                 return PartialView("AuthForm");//Json(new { status = "error", view = PartialView("AuthForm")},JsonRequestBehavior.AllowGet);
             }
+            //здесь авторизацию
             return Json(new { status = "ok" }, JsonRequestBehavior.AllowGet);
         }
         [Authorize]

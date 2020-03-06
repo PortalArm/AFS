@@ -1,0 +1,104 @@
+﻿@model ActualFileStorage.PL.Models.ObjectsViewModel
+
+
+<script>
+    $(document).ready(function () {
+        //$(document).on("mousedown", function (event) {
+        //    if (event.detail > 1)
+        //        event.preventDefault();
+        //});
+        $(".c-file").on('click', function (event) {
+            let newVal = $(event.target).attr("value");
+            if ($(".object-info").attr("data-id") == newVal || $(".object-info").is(":hidden"))
+                $(".object-info").toggle();
+
+            if ($(".object-info").is(":visible"))
+                //post request with data fetch about file
+                $(".object-info").attr("data-id", newVal);
+        });
+        let hist = @Html.Raw(Json.Encode(Model.History));
+        constructCrumbs(hist);
+        $(".breadcrumb-item").on("click", function (event) {
+            console.log("loading folder");
+            console.log($(event.target).attr("data-id"));
+            console.log("with history");
+            console.log(hist);
+            loadFolder($(event.target).attr("data-id"), hist);
+        });
+        $(".c-folder").on('dblclick', function (event) {
+            
+            console.log("history passed from event: ");
+            console.log(hist);
+            history.pushState({ "history": hist, "userId": userId, "folderId": hist[hist.length-1] },hist.toString());
+            loadFolder($(event.target).attr("value"), hist);
+            //$("#contentDiv").html("Загрузка..."); //$(event.target).attr("data-id")
+            //$("#contentDiv").load("Profile/GetContent", { "id": 3, "folderId": $(event.target).attr("value") });
+            
+
+        }).on("mousedown", function (event) {
+            if (event.detail > 1)
+                event.preventDefault();
+        });
+        window.addEventListener('popstate', function (event) {
+        state = event.state;
+        console.log(state);
+        if(state != null && state != "null"){
+            
+        }
+    });
+    });
+
+</script>
+    <div>
+        @foreach (var item in Model.Folders)
+        {
+            <div class="row">
+                @*<div class="col-1" style="display: none;">@Html.DisplayFor(modelItem => item.Id)</div>*@
+                <div class="col"><span class="c-folder" value="@item.Id">@Html.DisplayFor(modelItem => item.Name)</span></div>
+            </div>
+        }
+        @foreach (var item in Model.Files)
+        {
+
+    <div class="row">
+        @*<div class="col-1" style="display: none;">@Html.DisplayFor(modelItem => item.Id)</div>*@
+        <div class="col"><span class="c-file" value="@item.Id">@item.Name.@item.Extension</span></div>
+    </div>
+
+        }
+
+    </div>
+
+
+@*
+
+    <table class="table">
+        @foreach (var item in Model.Folders)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+            </tr>
+        }
+        @foreach (var item in Model.Files)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Extension)
+                </td>
+            </tr>
+        }
+
+    </table>
+
+*@
