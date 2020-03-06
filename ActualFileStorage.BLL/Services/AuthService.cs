@@ -1,8 +1,10 @@
-﻿using ActualFileStorage.BLL.Passwords;
+﻿using ActualFileStorage.BLL.DTOs;
+using ActualFileStorage.BLL.Passwords;
 using ActualFileStorage.BLL.Salts;
 using ActualFileStorage.BLL.Services.Interfaces;
 using ActualFileStorage.DAL.Models;
 using ActualFileStorage.DAL.UOW;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,19 +18,20 @@ namespace ActualFileStorage.BLL.Services
         private IUnitOfWork _uow;
         private IPasswordHasher _hasher;
         private ISaltResolver _salter;
-        public AuthService(IUnitOfWork uow, IPasswordHasher hasher, ISaltResolver salter)
+        private IMapper _mapper;
+        public AuthService(IUnitOfWork uow, IPasswordHasher hasher, ISaltResolver salter, IMapper mapper)
         {
-            _uow = uow; _hasher = hasher; _salter = salter;
+            _uow = uow; _hasher = hasher; _salter = salter; _mapper = mapper;
 
         }
-        public bool Auth(string input, string password)
+        public UserDTO Auth(string input, string password)
         {
             var users = _uow.GetRepo<User>();
             var possibleUsers = users.GetByPredicate(u => u.Login == input);
             if(possibleUsers == null || !possibleUsers.Any())
-                return false;
+                return null;
             var user = possibleUsers.First();
-            return user.PassHash == _hasher.HashPass(password, user.Salt);
+            return user.PassHash == _hasher.HashPass(password, user.Salt) ? _mapper.Map<UserDTO>(user) : null;
         }
     }
 }

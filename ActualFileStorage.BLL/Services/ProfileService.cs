@@ -1,4 +1,5 @@
 ﻿using ActualFileStorage.BLL.DTOs;
+using ActualFileStorage.BLL.Extensions;
 using ActualFileStorage.BLL.FileHandlers;
 using ActualFileStorage.BLL.Services.Interfaces;
 using ActualFileStorage.DAL.Models;
@@ -24,8 +25,34 @@ namespace ActualFileStorage.BLL.Services
         {
             _folders = folders;  _mapper = mapper; _file = file; _users = users; _fileRepo = fileRepo;
         }
+
+        public ObjectsDTO GetObjects(int userId, int? folderId, IEnumerable<int?> history = null)
+        {
+            var folders = GetFolders(userId, folderId);
+            var files = GetFiles(userId, folderId);
+            history = history.ToList();
+
+            var userFolders = _folders.GetUserFoldersIds(userId);
+            if (history == null)
+                throw new DataMisalignedException("Этого быть не должно");
+            //var skip = history.TakeWhileInclude(w => !w.Equals(folderId)).ToList();
+            //if (history.Count() == skip.Count())
+            if(!history.Contains(folderId))
+                history = history.Append(folderId);
+            else
+                history = history.TakeWhileInclude(w => w != folderId);
+            history = history.ToList();
+            return new ObjectsDTO {
+                Files = files,
+                Folders = folders,
+                History = history
+            };
+        }
         public IEnumerable<FolderDTO> GetFolders(int userId, int? folderId)
         {
+            
+            
+            //int ogo = ddd.Count();
             var user = _users.GetById(userId);
             if (!folderId.HasValue)
                 folderId = user.Folder.Id;

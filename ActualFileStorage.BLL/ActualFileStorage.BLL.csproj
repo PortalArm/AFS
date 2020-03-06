@@ -52,6 +52,9 @@
     <Compile Include="DTOs\FileDTO.cs" />
     <Compile Include="DTOs\FolderDTO.cs" />
     <Compile Include="DTOs\ObjectBase.cs" />
+    <Compile Include="DTOs\ObjectsDTO.cs" />
+    <Compile Include="DTOs\UserDTO.cs" />
+    <Compile Include="Extensions\LinqExtensions.cs" />
     <Compile Include="FileHandlers\IFileRoutine.cs" />
     <Compile Include="FileHandlers\IFileDownload.cs" />
     <Compile Include="FileHandlers\IFileUpload.cs" />
