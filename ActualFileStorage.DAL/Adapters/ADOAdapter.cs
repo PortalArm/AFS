@@ -79,9 +79,9 @@ namespace ActualFileStorage.DAL.Adapters
             throw new NotImplementedException();
         }
 
-        public void ExecuteSql(string sql, params SqlParameter[] pars)
+        public IEnumerable ExecuteSql<TElement>(string sql, params SqlParameter[] pars)
         {
-            
+            throw new NotImplementedException();
         }
 
         public void SaveChanges()

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.Linq.Expressions;
 using ActualFileStorage.DAL.Extensions;
@@ -29,7 +30,9 @@ namespace ActualFileStorage.DAL.Adapters
         public IAdapter LoadType(Type type) { _type = type; return this; }
         public IAdapter LoadType<T>() => LoadType(typeof(T));
         public IEnumerable FindAll() => _context.Set(_type);
-        public void ExecuteSql(string sql, params SqlParameter[] pars) => _context.Set(_type).SqlQuery(sql, pars);
+        public IEnumerable ExecuteSql<TElement>(string sql, params SqlParameter[] pars) {
+            return _context.Database.SqlQuery<TElement>(sql, pars);
+        }//_context.Set(_type).SqlQuery(sql, pars);
         public void SaveChanges() => _context.SaveChanges();
         public void Dispose() => _context.Dispose();
         public IEnumerable FindByPred<T>(Expression<Func<T, bool>> expr) where T : class => _context.Set<T>().FindPredicate(expr);
