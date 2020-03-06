@@ -31,7 +31,7 @@
                     <li class="nav-item">@Html.ActionLink("Admin panel", "", "Adminpanel", null, new { @class = "nav-link" })</li>
 
                 </ul>
-                <ul class="nav navbar-nav navbar-right mr-auto">
+                <ul class="nav navbar-nav navbar-right">
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item">@User.Identity.Name</li>
@@ -49,7 +49,9 @@
         </div>
     </nav>
     <div class="container body-content">
-        @RenderBody()
+        <div class="layout-render">
+            @RenderBody()
+        </div>
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - File Storage</p>
