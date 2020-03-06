@@ -31,10 +31,30 @@
     margin-bottom: auto;
 }
 
-/*div {
+.layout-render {
+    margin: 20px 0;
+}
+
+.c-folder, .c-file {
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.c-folder:hover, .c-file:hover {
+    cursor: pointer;
+    background-color: lightgray;
+}
+/*.c-flex-item {
+    margin: 0 5px;
+}*/
+.object-info {
+    display: none;
+}
+
+d /*iv {
     border-color: #ff0000;
     border-radius: 1px;
-    border-width: 1.5px;
+    border-width: 0.5px;
     border-style: solid;
 }
 
@@ -50,3 +70,4 @@ span {
     border-radius: 1px;
     border-style: solid;
 }*/
+
