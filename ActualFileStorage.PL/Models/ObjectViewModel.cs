@@ -10,5 +10,6 @@ namespace ActualFileStorage.PL.Models
     {
         public IEnumerable<FileViewModel> Files { get; set; }
         public IEnumerable<FolderViewModel> Folders { get; set; }
+        public IEnumerable<int?> History { get; set; }
     }
 }
