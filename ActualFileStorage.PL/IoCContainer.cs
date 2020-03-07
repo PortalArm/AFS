@@ -49,6 +49,16 @@ namespace ActualFileStorage.PL
 
                 cfg.CreateMap<User, UserDTO>();
                 cfg.CreateMap<ObjectsDTO, ObjectsViewModel>();
+
+                cfg.CreateMap<HistoryItemDTO, HistoryItemViewModel>()
+                    .ForMember(v => v.id, opt => opt.MapFrom(v => v.Id))
+                    .ForMember(v => v.value, opt => opt.MapFrom(v => v.Value))
+                        .ReverseMap()
+                        .ForMember(v => v.Id, opt => opt.MapFrom(v => v.id))
+                        .ForMember(v => v.Value, opt => opt.MapFrom(v => v.value));
+
+
+                //cfg.CreateMap<HistoryItemViewModel, HistoryItemDTO>();
             });
             
             IMapper mapper = config.CreateMapper();

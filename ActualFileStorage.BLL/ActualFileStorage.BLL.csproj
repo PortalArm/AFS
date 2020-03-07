@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="DTOs\FileDTO.cs" />
     <Compile Include="DTOs\FolderDTO.cs" />
+    <Compile Include="DTOs\HistoryItemDTO.cs" />
     <Compile Include="DTOs\ObjectBase.cs" />
     <Compile Include="DTOs\ObjectsDTO.cs" />
     <Compile Include="DTOs\UserDTO.cs" />
