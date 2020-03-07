@@ -3,6 +3,7 @@ using ActualFileStorage.BLL.Salts;
 using ActualFileStorage.BLL.Services.Interfaces;
 using ActualFileStorage.DAL.Adapters;
 using ActualFileStorage.DAL.Models;
+using ActualFileStorage.DAL.Repositories;
 using ActualFileStorage.DAL.UOW;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace ActualFileStorage.BLL.Services
 {
-    public class RegistrationService  //: ISaltResolver, IPasswordHasher OR : IRoleGenerateSalt, IRoleGeneratePassHash
+    public class RegistrationService //: ISaltResolver, IPasswordHasher OR : IRoleGenerateSalt, IRoleGeneratePassHash
     {
         private ISaltResolver _saltGen;
         private IPasswordHasher _passHasher;
@@ -27,13 +28,14 @@ namespace ActualFileStorage.BLL.Services
         private string GenerateHash(string pass, string salt) => _passHasher.HashPass(pass, salt);
         public void Register(User u, string password)
         {
+            
             var users = _uow.GetRepo<User>();
-            var folders = _uow.GetRepo<Folder>();
             string salt = GenerateSalt(64);
             string hash = GenerateHash(password, salt);
             u.Salt = salt;
             u.PassHash = hash;
             Folder privateFolder = CreateRootFolder(u);
+            var folders = _uow.GetRepo<Folder>();
             users.Add(u);
             folders.Add(privateFolder);
             _uow.SaveChanges();
@@ -41,6 +43,13 @@ namespace ActualFileStorage.BLL.Services
         }
         private Folder CreateRootFolder(User u, FileAccess vis = FileAccess.Private) =>
             new Folder() { Name = u.Login, User = u, Visibility = vis, CreationTime = DateTime.Now };
+
+        public bool LoginExists(string login)
+        {
+            var users = _uow.GetRepo<User>();
+            return (users as UserRepository).UserWithLoginExists(login);
+            //users.
+        }
 
     }
 }

@@ -1,0 +1,73 @@
+﻿
+
+@{
+    <script>
+        var userId = 3;
+        $(document).ready(function () {
+            loadFolder();
+
+        });
+
+        function getHistoryFromCrumbs() {
+            let arr = new Array();
+            let crumbs = $(".breadcrumb-item");
+            for (let i = 0; i < crumbs.length; ++i) {
+                let data = $(crumbs[i]).attr("data-id");
+                if (data == null)
+                    arr.push(null);
+                else
+                    arr.push(parseInt(data));
+            }
+            //console.log(arr);
+            return arr;
+        }
+        function constructCrumbs(history) {
+            console.log("history in construction: ");
+            console.log(history);
+            let outputString = "";
+            for (let historyItem of history) {
+                //if (isNaN(historyItem))
+                //    outputString += `<div class="breadcrumb-item" data-id="null">root</div>`;
+                //else
+                    outputString += `<div class="breadcrumb-item" data-id="${isNaN(historyItem)?'null':historyItem}">${historyItem}</div>`;
+            }
+            $(".breadcrumb").html(outputString);
+        }
+        function loadFolder(folder, history) {
+            console.log("------- passed history and history from crumbs -------");
+            console.log(getHistoryFromCrumbs());
+            console.log(history);
+            if (!folder)
+                folder = null;
+            if (history)
+                constructCrumbs(history);
+            $("#contentDiv").html("Загрузка...");
+            $("#contentDiv").load("/Profile/GetContent", { "id": userId, "folderId": folder, "history": getHistoryFromCrumbs() });
+        }
+    </script>
+    <div class="container">
+        <div class="row">
+            <div class="col-4 col-md-3 col-lg-2 d-flex bg-light flex-column">
+                <a class="text-center" href="#">Добавить файл</a> <!--TODO: Заменить на настоящие действия-->
+                <a class="text-center" href="#">Добавить папку</a>
+                <a class="text-center" href="#">Удалить файл</a>
+                <a class="text-center" href="#">Удалить папку</a>
+            </div>
+            <div class="col">
+                <div class="row breadcrumb text-info">
+                    <div class="breadcrumb-item" data-id="null">root folder</div>
+                </div>
+                <div id="contentDiv">
+
+                </div>
+                @*@{Html.RenderAction("GetContent", "Profile", new RouteValueDictionary { { "id", 3 } });}*@
+            </div>
+            <div class="col-4 object-info text-justify">
+                Maecenas eu dignissim magna.
+                Cras congue posuere mauris, et hendrerit diam mattis ac.
+                Phasellus ut mattis ante.
+            </div>
+        </div>
+    </div>
+
+}

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,6 +33,12 @@ namespace ActualFileStorage.DAL.Repositories
         public void SaveChanges() => Adapter.SaveChanges();
         public void Dispose() => Adapter.Dispose();
 
+        public IEnumerable<T> GetByPredicate(Expression<Func<T, bool>> pred) {
+            var list = _adapter.FindByPred(pred);
+            if (list == null)
+                return null;
+            return list.Cast<T>(); 
+        }
         //public void ChangeType<TOut>()
         //{
         //    ChangeType(typeof(TOut));

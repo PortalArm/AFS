@@ -1,0 +1,67 @@
+﻿@helper CreateScript(string btnId, string formId, string url, string method = "POST", string callbackUrl = null)
+{
+    <script>
+        $(document).ready(function () {
+            
+                //form.validate({
+                //    onsubmit: true,
+                //    onkeyup: false,
+                //    onclick: false,
+                //    onfocusout: false
+                //});
+            console.log(null);
+            console.log("@callbackUrl");
+            $('#@btnId').on('click', function () {
+                let form = $("#@formId");
+                event.preventDefault();
+                if (form.valid())
+                    $.ajax({
+                        url: "@url",
+                        method: "@method",
+                        data: form.serialize(),
+                        success: function (data) {
+                            console.log(data);
+                            console.log("@callbackUrl");
+                            if ($("body > .blocking-div"))
+                                $("body > .blocking-div").remove();
+                            if (data.status === "ok") {
+                            @if (callbackUrl != null) {
+                                    @:window.location = "@callbackUrl";
+                                    @:return;
+                            }
+                            }
+                            if (data) {
+                                 $("body").prepend("<div class='container-fluid blocking-div'><div class='container'>" + data + "<</div>");
+                                //$("body").prepend("<div><h1>Ошибка есть</h1></div>");
+                                return;
+                            }
+                            
+                                //$("body").prepend("<div class='blocking-div container'><div class='container'>" + data.data + "</div></div>");
+                        }
+                    });
+            })});
+    </script>
+}
+
+@helper DatalessRequestOnClick(string btnId, string url, string method = "GET")
+{
+    <script>
+        $(document).ready(function () {
+            $('#@btnId').on('click', function () {
+                event.preventDefault();
+                $.ajax({
+                    url: "@url",
+                    data: null,
+                    method: "@method",
+                    success: function (data) {
+                        if ($("body > .blocking-div"))
+                            $("body > .blocking-div").remove();
+
+                        $("body").prepend("<div class='container-fluid blocking-div'><div class='container'>" + data + "<</div>");
+                    }
+                })
+            })});
+    </script>
+}
+
+

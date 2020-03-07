@@ -9,5 +9,6 @@ namespace ActualFileStorage.DAL.Repositories
 {
     public interface IFolderRepository : IRepository<Folder>
     {
+        IEnumerable<int> GetUserFoldersIds(int userId);
     }
 }

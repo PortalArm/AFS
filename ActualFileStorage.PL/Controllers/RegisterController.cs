@@ -1,4 +1,6 @@
-﻿using ActualFileStorage.PL.Models;
+﻿using ActualFileStorage.BLL.Services;
+using ActualFileStorage.PL.Models;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,39 +11,51 @@ namespace ActualFileStorage.PL.Controllers
 {
     public class RegisterController : Controller
     {
-        ActualFileStorage.BLL.Services.RegistrationService _regService;
-        public RegisterController(ActualFileStorage.BLL.Services.RegistrationService rs)
+        RegistrationService _service;
+        IMapper _mapper;
+        public RegisterController(RegistrationService service, IMapper mapper)
         {
-            _regService = rs;
+            _service = service;
+            _mapper = mapper;
         }
         // GET: Register
         public ActionResult Index()
         {
-            return PartialView(regs);
-        }
 
-        
-
-        public ActionResult Register()
-        {
             return View();
         }
 
-        private static List<RegistrationUserViewModel> regs = new List<RegistrationUserViewModel>() {
-        new RegistrationUserViewModel() {  Login = "4t3523er", BirthDate = DateTime.Now, FirstName = "4tgrdfg", SecondName = "4etgrdg", Email = "3tgdfg"},
-        new RegistrationUserViewModel() {  Login = "4tegfdr", BirthDate = DateTime.Now, FirstName = "4tgrdfg", SecondName = "4etgrdg", Email = "3tgdfg"},
-        new RegistrationUserViewModel() {  Login = "4tersger", BirthDate = DateTime.Now, FirstName = "4tgrdfg", SecondName = "4etgrdg", Email = "3tgdfg"},
-        new RegistrationUserViewModel() {  Login = "4ter34h6", BirthDate = DateTime.Now, FirstName = "4tgrdfg", SecondName = "4etgrdg", Email = "3tgdfg"}
-        };
-        [HttpPost]
-        public ActionResult Register(RegistrationUserViewModel model)
+        public ActionResult RegForm()
         {
-            if (ModelState.IsValid)
-            {
-                regs.Add(model);
-            }
-            return PartialView("Index", regs);
-            //return RedirectToAction("Index","Home");
+            return PartialView();
         }
+        public JsonResult IsLoginPresent(string login)
+        {
+            if (_service.LoginExists(login))
+                return Json("This login is already occupied.", JsonRequestBehavior.AllowGet);
+
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RegAjaxForm(RegistrationUserViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return new JsonResult() { ContentType = "application/json", Data = new { status = "error" } };
+            //System.IdentityModel.Tokens.Jwt.JwtSecurityToken jwtToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken();
+            //jwtToken.RawData
+            ////DAL.Models.User u = new DAL.Models.User() {
+            //    BirthDate = model.BirthDate,
+            //    Email = model.Email,
+            //    FirstName = model.FirstName,
+            //    AuthForm = model.AuthForm,
+            //    SecondName = model.SecondName
+            //};
+            DAL.Models.User u = _mapper.Map<DAL.Models.User>(model);
+            _service.Register(u, model.Password);
+            return new JsonResult() { ContentType = "application/json", Data = new { status = "ok" } };
+            //RedirectToAction("Index", "Home");
+        }
+
     }
 }

@@ -18,14 +18,14 @@ namespace ActualFileStorage.DAL
         //convert to dll
         static void Main(string[] args)
         {
-            using (IUnitOfWork uow = new BasicUOW(new EFAdapter(new FileStorageContext())))
-            {
-                IRepository<Folder> repo = uow.GetRepo<Folder>();
-                //(repo as Repository<Folder>).ChangeType<Folder>();
-                Console.WriteLine(repo.GetById(1).CreationTime);
-                foreach(var l in repo.GetAll().ToList())
-                    Console.WriteLine($"{l.Id} {l.Name} {l.ShortLink}");
-            }
+            //using (IUnitOfWork uow = new BasicUOW(new EFAdapter(new FileStorageContext())))
+            //{
+            //    IRepository<Folder> repo = uow.GetRepo<Folder>();
+            //    //(repo as Repository<Folder>).ChangeType<Folder>();
+            //    Console.WriteLine(repo.GetById(1).CreationTime);
+            //    foreach(var l in repo.GetAll().ToList())
+            //        Console.WriteLine($"{l.Id} {l.Name} {l.ShortLink}");
+            //}
             //using (IUnitOfWork uow = new BasicUOW(new EFAdapter(context)))
             //{
             //    var cntx1 = uow.GetRepo<User>(); 

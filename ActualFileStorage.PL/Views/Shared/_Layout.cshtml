@@ -5,33 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - File Storage</title>
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/modernizr")
+
+
     @RenderSection("scripts", required: false)
+    @AjaxHelper.DatalessRequestOnClick("regLink", Url.Action("RegForm", "Register"))
+    @AjaxHelper.DatalessRequestOnClick("authLink", Url.Action("AuthForm", "Auth"))
+    @*@AjaxHelper.CreateScript("regLink", null, Url.Action("RegForm", "Register"))*@
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("File Storage", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            @Html.ActionLink("File Storage", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+            <div class="navbar-collapse collapse" id="navbarSupportedContent">
+                <ul class="nav navbar-nav mr-auto">
+                    <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("About", "About", "Home", new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Admin panel", "", "Adminpanel", null, new { @class = "nav-link" })</li>
+
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">@User.Identity.Name</li>
+                        <li class="nav-item">@Html.ActionLink("Logout", "Logout", "Auth")</li>
+                    } else
+                    {
+                        <li class="nav-item">@Html.ActionLink("Register", "RegForm", "Register", null, new { id = "regLink", @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Login", "AuthForm", "Auth", null, new { id = "authLink", @class = "nav-link"  })</li>
+                    }
+
+                </ul>
+
             </div>
+
         </div>
-    </div>
+    </nav>
     <div class="container body-content">
-        @RenderBody()
+        <div class="layout-render">
+            @RenderBody()
+        </div>
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - File Storage</p>

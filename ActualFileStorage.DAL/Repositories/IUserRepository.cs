@@ -9,9 +9,11 @@ namespace ActualFileStorage.DAL.Repositories
 {
     public interface IUserRepository : IRepository<User>
     {
-        UserCredential GetUserCredsById(int id);
-
+        //UserCredential GetUserCredsById(int id);
+        bool UserWithLoginExists(string login);
+        User GetUserByLogin(string login);
+        
         // под вопросом
-        Folder GetRootFolderById(int id);
+        //Folder GetRootFolderById(int id);
     }
 }

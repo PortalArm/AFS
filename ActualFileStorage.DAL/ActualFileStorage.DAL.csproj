@@ -64,6 +64,7 @@
     <Compile Include="Configurations\FolderConfiguration.cs" />
     <Compile Include="Configurations\FileConfiguration.cs" />
     <Compile Include="Configurations\UserConfiguration.cs" />
+    <Compile Include="Extensions\EFExtensions.cs" />
     <Compile Include="Migrations\202001270643207_initial.cs" />
     <Compile Include="Migrations\202001270643207_initial.designer.cs">
       <DependentUpon>202001270643207_initial.cs</DependentUpon>
@@ -84,16 +85,31 @@
     <Compile Include="Migrations\202002210756069_indexedlinks.designer.cs">
       <DependentUpon>202002210756069_indexedlinks.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202003011853414_addroles.cs" />
+    <Compile Include="Migrations\202003011853414_addroles.designer.cs">
+      <DependentUpon>202003011853414_addroles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003040650021_addparentfolder.cs" />
+    <Compile Include="Migrations\202003040650021_addparentfolder.designer.cs">
+      <DependentUpon>202003040650021_addparentfolder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202003041111358_removeFolderFKfromFile.cs" />
+    <Compile Include="Migrations\202003041111358_removeFolderFKfromFile.designer.cs">
+      <DependentUpon>202003041111358_removeFolderFKfromFile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\File.cs" />
     <Compile Include="Models\FileAccess.cs" />
     <Compile Include="Models\FileStorageContext.cs" />
     <Compile Include="Models\Folder.cs" />
+    <Compile Include="Models\WebRole.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserCredential.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\FileRepository.cs" />
     <Compile Include="Repositories\FolderRepository.cs" />
+    <Compile Include="Repositories\IFileRepository.cs" />
     <Compile Include="Repositories\IFolderRepository.cs" />
     <Compile Include="Repositories\RepoFactory.cs" />
     <Compile Include="Repositories\IRepository.cs" />
@@ -126,6 +142,18 @@
     <EmbeddedResource Include="Migrations\202002210756069_indexedlinks.resx">
       <DependentUpon>202002210756069_indexedlinks.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003011853414_addroles.resx">
+      <DependentUpon>202003011853414_addroles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003040650021_addparentfolder.resx">
+      <DependentUpon>202003040650021_addparentfolder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202003041111358_removeFolderFKfromFile.resx">
+      <DependentUpon>202003041111358_removeFolderFKfromFile.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Sqls\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

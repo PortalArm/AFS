@@ -67,7 +67,7 @@ namespace ActualFileStorage.BLL
             //        tt.Add(w);
             //}
             //Console.WriteLine("Done");
-            Console.ReadKey();
+            //Console.ReadKey();
         }
     }
 }

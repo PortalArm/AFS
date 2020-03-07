@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>dictor2</Title>
+      <Shortcut>dc2</Shortcut>
+      <Description>Code snippet for DI constructor</Description>
+      <Author>PortalArm</Author>
+      <SnippetTypes>
+        <SnippetType>Expansion</SnippetType>
+      </SnippetTypes>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal Editable="false">
+          <ID>classname</ID>
+          <ToolTip>Class name</ToolTip>
+          <Function>ClassName()</Function>
+          <Default>ClassNamePlaceholder</Default>
+        </Literal>
+        <Literal Editable="true">
+          <ID>di1</ID>
+          <Default>IDependency1</Default>
+        </Literal>
+        <Literal Editable="true">
+          <ID>di2</ID>
+          <Default>IDependency2</Default>
+        </Literal>
+        <Literal Editable="true">
+          <ID>div1</ID>
+          <Default>dep1</Default>
+        </Literal>
+        <Literal Editable="true">
+          <ID>div2</ID>
+          <Default>dep2</Default>
+        </Literal>
+      </Declarations>
+      <Code Language="csharp">
+        <![CDATA[private $di1$ _$div1$; 
+        private $di2$ _$div2$;
+        public $classname$ ($di1$ $div1$, $di2$ $div2$)
+	{
+  _$div1$ = $div1$; _$div2$ = $div2$;
+		$end$
+	}]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

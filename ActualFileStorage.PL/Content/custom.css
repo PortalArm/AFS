@@ -1,3 +1,73 @@
-﻿div {
-
+﻿.blocking-div {
+    position: fixed;
+    background-color: #808080bb;
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    /*overflow-y: scroll;*/
 }
+
+::-webkit-scrollbar {
+    display: none;
+}
+
+.blocking-div form {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: #808080 2px 2px;
+    /*margin-top: 70px;*/
+    /*margin-bottom: auto;*/
+    padding: 0 15px;
+    position: fixed;
+    top: 20%;
+    bottom: 20%;
+    overflow-y: scroll;
+}
+
+.my-auto-height {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.layout-render {
+    margin: 20px 0;
+}
+
+.c-folder, .c-file {
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.c-folder:hover, .c-file:hover {
+    cursor: pointer;
+    background-color: lightgray;
+}
+/*.c-flex-item {
+    margin: 0 5px;
+}*/
+.object-info {
+    display: none;
+}
+
+d /*iv {
+    border-color: #ff0000;
+    border-radius: 1px;
+    border-width: 0.5px;
+    border-style: solid;
+}
+
+label {
+    border-color: #1b19b7;
+    border-radius: 1px;
+    border-width: 1.5px;
+    border-style: solid;
+}
+
+span {
+    border-color: #00ff21;
+    border-radius: 1px;
+    border-style: solid;
+}*/
+

@@ -38,6 +38,10 @@ namespace ActualFileStorage.DAL.Configurations
             HasRequired(u => u.Folder)
                 .WithOptional(f => f.User)
                 .Map(t => t.MapKey("FolderId"));
+
+            HasMany(u => u.Roles)
+                .WithMany(wr => wr.Users)
+                .Map(c => c.ToTable("UserRoles"));
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Data.Common;
 using System.Data.SqlClient;
+using System.Linq.Expressions;
 
 namespace ActualFileStorage.DAL.Adapters
 {
@@ -78,9 +79,9 @@ namespace ActualFileStorage.DAL.Adapters
             throw new NotImplementedException();
         }
 
-        public void ExecuteSql(string sql, params SqlParameter[] pars)
+        public IEnumerable ExecuteSql<TElement>(string sql, params SqlParameter[] pars)
         {
-            
+            throw new NotImplementedException();
         }
 
         public void SaveChanges()
@@ -89,6 +90,11 @@ namespace ActualFileStorage.DAL.Adapters
         }
 
         public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable FindByPred<T>(Expression<Func<T, bool>> expr) where T : class
         {
             throw new NotImplementedException();
         }

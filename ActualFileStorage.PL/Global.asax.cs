@@ -21,7 +21,7 @@ namespace ActualFileStorage.PL
             //cont.RegisterInstance<IUnityContainer>(cont);
             DIControllerFactory factory = new DIControllerFactory(cont); //cont.Resolve<DIControllerFactory>();
             ControllerBuilder.Current.SetControllerFactory(factory);
-
+            
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);

@@ -30,7 +30,7 @@ namespace ActualFileStorage.DAL.UOW
         public void SaveChanges()
         {
             // TODO: Придумать что-то получше
-            foreach (dynamic v in _dict.Values)
+            foreach (IRepository v in _dict.Values)
                 v.SaveChanges();
         }
 
