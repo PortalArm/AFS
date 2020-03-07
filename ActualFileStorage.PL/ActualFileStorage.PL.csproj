@@ -21,9 +21,9 @@
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort>44362</IISExpressSSLPort>
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode />
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -183,6 +183,7 @@
     <Compile Include="Models\AuthUserViewModel.cs" />
     <Compile Include="Models\FileViewModel.cs" />
     <Compile Include="Models\FolderViewModel.cs" />
+    <Compile Include="Models\HistoryItemViewModel.cs" />
     <Compile Include="Models\ObjectViewModel.cs" />
     <Compile Include="Models\RegistrationUserViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />

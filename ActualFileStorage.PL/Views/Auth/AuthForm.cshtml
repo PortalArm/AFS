@@ -1,6 +1,6 @@
 ﻿@model ActualFileStorage.PL.Models.AuthUserViewModel
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/jqueryval")
+@*@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")*@
 @AjaxHelper.CreateScript("submitAuthButton", "authForm", Url.Action("AuthAjaxForm"), "POST", Url.Action("Index", controllerName: "Adminpanel"))
 
 @{

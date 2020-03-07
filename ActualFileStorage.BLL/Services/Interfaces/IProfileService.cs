@@ -11,6 +11,6 @@ namespace ActualFileStorage.BLL.Services.Interfaces
     {
         IEnumerable<FileDTO> GetFiles(int userId, int? folderId);
         IEnumerable<FolderDTO> GetFolders(int userId, int? folderId);
-        ObjectsDTO GetObjects(int userId, int? folderId, IEnumerable<int?> history = null);
+        ObjectsDTO GetObjects(int userId, int? folderId, IEnumerable<HistoryItemDTO> history = null);
     }
 }

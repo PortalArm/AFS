@@ -12,13 +12,25 @@
             let arr = new Array();
             let crumbs = $(".breadcrumb-item");
             for (let i = 0; i < crumbs.length; ++i) {
-                let data = $(crumbs[i]).attr("data-id");
-                if (data == null)
-                    arr.push(null);
-                else
-                    arr.push(parseInt(data));
+                let dataId = $(crumbs[i]).attr("data-id");
+                let dataVal = $(crumbs[i]).attr("data-val");
+                let item = new Object();
+                item.id = 2;
+                item.value = "root";
+                if (dataId != null) {
+                    item.id = parseInt(dataId);
+                    item.value = dataVal;
+                }
+                arr.push(item);
+                //if (dataId == null)
+                //    arr.push({ "id": null, "val": "root" });
+                ////arr.push(["null","root"]);
+                //else
+                //    arr.push({ "id": parseInt(dataId), "val": dataVal });
+                //arr.push([ dataId,  dataVal ]);
             }
             //console.log(arr);
+            //return JSON.stringify(arr);
             return arr;
         }
         function constructCrumbs(history) {
@@ -29,7 +41,7 @@
                 //if (isNaN(historyItem))
                 //    outputString += `<div class="breadcrumb-item" data-id="null">root</div>`;
                 //else
-                    outputString += `<div class="breadcrumb-item" data-id="${isNaN(historyItem)?'null':historyItem}">${historyItem}</div>`;
+                outputString += `<div class="breadcrumb-item" data-val="${historyItem.value}" data-id="${isNaN(historyItem.id) ? 'null' : historyItem.id}">${historyItem.value}</div>`;
             }
             $(".breadcrumb").html(outputString);
         }
@@ -41,7 +53,7 @@
                 folder = null;
             if (history)
                 constructCrumbs(history);
-            $("#contentDiv").html("Загрузка...");
+            //$("#contentDiv").html("Загрузка...");
             $("#contentDiv").load("/Profile/GetContent", { "id": userId, "folderId": folder, "history": getHistoryFromCrumbs() });
         }
     </script>
@@ -55,7 +67,7 @@
             </div>
             <div class="col">
                 <div class="row breadcrumb text-info">
-                    <div class="breadcrumb-item" data-id="null">root folder</div>
+                    <div class="breadcrumb-item" data-val="root" data-id="null">root</div>
                 </div>
                 <div id="contentDiv">
 
