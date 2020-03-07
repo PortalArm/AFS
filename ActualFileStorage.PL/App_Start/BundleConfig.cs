@@ -28,6 +28,12 @@ namespace ActualFileStorage.PL
                       //"~/Content/bootstrap-lux.css",
                       "~/Content/Site.css",
                       "~/Content/custom.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/polymer").Include(
+                    "~/Content/polymer.html"
+                ));
+
+
         }
     }
 }
