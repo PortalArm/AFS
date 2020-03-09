@@ -49,7 +49,13 @@ namespace ActualFileStorage.PL.Controllers
             return PartialView(objects);
         }
 
-
+        [HttpPost]
+        
+        public ActionResult UploadFiles(int? folderId, IEnumerable<HttpPostedFileBase> files)
+        {
+            
+            return RedirectToAction("Index");
+        }
         public JsonResult RenderTree(int? id)
         {
             return Json(new { data = 0 });

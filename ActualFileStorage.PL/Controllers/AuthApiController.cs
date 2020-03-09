@@ -7,6 +7,7 @@ using System.Web.Http;
 
 namespace ActualFileStorage.PL.Controllers
 {
+    [Route("Api")]
     public class AuthApiController : ApiController
     {
         // GET api/<controller>

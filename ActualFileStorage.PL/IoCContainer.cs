@@ -54,8 +54,8 @@ namespace ActualFileStorage.PL
                     .ForMember(v => v.id, opt => opt.MapFrom(v => v.Id))
                     .ForMember(v => v.value, opt => opt.MapFrom(v => v.Value))
                         .ReverseMap()
-                        .ForMember(v => v.Id, opt => opt.MapFrom(v => v.id))
-                        .ForMember(v => v.Value, opt => opt.MapFrom(v => v.value));
+                            .ForMember(v => v.Id, opt => opt.MapFrom(v => v.id))
+                            .ForMember(v => v.Value, opt => opt.MapFrom(v => v.value));
 
 
                 //cfg.CreateMap<HistoryItemViewModel, HistoryItemDTO>();
@@ -63,6 +63,7 @@ namespace ActualFileStorage.PL
             
             IMapper mapper = config.CreateMapper();
             this.RegisterInstance(mapper);
+
             this.RegisterType<IFileRoutine, LocalServerStorage>();
             this.RegisterType<IAdapter, EFAdapter>();
             this.RegisterType<DbContext, FileStorageContext>();

@@ -8,6 +8,7 @@ namespace ActualFileStorage.PL.Controllers
 {
     public class HomeController : Controller
     {
+        [JWTAuthorize]
         public ActionResult Index()
         {
             return View();
