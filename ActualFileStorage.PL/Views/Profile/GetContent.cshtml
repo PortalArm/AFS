@@ -1,8 +1,47 @@
 ﻿@model ActualFileStorage.PL.Models.ObjectsViewModel
 
 
+
 <script>
     $(document).ready(function () {
+        $("html").on("dragover", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log("произошел dragover");
+            //$("h1").text("Drag here");
+        })
+            .on("drop", function (e) {
+                e.preventDefault();
+            });
+
+
+        $("#contentDiv").on("drop", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log(e.target);
+            let uploadFolder = $(e.target).find(".c-folder");
+            let folderId = null;
+            if (uploadFolder)
+                folderId = uploadFolder.attr("value");
+            //console.log( Array.from(e.originalEvent.dataTransfer.files));
+            //console.log(e.originalEvent.dataTransfer.files);
+            var a = new FormData();
+            a.append("folderId", folderId);
+            for(let file of e.originalEvent.dataTransfer.files)
+                a.append("files", file);
+            $.ajax({
+                url: "/Profile/UploadFiles",
+                data: a,
+                //dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (z) { console.log(z); },
+                method: "POST"
+            });
+            console.log("произошел drop");
+
+        });
+
         //$(document).on("mousedown", function (event) {
         //    if (event.detail > 1)
         //        event.preventDefault();
@@ -26,14 +65,14 @@
             loadFolder($(event.target).attr("data-id"), hist);
         });
         $(".c-folder").on('dblclick', function (event) {
-            
+
             console.log("history passed from event: ");
             console.log(hist);
             history.pushState({ "history": hist, "userId": userId, "folderId": hist[hist.length-1] },hist.toString());
             loadFolder($(event.target).attr("value"), hist);
             //$("#contentDiv").html("Загрузка..."); //$(event.target).attr("data-id")
             //$("#contentDiv").load("Profile/GetContent", { "id": 3, "folderId": $(event.target).attr("value") });
-            
+
 
         }).on("mousedown", function (event) {
             if (event.detail > 1)
@@ -43,31 +82,31 @@
         state = event.state;
         console.log(state);
         if(state != null && state != "null"){
-            
+
         }
     });
     });
 
 </script>
-    <div>
-        @foreach (var item in Model.Folders)
-        {
-            <div class="row">
-                @*<div class="col-1" style="display: none;">@Html.DisplayFor(modelItem => item.Id)</div>*@
-                <div class="col"><span class="c-folder" value="@item.Id">@Html.DisplayFor(modelItem => item.Name)</span></div>
-            </div>
-        }
-        @foreach (var item in Model.Files)
-        {
+<div>
+    @foreach (var item in Model.Folders)
+    {
+        <div class="row">
+            @*<div class="col-1" style="display: none;">@Html.DisplayFor(modelItem => item.Id)</div>*@
+            <div class="col"><span class="c-folder" value="@item.Id">@Html.DisplayFor(modelItem => item.Name)</span></div>
+        </div>
+    }
+    @foreach (var item in Model.Files)
+    {
 
-    <div class="row">
-        @*<div class="col-1" style="display: none;">@Html.DisplayFor(modelItem => item.Id)</div>*@
-        <div class="col"><span class="c-file" value="@item.Id">@item.Name.@item.Extension</span></div>
-    </div>
+        <div class="row">
+            @*<div class="col-1" style="display: none;">@Html.DisplayFor(modelItem => item.Id)</div>*@
+            <div class="col"><span class="c-file" value="@item.Id">@item.Name.@item.Extension</span></div>
+        </div>
 
-        }
+    }
 
-    </div>
+</div>
 
 
 @*

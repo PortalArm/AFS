@@ -8,8 +8,11 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/modernizr")
-
-
+    @*@Scripts.Render("~/bundles/polymer");*@
+    @*<link rel="import" href="~/Scripts/polymer.html" />
+    <script type="module">
+      import '@@polymer/paper-spinner/paper-spinner.js';
+    </script>*@
     @RenderSection("scripts", required: false)
     @AjaxHelper.DatalessRequestOnClick("regLink", Url.Action("RegForm", "Register"))
     @AjaxHelper.DatalessRequestOnClick("authLink", Url.Action("AuthForm", "Auth"))
@@ -52,6 +55,9 @@
         <div class="layout-render">
             @RenderBody()
         </div>
+        <paper-spinner>
+
+        </paper-spinner>
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - File Storage</p>

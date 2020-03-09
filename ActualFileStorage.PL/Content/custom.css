@@ -51,6 +51,11 @@
     display: none;
 }
 
+#contentDiv {
+    min-height:30px;    
+    background-color:#faf3f3;
+}
+
 d /*iv {
     border-color: #ff0000;
     border-radius: 1px;

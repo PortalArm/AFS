@@ -9,8 +9,8 @@
                 //    onclick: false,
                 //    onfocusout: false
                 //});
-            console.log(null);
-            console.log("@callbackUrl");
+            //console.log(null);
+            //console.log("@callbackUrl");
             $('#@btnId').on('click', function () {
                 let form = $("#@formId");
                 event.preventDefault();
@@ -20,8 +20,8 @@
                         method: "@method",
                         data: form.serialize(),
                         success: function (data) {
-                            console.log(data);
-                            console.log("@callbackUrl");
+                            //console.log(data);
+                            //console.log("@callbackUrl");
                             if ($("body > .blocking-div"))
                                 $("body > .blocking-div").remove();
                             if (data.status === "ok") {
