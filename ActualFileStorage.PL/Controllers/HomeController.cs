@@ -8,9 +8,9 @@ namespace ActualFileStorage.PL.Controllers
 {
     public class HomeController : Controller
     {
-        [JWTAuthorize]
         public ActionResult Index()
         {
+            var k = HttpContext.Request.Cookies;
             return View();
         }
 
