@@ -16,6 +16,7 @@ namespace ActualFileStorage.PL.Models
         public DateTime BirthDate { get; set; }
         public string Email { get; set; }
         public FileAccess RootFolderAccess { get; set; }
+        public IEnumerable<string> Roles { get; set; }
 
     }
 }

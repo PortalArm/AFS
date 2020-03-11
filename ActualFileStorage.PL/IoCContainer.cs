@@ -36,7 +36,9 @@ namespace ActualFileStorage.PL
             //);
             var config = new MapperConfiguration(cfg => {
                 cfg.CreateMap<RegistrationUserViewModel, User>();
-                cfg.CreateMap<User, UserViewModel>().ForMember("RootFolderAccess", opt => opt.MapFrom(r => r.Folder.Visibility));
+                cfg.CreateMap<User, UserViewModel>()
+                .ForMember("RootFolderAccess", opt => opt.MapFrom(r => r.Folder.Visibility))
+                .ForMember(m => m.Roles, opt => opt.MapFrom(w => w.Roles.Select(z => z.Description)));
                 cfg.CreateMap<Folder, FolderDTO>();
                 cfg.CreateMap<File, FileDTO>().ForMember(m => m.Extension, opt => opt.MapFrom(r => r.Ext));
 

@@ -34,14 +34,15 @@ namespace ActualFileStorage.PL.Controllers
         public ActionResult AuthAjaxForm(AuthUserViewModel model)
         {
             if (!ModelState.IsValid)
-                return PartialView("AuthForm");//Json("Ошибка!", JsonRequestBehavior.AllowGet);
+                return PartialView("AuthForm");
+            //Json("Ошибка!", JsonRequestBehavior.AllowGet);
 
             var res = _service.Auth(model.Value, model.Password);
             if (res == null)
             {
-                
                 ModelState.AddModelError("Password", "Не найдена комбинация логин/пароль");
-                return PartialView("AuthForm");//Json(new { status = "error", view = PartialView("AuthForm")},JsonRequestBehavior.AllowGet);
+                return PartialView("AuthForm");
+                //Json(new { status = "error", view = PartialView("AuthForm")},JsonRequestBehavior.AllowGet);
             }
             ClaimsIdentity ci = new ClaimsIdentity(new List<Claim> {
                 new Claim(ClaimTypes.Name, model.Value),
@@ -53,15 +54,12 @@ namespace ActualFileStorage.PL.Controllers
             
             //ci.AuthenticationType = ConfigurationManager.AppSettings["authtype"];
             HttpContext.GetOwinContext().Authentication.SignIn(ci);//ci);
-            var be = (ci.IsAuthenticated);
-
+            //var be = (ci.IsAuthenticated);
             //var rresult = HttpContext.GetOwinContext().Authentication.AuthenticateAsync(ConfigurationManager.AppSettings["authtype"]);
             //rresult.Wait();
             //var result = rresult.Result;
-
             //HttpContext.GetOwinContext().Authentication.SignIn(result.Identity);//ci);
-
-            //здесь авторизацию
+            
             return Json(new { status = "ok" }, JsonRequestBehavior.AllowGet);
         }
         [Authorize]

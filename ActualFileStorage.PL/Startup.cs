@@ -40,6 +40,7 @@ namespace ActualFileStorage.PL
                 AuthenticationType = ConfigurationManager.AppSettings["authtype"],
                 AuthenticationMode = AuthenticationMode.Active,
                 CookieHttpOnly = true,
+                 LoginPath = new PathString("/"), 
                 //LoginPath = new PathString("/Auth/AuthForm"),
                 //LogoutPath = new PathString("/Auth/Logout"),
                 ExpireTimeSpan = TimeSpan.FromDays(7),

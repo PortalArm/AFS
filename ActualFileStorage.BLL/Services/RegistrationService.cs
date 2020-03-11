@@ -34,10 +34,14 @@ namespace ActualFileStorage.BLL.Services
             string hash = GenerateHash(password, salt);
             u.Salt = salt;
             u.PassHash = hash;
+            //u.Roles = new List<WebRole>() { new WebRole() { Id = 3, Description = Role.Default.ToString() } };
+            
+            
             Folder privateFolder = CreateRootFolder(u);
             var folders = _uow.GetRepo<Folder>();
             users.Add(u);
             folders.Add(privateFolder);
+            (_uow.GetRepo<WebRole>() as IWebRoleRepository).AddRoleToUser(Role.Default, u);
             _uow.SaveChanges();
             
         }

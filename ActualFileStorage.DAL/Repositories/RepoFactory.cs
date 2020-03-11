@@ -21,6 +21,10 @@ namespace ActualFileStorage.DAL.Repositories
             if (t == typeof(Folder))
                 return new FolderRepository(adapter) as IRepository<T>;
 
+            if (t == typeof(WebRole))
+                return new WebRoleRepository(adapter) as IRepository<T>;
+
+
             return null; 
 
         }

@@ -111,6 +111,8 @@
     <Compile Include="Repositories\FolderRepository.cs" />
     <Compile Include="Repositories\IFileRepository.cs" />
     <Compile Include="Repositories\IFolderRepository.cs" />
+    <Compile Include="Repositories\WebRoleRepository.cs" />
+    <Compile Include="Repositories\IWebRoleRepository.cs" />
     <Compile Include="Repositories\RepoFactory.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\IUserRepository.cs" />

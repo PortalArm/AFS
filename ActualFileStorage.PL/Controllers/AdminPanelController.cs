@@ -24,16 +24,6 @@ namespace ActualFileStorage.PL.Controllers
         {
             var users = _uow.GetRepo<User>();
             var userInfos = _mapper.Map<IEnumerable<UserViewModel>>(users.GetAll());
-            //var userInfos = users.GetAll().Select(u => new UserViewModel() {
-            //    BirthDate = u.BirthDate,
-            //    Email = u.Email,
-            //    FirstName = u.FirstName,
-            //    Id = u.Id,
-            //    AuthForm = u.AuthForm,
-            //    RootFolderAccess = u.Folder.Visibility,
-            //    SecondName = u.SecondName
-            //});
-
             return View(userInfos);
         }
     }

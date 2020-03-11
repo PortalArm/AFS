@@ -48,7 +48,10 @@
     <td>
         @Html.DisplayFor(modelItem => item.RootFolderAccess)
     </td>
-
+    <td>
+        @string.Join(", ",item.Roles)
+        @*@Html.DisplayFor(modelItem => item.Roles)*@
+    </td>
 </tr>
 }
 
