@@ -19,6 +19,7 @@ namespace ActualFileStorage.PL.Controllers
             _uow = uow;
             _mapper = mapper;
         }
+        [Authorize(Roles = "Administrator")]
         public ActionResult Index()
         {
             var users = _uow.GetRepo<User>();

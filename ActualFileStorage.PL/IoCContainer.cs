@@ -47,7 +47,7 @@ namespace ActualFileStorage.PL
                 cfg.CreateMap<FolderDTO, FolderViewModel>();
                 cfg.CreateMap<FileDTO, FileViewModel>();
 
-                cfg.CreateMap<User, UserDTO>();
+                cfg.CreateMap<User, UserDTO>().ForMember(m => m.Roles, opt => opt.MapFrom(w => w.Roles.Select(z => z.Description)));
                 cfg.CreateMap<ObjectsDTO, ObjectsViewModel>();
 
                 cfg.CreateMap<HistoryItemDTO, HistoryItemViewModel>()
@@ -56,7 +56,6 @@ namespace ActualFileStorage.PL
                         .ReverseMap()
                             .ForMember(v => v.Id, opt => opt.MapFrom(v => v.id))
                             .ForMember(v => v.Value, opt => opt.MapFrom(v => v.value));
-
 
                 //cfg.CreateMap<HistoryItemViewModel, HistoryItemDTO>();
             });

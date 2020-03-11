@@ -14,6 +14,7 @@ namespace ActualFileStorage.BLL.DTOs
         public string SecondName { get; set; }
         public DateTime BirthDate { get; set; }
         public string Email { get; set; }
+        public IEnumerable<string> Roles { get; set; }
 
     }
 }

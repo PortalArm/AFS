@@ -48,6 +48,9 @@ namespace ActualFileStorage.PL.Controllers
                 new Claim(ClaimTypes.Email, res.Email),
                 new Claim(ClaimTypes.DateOfBirth, res.BirthDate.ToString())
             }, ConfigurationManager.AppSettings["authtype"]);
+            foreach (var role in res.Roles)
+                ci.AddClaim(new Claim(ClaimTypes.Role, role));
+            
             //ci.AuthenticationType = ConfigurationManager.AppSettings["authtype"];
             HttpContext.GetOwinContext().Authentication.SignIn(ci);//ci);
             var be = (ci.IsAuthenticated);

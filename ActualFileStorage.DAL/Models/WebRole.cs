@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ActualFileStorage.DAL.Models
 {
-    [Flags]
+    //[Flags]
     public enum Role
     {
         Administrator=1,
