@@ -17,6 +17,8 @@ namespace ActualFileStorage.DAL.Models
             modelBuilder.Configurations.Add(ConfigurationGetter.GetConfig<File>());
             modelBuilder.Configurations.Add(ConfigurationGetter.GetConfig<Folder>());
 
+            
+
         }
 
         //~FileStorageContext()
