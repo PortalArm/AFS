@@ -109,8 +109,8 @@ namespace ActualFileStorage.PL
         }
         public override Task ValidateIdentity(CookieValidateIdentityContext context)
         {
-            if(false)
-                context.RejectIdentity();
+            //if(false)
+            //    context.RejectIdentity();
             return base.ValidateIdentity(context);
         }
         public override void ApplyRedirect(CookieApplyRedirectContext context)
@@ -132,9 +132,9 @@ namespace ActualFileStorage.PL
             identity.AddClaim(new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", username));
             identity.AddClaim(new Claim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "user"));
             context.Validated(identity);
-            if (!System.IO.File.Exists(@"F:\log.txt"))
-                System.IO.File.Create(@"F:\log.txt").Close();
-            System.IO.File.AppendAllText(@"F:\log.txt", "granting creds");
+            //if (!System.IO.File.Exists(@"F:\log.txt"))
+            //    System.IO.File.Create(@"F:\log.txt").Close();
+            //System.IO.File.AppendAllText(@"F:\log.txt", "granting creds");
             //context.Response.Cookies.Append("ha","ha", new CookieOptions() { HttpOnly = true });
             return Task.FromResult(0);
         }
