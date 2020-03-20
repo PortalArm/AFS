@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ActualFileStorage.BLL.Links
 {
-    public interface ILinkResolver
+    public interface ILinkBuilder
     {
         string Encode(string fullString);
         string Decode(string shortString);
