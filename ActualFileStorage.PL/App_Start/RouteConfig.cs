@@ -14,6 +14,13 @@ namespace ActualFileStorage.PL
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "DownloadFileData",
+                url: "download/{fileUrl}",
+                defaults: new { controller = "Profile", action = "DownloadFile" },
+                constraints: new { fileUrl = @"\w{32}" }
+            );
+
+            routes.MapRoute(
                 name: "ShortLink",
                 url: "s/{id}",
                 defaults: new { controller = "Shortener", action = "Unpack", id = UrlParameter.Optional }//,
