@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ActualFileStorage.BLL.Salts
 {
-    public class SaltResolver : ISaltResolver
+    public class SaltBuilder : ISaltBuilder
     {
         // Позаимствовал у
         // https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings

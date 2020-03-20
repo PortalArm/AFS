@@ -1,6 +1,6 @@
 ﻿namespace ActualFileStorage.BLL.Salts
 {
-    public interface ISaltResolver
+    public interface ISaltBuilder
     {
         string GetSalt(int size);
     }
