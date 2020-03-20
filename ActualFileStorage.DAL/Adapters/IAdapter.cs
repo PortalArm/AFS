@@ -39,9 +39,9 @@ namespace ActualFileStorage.DAL.Adapters
         IEnumerable FindAll();
         object Remove(object entity);
         IEnumerable RemoveRange(IEnumerable entities);
-        IEnumerable ExecuteSql<TElement>(string sql, params SqlParameter[] pars);
+        IEnumerable<TElement> ExecuteSql<TElement>(string sql, params SqlParameter[] pars);
         IEnumerable FindByPred<T>(Expression<Func<T, bool>> expr) where T : class;
         void SaveChanges();
-        
+        IEnumerable ExecuteSqlAsTracked(string sql, params SqlParameter[] pars);
     }
 }

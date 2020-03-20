@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Linq.Expressions;
@@ -79,11 +80,6 @@ namespace ActualFileStorage.DAL.Adapters
             throw new NotImplementedException();
         }
 
-        public IEnumerable ExecuteSql<TElement>(string sql, params SqlParameter[] pars)
-        {
-            throw new NotImplementedException();
-        }
-
         public void SaveChanges()
         {
             throw new NotImplementedException();
@@ -95,6 +91,16 @@ namespace ActualFileStorage.DAL.Adapters
         }
 
         public IEnumerable FindByPred<T>(Expression<Func<T, bool>> expr) where T : class
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<TElement> ExecuteSql<TElement>(string sql, params SqlParameter[] pars)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable ExecuteSqlAsTracked(string sql, params SqlParameter[] pars)
         {
             throw new NotImplementedException();
         }
