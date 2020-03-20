@@ -7,6 +7,7 @@ using ActualFileStorage.BLL.FileHandlers;
 using ActualFileStorage.BLL.Passwords;
 using ActualFileStorage.BLL.Salts;
 using ActualFileStorage.DAL.Adapters;
+using ActualFileStorage.DAL.Models;
 
 namespace ActualFileStorage.BLL
 {
@@ -42,7 +43,23 @@ namespace ActualFileStorage.BLL
         //convert to dll
         static void Main(string[] args)
         {
+            //AzureFileStorage afs = new AzureFileStorage();
+            //User u = new User() {
+            //    Login = "privet",
+            //    Folder = new Folder() {
+            //        Name = "privet"
+            //    }
+            //};
+            //File f = new File() {
+            //    Hash = "5465yrthfdrsertrdhtf"
+            //};
+            //afs.UploadFile(u, f, new byte[] { 2, 199, 27, 43, 8, 26, 3, 43, 6, 6, 55, 45, 4, 65, 6, 56, 45, 3, 5, 67, 6, 31, 45, 45, 76, 78, 99, 63, 4, 55, 6 });
 
+            //var data = afs.DownloadFileAsStream(u, f);
+            //var output = new byte[data.Length];
+            //data.Read(output, 0, (int)data.Length);
+            //Console.WriteLine(string.Join(" ", output));
+            //Console.ReadKey();
             //LocalServerStorage lss = new LocalServerStorage(AppDomain.CurrentDomain.BaseDirectory);
             //DAL.Models.User u = new DAL.Models.User() { Login = "HelloC" };
             //DAL.Models.Folder f = new DAL.Models.Folder() { Id = 55, Name = u.Login };

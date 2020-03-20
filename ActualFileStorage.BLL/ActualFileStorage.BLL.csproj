@@ -39,6 +39,15 @@
     <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoMapper.9.0.0\lib\net461\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=9.3.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsAzure.Storage.9.3.3\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -49,36 +58,46 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\ChangeRoleDTO.cs" />
+    <Compile Include="DTOs\FileDownloadDTO.cs" />
     <Compile Include="DTOs\FileDTO.cs" />
+    <Compile Include="DTOs\FileInfoDTO.cs" />
+    <Compile Include="DTOs\FileUploadDTO.cs" />
     <Compile Include="DTOs\FolderDTO.cs" />
     <Compile Include="DTOs\HistoryItemDTO.cs" />
     <Compile Include="DTOs\ObjectBase.cs" />
     <Compile Include="DTOs\ObjectsDTO.cs" />
+    <Compile Include="DTOs\RegistrationUserDTO.cs" />
     <Compile Include="DTOs\UserDTO.cs" />
     <Compile Include="Extensions\LinqExtensions.cs" />
-    <Compile Include="FileHandlers\IFileRoutine.cs" />
+    <Compile Include="FileHandlers\AzureFileStorage.cs" />
+    <Compile Include="FileHandlers\IFileDelete.cs" />
+    <Compile Include="FileHandlers\IStorage.cs" />
     <Compile Include="FileHandlers\IFileDownload.cs" />
     <Compile Include="FileHandlers\IFileUpload.cs" />
     <Compile Include="FileHandlers\LocalServerStorage.cs" />
+    <Compile Include="Hashers\IHash.cs" />
+    <Compile Include="Hashers\SHA256Hash.cs" />
     <Compile Include="Passwords\IPasswordHasher.cs" />
     <Compile Include="Passwords\PasswordHasher.cs" />
-    <Compile Include="Salts\ISaltResolver.cs" />
+    <Compile Include="Salts\ISaltBuilder.cs" />
     <Compile Include="Links\CustomLink.cs" />
     <Compile Include="Links\ILinkResolver.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Salts\SaltResolver.cs" />
+    <Compile Include="Salts\SaltBuilder.cs" />
     <Compile Include="Services\AdminService.cs" />
     <Compile Include="Services\AuthService.cs" />
+    <Compile Include="Services\BaseService.cs" />
     <Compile Include="Services\Interfaces\IAdminService.cs" />
     <Compile Include="Services\Interfaces\IAuthService.cs" />
+    <Compile Include="Services\Interfaces\IBaseService.cs" />
+    <Compile Include="Services\Interfaces\IRegistrationService.cs" />
     <Compile Include="Services\Interfaces\IProfileService.cs" />
     <Compile Include="Services\Interfaces\IRoleGeneratePassHash.cs" />
     <Compile Include="Services\Interfaces\IRoleGenerateSalt.cs" />
     <Compile Include="Services\ProfileService.cs" />
     <Compile Include="Services\RegistrationService.cs" />
-    <Compile Include="Session\ISessionProvider.cs" />
-    <Compile Include="Session\SessionProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
