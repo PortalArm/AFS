@@ -12,13 +12,16 @@ namespace ActualFileStorage.DAL.Extensions
     {
         public static IEnumerable<T> FindPredicate<T>(this DbSet<T> dbSet, Expression<Func<T, bool>> predicate) where T : class
         {
-            var a = dbSet.Local;
-            var b = a.Where(predicate.Compile());
-            if (b.FirstOrDefault() != null)
-                return b.ToList();
-            var c = dbSet.Where(predicate);
-            var d = c.ToList();
-            return d;
+            var local = dbSet.Local.Where(predicate.Compile()).ToList();
+            //var b = a.Where(predicate.Compile());
+
+            //var a = dbSet.Local.ToList().Where(predicate.Compile());
+            //if (a.FirstOrDefault() != null)
+            //    return a.ToList();
+            //var c = dbSet.Where(predicate);
+            //var d = c.ToList();
+            //return d;
+
             //var c = b.ToList();
             //return c;
             //IEnumerable<T> local = null;
@@ -33,9 +36,10 @@ namespace ActualFileStorage.DAL.Extensions
             //if (fromDb.Any())
             //    return fromDb.ToArray();
             //return null;
-            //return local.Any()
-            //    ? local
-            //    : (dbSet.Where(predicate)).ToArray();
+
+            return local.Any()
+                ? local
+                : (dbSet.Where(predicate)).ToList();
         }
     }
 }
