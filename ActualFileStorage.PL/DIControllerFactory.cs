@@ -17,21 +17,12 @@ namespace ActualFileStorage.PL
     {
 
         private IUnityContainer _container;
-        //public void CompositionRootRoutine(IUnityContainer c)
-        //{
-        //    _container = c;
-        //}
-
         public DIControllerFactory(IUnityContainer c) => _container = c;
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
         {
-            //File.AppendAllLines(Properties.Resources.logfile,new[] { $"Creating {controllerType} controller" });
             if (controllerType == null)
                 return null;
-            // request context?
             return _container.Resolve(controllerType) as Controller;
-
-            //return base.GetControllerInstance(requestContext, controllerType);
         }
     }
 }
