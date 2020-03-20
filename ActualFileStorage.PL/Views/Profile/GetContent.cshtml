@@ -1,90 +1,32 @@
 ﻿@model ActualFileStorage.PL.Models.ObjectsViewModel
 
-
-
 <script>
     $(document).ready(function () {
-        $("html").on("dragover", function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log("произошел dragover");
-            //$("h1").text("Drag here");
-        })
-            .on("drop", function (e) {
-                e.preventDefault();
-            });
-
-
-        $("#contentDiv").on("drop", function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log(e.target);
-            let uploadFolder = $(e.target).find(".c-folder");
-            let folderId = null;
-            if (uploadFolder)
-                folderId = uploadFolder.attr("value");
-            //console.log( Array.from(e.originalEvent.dataTransfer.files));
-            //console.log(e.originalEvent.dataTransfer.files);
-            var a = new FormData();
-            a.append("folderId", folderId);
-            for(let file of e.originalEvent.dataTransfer.files)
-                a.append("files", file);
-            $.ajax({
-                url: "/Profile/UploadFiles",
-                data: a,
-                //dataType: 'json',
-                contentType: false,
-                processData: false,
-                success: function (z) { console.log(z); },
-                method: "POST"
-            });
-            console.log("произошел drop");
-
-        });
-
-        //$(document).on("mousedown", function (event) {
-        //    if (event.detail > 1)
-        //        event.preventDefault();
-        //});
-        $(".c-file").on('click', function (event) {
-            let newVal = $(event.target).attr("value");
-            if ($(".object-info").attr("data-id") == newVal || $(".object-info").is(":hidden"))
-                $(".object-info").toggle();
-
-            if ($(".object-info").is(":visible"))
-                //post request with data fetch about file
-                $(".object-info").attr("data-id", newVal);
-        });
-        let hist = @Html.Raw(Json.Encode(Model.History));
+        document.getElementById("removeFile").disabled = true;
+        document.getElementById("removeFolder").disabled = true;
+        prevHist = hist;
+        hist = @Html.Raw(Json.Encode(Model.History));
         constructCrumbs(hist);
         $(".breadcrumb-item").on("click", function (event) {
-            console.log("loading folder");
-            console.log($(event.target).attr("data-id"));
-            console.log("with history");
-            console.log(hist);
+            clearInfo();
             loadFolder($(event.target).attr("data-id"), hist);
         });
-        $(".c-folder").on('dblclick', function (event) {
 
-            console.log("history passed from event: ");
-            console.log(hist);
-            history.pushState({ "history": hist, "userId": userId, "folderId": hist[hist.length-1] },hist.toString());
-            loadFolder($(event.target).attr("value"), hist);
-            //$("#contentDiv").html("Загрузка..."); //$(event.target).attr("data-id")
-            //$("#contentDiv").load("Profile/GetContent", { "id": 3, "folderId": $(event.target).attr("value") });
-
-
-        }).on("mousedown", function (event) {
-            if (event.detail > 1)
-                event.preventDefault();
-        });
-        window.addEventListener('popstate', function (event) {
-        state = event.state;
-        console.log(state);
-        if(state != null && state != "null"){
-
-        }
-    });
+        //delegated event handling to resolve dynamic changes, но тогда должно быть в index.cshtml
+        //$(".c-folder").on('click', e => {
+        ////$("#contentDiv").on('click', ".c-folder", e => {
+        //    toggleSelection(e);
+        //}).on('dblclick', e => {
+        //    clearInfo();
+        //        //console.log("history passed from event: ");
+        //    //console.log(hist);
+        //    history.pushState({ "history": hist, "userId": defUserId, "folderId": hist[hist.length - 1] }, hist.toString());
+        //    loadFolder($(e.target).attr("value"), hist);
+        //}).on("mousedown", e => {
+        //    if (e.detail > 1)
+        //        e.preventDefault();
+        //});
+        
     });
 
 </script>
@@ -93,7 +35,12 @@
     {
         <div class="row">
             @*<div class="col-1" style="display: none;">@Html.DisplayFor(modelItem => item.Id)</div>*@
-            <div class="col"><span class="c-folder" value="@item.Id">@Html.DisplayFor(modelItem => item.Name)</span></div>
+            <div class="col">
+                <span class="c-folder" value="@item.Id">
+                    <img src="~/Content/folder-icon.png" width="12" />
+                    @Html.DisplayFor(modelItem => item.Name)
+                </span>
+            </div>
         </div>
     }
     @foreach (var item in Model.Files)
@@ -101,43 +48,9 @@
 
         <div class="row">
             @*<div class="col-1" style="display: none;">@Html.DisplayFor(modelItem => item.Id)</div>*@
-            <div class="col"><span class="c-file" value="@item.Id">@item.Name.@item.Extension</span></div>
+            <div class="col"><span class="c-file" value="@item.Id">@Html.DisplayFor(modelItem => item.FullName)</span></div>
         </div>
 
     }
 
 </div>
-
-
-@*
-
-    <table class="table">
-        @foreach (var item in Model.Folders)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-            </tr>
-        }
-        @foreach (var item in Model.Files)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Extension)
-                </td>
-            </tr>
-        }
-
-    </table>
-
-*@

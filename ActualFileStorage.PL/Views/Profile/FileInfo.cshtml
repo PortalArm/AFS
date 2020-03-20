@@ -1,0 +1,74 @@
+﻿@model ActualFileStorage.PL.Models.FileInfoViewModel
+
+    <div class="container">
+        <h4>Информация о файле</h4>
+        <hr />
+        <div id="fileIdDiv" class="d-none">@Model.Id</div>
+        <div class="row">
+            <div class="col-5 font-weight-bold">@Html.DisplayNameFor(model => model.FullName)</div>
+            <div class="col">@Html.DisplayFor(model => model.FullName)</div>
+        </div>
+        <div class="row">
+            <div class="col-5 font-weight-bold">@Html.DisplayNameFor(model => model.Size)</div>
+            <div class="col">@Html.DisplayFor(model => model.Size)</div>
+        </div>
+        <div class="row">
+            <div class="col-12 font-weight-bold">@Html.DisplayNameFor(model => model.CreationTime)</div>
+            <div class="col">@Html.DisplayFor(model => model.CreationTime)</div>
+        </div>
+        <div class="row no-gutters">
+            @{
+               Model.ShortLink = "https://localhost/privet.haa";
+            }
+            @if (string.IsNullOrEmpty(Model.ShortLink))
+            {
+                <div class="col-12 col-md-8 col-lg-6 font-weight-bold my-auto-height">@Html.DisplayNameFor(model => model.ShortLink)</div>
+                <div class="col-12 col-md-4 col-lg-6 font-weight-bold"><button class="my-auto-height btn-block btn-sm btn-dark">Создать</button></div>
+            } else
+            {
+                <div class="col-12 col-md-8 col-lg-6 font-weight-bold my-auto-height">@Html.DisplayNameFor(model => model.ShortLink)</div>
+                <div class="col"><a href="@Html.DisplayFor(model => model.ShortLink)">@Html.DisplayFor(model => model.ShortLink)</a></div>
+            }
+        </div>
+        <div class="row">
+            <div class="col">
+                <button id="downloadBtn" class="btn-block btn-sm btn-dark mt-2">
+                    Скачать файл
+                </button>
+            </div>
+        </div>
+            @*<dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.FullName)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.FullName)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Size)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Size)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.CreationTime)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CreationTime)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.ShortLink)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.ShortLink)
+                </dd>
+
+            </dl>*@
+        </div>

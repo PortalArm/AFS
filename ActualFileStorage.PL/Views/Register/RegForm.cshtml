@@ -1,8 +1,8 @@
 ﻿@model ActualFileStorage.PL.Models.RegistrationUserViewModel
 @*@Scripts.Render("~/bundles/jquery")*@
 @Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/Scripts/blockingdivescape.js")
 @AjaxHelper.CreateScript("submitRegButton", "regForm", Url.Action("RegAjaxForm"), "POST", Url.Action("Index", controllerName: "Adminpanel"))
-
 @{
     string labelClass = "control-label my-auto-height col-4";
     string itemClass = "col-8";
@@ -64,7 +64,7 @@
         </div>
 
         <div class="form-group text-center">
-            <div class="">
+            <div>
                 <input id="submitRegButton" value="Register" class="btn btn-default" />
             </div>
         </div>

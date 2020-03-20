@@ -1,58 +1,149 @@
-﻿@model IEnumerable<ActualFileStorage.PL.Models.UserViewModel>
+﻿@using ActualFileStorage.DAL.Models
+@model IEnumerable<ActualFileStorage.PL.Models.UserViewModel>
 
 @{
     ViewBag.Title = "Admin panel";
 }
+<h2>User list</h2>
+<script>
+    var updList = [];
+    $(document).ready(() => {
+        $(".role").on("click", () => {
+            let roleElement = $(event.target);
+            roleElement.toggleClass("btn-danger");
+            roleElement.toggleClass("btn-success");
+            let currentRow = roleElement.parent().parent();
+            let vals = roleElement.parent().children().map((index, el) => {
+                return {
+                    Role: el.innerText,
+                    Enabled: el.className.indexOf("btn-success") != -1//$(el).hasClass("btn-success")
+                }
+            }).toArray();
 
-<h2>Users list</h2>
-<table class="table">
+            //получаем id
+            let currId = parseInt(currentRow.children(".d-none").html());
+            
+            let elems = updList.filter(w => w.Id === currId);
+            let elem = elems.length != 1 ? undefined : elems[0];
+
+            //если права пользователя с id еще не менялись, то добавляем во временный массив id и текущее состояние ролей 
+            if (elem === undefined)
+                updList.push({
+                    Id: currId,
+                    Roles: vals
+                });
+            //иначе просто обновляем состояние ролей
+            else
+                elem.Roles = vals;
+        });
+
+        $("#saveBtn").on("click", event => {
+            //let formData = new FormData();
+            //for (let item of updList)
+            //    formData.append("Values", item);
+            //formData.append("Values", updList);
+            if (updList.length > 0)
+                $.ajax({
+                    url: "/AdminPanel/UpdateRoles",
+                    data: { "Values": updList },
+                    //data: formData,
+                    method: "POST",
+                    //contentType: false,
+                    //traditional: true,
+                    //processData: false,
+                    success: (data) => {
+                        console.log(data);
+                    }
+                });
+        });
+    });
+
+</script>
+<div class="container">
+    <div class="row btn-info">
+        <div class="col-1">@Html.DisplayNameFor(model => model.Login)</div>
+        <div class="col-1">@Html.DisplayNameFor(model => model.FirstName)</div>
+        <div class="col-2">@Html.DisplayNameFor(model => model.SecondName)</div>
+        <div class="col-2">@Html.DisplayNameFor(model => model.BirthDate)</div>
+        <div class="col-3">@Html.DisplayNameFor(model => model.Email)</div>
+        <div class="col-3">@Html.DisplayNameFor(model => model.Roles)</div>
+    </div>
+
+    @foreach (var item in Model)
+    {
+        <div class="row btn-outline-dark border-info border-top-0 border">
+            <div class="d-none">@Html.DisplayFor(modelItem => item.Id)</div>
+            <div class="col-1">@Html.DisplayFor(modelItem => item.Login)</div>
+            <div class="col-1">@Html.DisplayFor(modelItem => item.FirstName)</div>
+            <div class="col-2">@Html.DisplayFor(modelItem => item.SecondName)</div>
+            <div class="col-2">@Html.DisplayFor(modelItem => item.BirthDate)</div>
+            <div class="col-3">@Html.DisplayFor(modelItem => item.Email)</div>
+            <div class="col-3">
+                @foreach(var role in Enum.GetNames(typeof(Role)))
+                {
+                    string displayClass = item.Roles.Contains(role)?"btn-success":"btn-danger";
+                    <div class="btn role @displayClass">@role</div>
+                }
+
+                @*@Html.ActionLink("Change roles", "RoleChange")*@
+            </div>
+        </div>
+    }
+
+    <div class="row">
+        <div class="offset-11 col-1"><button id="saveBtn" class="btn btn-lg">Save</button></div>
+    </div>
+</div>
+@*<h2>Users list</h2>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Login)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SecondName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BirthDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RootFolderAccess)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Login)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FirstName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SecondName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BirthDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RootFolderAccess)
-        </th>
-        <th></th>
+        <td>
+            @Html.DisplayFor(modelItem => item.Login)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SecondName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BirthDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RootFolderAccess)
+        </td>
+        <td>
+            @string.Join(", ",item.Roles)
+            @Html.DisplayFor(modelItem => item.Roles)
+        </td>
     </tr>
+    }
 
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Login)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.FirstName)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.SecondName)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.BirthDate)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Email)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.RootFolderAccess)
-    </td>
-    <td>
-        @string.Join(", ",item.Roles)
-        @*@Html.DisplayFor(modelItem => item.Roles)*@
-    </td>
-</tr>
-}
-
-</table>
+    </table>
+*@

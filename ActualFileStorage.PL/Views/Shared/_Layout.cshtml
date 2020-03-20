@@ -9,6 +9,7 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/mainscript")
     @*@Scripts.Render("~/bundles/polymer");*@
     @*<link rel="import" href="~/Scripts/polymer.html" />
         <script type="module">
@@ -30,9 +31,10 @@
             <div class="navbar-collapse collapse" id="navbarSupportedContent">
                 <ul class="nav navbar-nav mr-auto">
                     <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("About", "About","Home",null,  new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Contact", "Contact","Home",null,  new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Admin panel", "","Adminpanel", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Admin panel", "", "Adminpanel", null, new { @class = "nav-link" })</li>
+                    <li class="nav-item">@Html.ActionLink("Your storage", "", "Profile", null, new { @class = "nav-link" })</li>
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -56,9 +58,9 @@
         <div class="layout-render">
             @RenderBody()
         </div>
-        <paper-spinner>
+        @*<paper-spinner>
 
-        </paper-spinner>
+        </paper-spinner>*@
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - File Storage</p>
