@@ -59,14 +59,5 @@ namespace ActualFileStorage.PL.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to C:\Users\Tom\Desktop\Проект_EPAM\logs\log.txt.
-        /// </summary>
-        internal static string logfile {
-            get {
-                return ResourceManager.GetString("logfile", resourceCulture);
-            }
-        }
     }
 }
