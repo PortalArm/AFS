@@ -14,9 +14,16 @@ namespace ActualFileStorage.DAL.Repositories
         {
 
         }
-        public void AddRoleToUser(Role role, User u)
-        {
+        public void AddRoleToUser(Role role, User u) =>
             GetByPredicate(r => r.Description == role.ToString()).First().Users.Add(u);
-        }
+
+        //public void AddRoleToUser(Role role, int userId)
+        //{
+            
+        //}
+
+        public void RemoveRoleFromUser(Role role, User u) =>
+            GetByPredicate(r => r.Description == role.ToString()).First().Users.Remove(u);
+
     }
 }

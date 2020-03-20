@@ -10,5 +10,7 @@ namespace ActualFileStorage.DAL.Repositories
     public interface IFolderRepository : IRepository<Folder>
     {
         IEnumerable<int> GetUserFoldersIds(int userId);
+        bool IsFolderNameAvailable(int parentId, string name);
+        IEnumerable<int> GetDescendantFoldersIds(int folderId);
     }
 }

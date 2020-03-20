@@ -9,6 +9,6 @@ namespace ActualFileStorage.DAL.Repositories
 {
     public interface IFileRepository : IRepository<File>
     {
-
+        IEnumerable<File> GetAllFilesInFolder(int folderId);
     }
 }

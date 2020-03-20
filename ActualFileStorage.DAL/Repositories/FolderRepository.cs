@@ -15,9 +15,19 @@ namespace ActualFileStorage.DAL.Repositories
         {
         }
 
+        public IEnumerable<int> GetDescendantFoldersIds(int folderId)
+        {
+            return _adapter.ExecuteSql<int>("select * from getDescendantFoldersIds(@id)",
+                new SqlParameter("@id", folderId)).ToList();
+        }
+
         public IEnumerable<int> GetUserFoldersIds(int userId)
         {
-            return _adapter.ExecuteSql<int>("getAllUserFolders @id", new SqlParameter("id", userId)).Cast<int>();
+            return _adapter.ExecuteSql<int>("getAllUserFolders @id",
+                new SqlParameter("@id", userId)).ToList();
         }
+
+        public bool IsFolderNameAvailable(int parentId, string name) => !GetByPredicate(w => w.ParentFolder != null && w.ParentFolder.Id == parentId).Any(z => z.Name.Equals(name));
+
     }
 }

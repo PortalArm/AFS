@@ -14,5 +14,11 @@ namespace ActualFileStorage.DAL.Repositories
         {
 
         }
+
+        public IEnumerable<File> GetAllFilesInFolder(int folderId)
+        {
+            return Adapter.ExecuteSqlAsTracked("select * from getDescendantFilesIds(@id)",
+                new System.Data.SqlClient.SqlParameter("@id", folderId)).Cast<File>();
+        }
     }
 }
