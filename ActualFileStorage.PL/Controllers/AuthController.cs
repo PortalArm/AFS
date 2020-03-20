@@ -40,18 +40,19 @@ namespace ActualFileStorage.PL.Controllers
             var res = _service.Auth(model.Value, model.Password);
             if (res == null)
             {
+                
                 ModelState.AddModelError("Password", "Не найдена комбинация логин/пароль");
                 return PartialView("AuthForm");
                 //Json(new { status = "error", view = PartialView("AuthForm")},JsonRequestBehavior.AllowGet);
             }
             ClaimsIdentity ci = new ClaimsIdentity(new List<Claim> {
                 new Claim(ClaimTypes.Name, model.Value),
+                new Claim(ClaimTypes.NameIdentifier, res.Id.ToString()),
                 new Claim(ClaimTypes.Email, res.Email),
                 new Claim(ClaimTypes.DateOfBirth, res.BirthDate.ToString())
             }, ConfigurationManager.AppSettings["authtype"]);
             foreach (var role in res.Roles)
                 ci.AddClaim(new Claim(ClaimTypes.Role, role));
-            
             //ci.AuthenticationType = ConfigurationManager.AppSettings["authtype"];
             HttpContext.GetOwinContext().Authentication.SignIn(ci);//ci);
             //var be = (ci.IsAuthenticated);
@@ -59,7 +60,7 @@ namespace ActualFileStorage.PL.Controllers
             //rresult.Wait();
             //var result = rresult.Result;
             //HttpContext.GetOwinContext().Authentication.SignIn(result.Identity);//ci);
-            
+           
             return Json(new { status = "ok" }, JsonRequestBehavior.AllowGet);
         }
         [Authorize]

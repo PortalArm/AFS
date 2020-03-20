@@ -1,4 +1,6 @@
-﻿using ActualFileStorage.BLL.Services;
+﻿using ActualFileStorage.BLL.DTOs;
+using ActualFileStorage.BLL.Services;
+using ActualFileStorage.BLL.Services.Interfaces;
 using ActualFileStorage.PL.Models;
 using AutoMapper;
 using System;
@@ -11,9 +13,9 @@ namespace ActualFileStorage.PL.Controllers
 {
     public class RegisterController : Controller
     {
-        RegistrationService _service;
+        IRegistrationService _service;
         IMapper _mapper;
-        public RegisterController(RegistrationService service, IMapper mapper)
+        public RegisterController(IRegistrationService service, IMapper mapper)
         {
             _service = service;
             _mapper = mapper;
@@ -42,19 +44,11 @@ namespace ActualFileStorage.PL.Controllers
         {
             if (!ModelState.IsValid)
                 return new JsonResult() { ContentType = "application/json", Data = new { status = "error" } };
-            //System.IdentityModel.Tokens.Jwt.JwtSecurityToken jwtToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken();
-            //jwtToken.RawData
-            ////DAL.Models.User u = new DAL.Models.User() {
-            //    BirthDate = model.BirthDate,
-            //    Email = model.Email,
-            //    FirstName = model.FirstName,
-            //    AuthForm = model.AuthForm,
-            //    SecondName = model.SecondName
-            //};
-            DAL.Models.User u = _mapper.Map<DAL.Models.User>(model);
+
+            //DAL.Models.User u = _mapper.Map<DAL.Models.User>(model);
+            var u = _mapper.Map<RegistrationUserDTO>(model);
             _service.Register(u, model.Password);
             return new JsonResult() { ContentType = "application/json", Data = new { status = "ok" } };
-            //RedirectToAction("Index", "Home");
         }
 
     }
