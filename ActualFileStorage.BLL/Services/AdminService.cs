@@ -1,6 +1,7 @@
-﻿using ActualFileStorage.BLL.Services.Interfaces;
+﻿using ActualFileStorage.BLL.DTOs;
+using ActualFileStorage.BLL.Services.Interfaces;
 using ActualFileStorage.DAL.Models;
-using ActualFileStorage.DAL.UOW;
+using ActualFileStorage.DAL.Repositories;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -12,20 +13,43 @@ namespace ActualFileStorage.BLL.Services
 {
     public class AdminService : IAdminService
     {
-        private IUnitOfWork _uow;
+        private IUserRepository _users;
+        private IWebRoleRepository _roles;
         private IMapper _mapper;
-        public AdminService(IUnitOfWork uow, IMapper mapper)
+        public AdminService(IUserRepository users, IWebRoleRepository roles, IMapper mapper)
         {
-            _uow = uow;
+            _users = users;
             _mapper = mapper;
+            _roles = roles;
         }
 
-        //public IEnumerable<UserViewModel> GetUsers()
+        //public void UpdateRoles(int userId, Dictionary<Role, bool> roles)
         //{
-        //    var users = _uow.GetRepo<User>();
-        //    return _mapper.Map<UserViewModel>(users.GetAll());
-        //}
+        //    var user = _users.GetById(userId);
+        //    foreach (Role role in roles.Keys)
+        //        if (roles[role])
+        //            _roles.AddRoleToUser(role, user);
+        //        else
+        //            _roles.RemoveRoleFromUser(role, user);
 
+        //    _roles.SaveChanges();
+
+        //}
+        public void UpdateRoles(IEnumerable<ChangeRoleDTO> roles) {
+            foreach(var rolelist in roles) {
+                var user = _users.GetById(rolelist.Id);
+                foreach (Role role in rolelist.Roles.Keys)
+                    if (rolelist.Roles[role])
+                        _roles.AddRoleToUser(role, user);
+                    else
+                        _roles.RemoveRoleFromUser(role, user);
+            }
+
+        }
+        public IEnumerable<UserDTO> GetUsers()
+        {
+            return _mapper.Map<IEnumerable<UserDTO>>(_users.GetAll());
+        }
 
     }
 }

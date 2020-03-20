@@ -1,10 +1,11 @@
-﻿using ActualFileStorage.BLL.Passwords;
+﻿using ActualFileStorage.BLL.DTOs;
+using ActualFileStorage.BLL.Passwords;
 using ActualFileStorage.BLL.Salts;
 using ActualFileStorage.BLL.Services.Interfaces;
 using ActualFileStorage.DAL.Adapters;
 using ActualFileStorage.DAL.Models;
 using ActualFileStorage.DAL.Repositories;
-using ActualFileStorage.DAL.UOW;
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,47 +14,47 @@ using System.Threading.Tasks;
 
 namespace ActualFileStorage.BLL.Services
 {
-    public class RegistrationService //: ISaltResolver, IPasswordHasher OR : IRoleGenerateSalt, IRoleGeneratePassHash
+    public class RegistrationService : IRegistrationService //: ISaltResolver, IPasswordHasher OR : IRoleGenerateSalt, IRoleGeneratePassHash
     {
-        private ISaltResolver _saltGen;
+        private ISaltBuilder _saltGen;
         private IPasswordHasher _passHasher;
-        private IUnitOfWork _uow;
-        public RegistrationService(ISaltResolver saltGen, IPasswordHasher passHasher, IUnitOfWork uow)
+        private IUserRepository _users;
+        private IFolderRepository _folders;
+        private IWebRoleRepository _roles;
+        private IMapper _mapper;
+        public RegistrationService(ISaltBuilder saltGen, IPasswordHasher passHasher, IUserRepository users, IFolderRepository folders, IWebRoleRepository roles, IMapper mapper)
         {
             _saltGen = saltGen;
             _passHasher = passHasher;
-            _uow = uow;
+            _users = users;
+            _folders = folders;
+            _roles = roles;
+            _mapper = mapper;
         }
         private string GenerateSalt(int size) => _saltGen.GetSalt(size);
         private string GenerateHash(string pass, string salt) => _passHasher.HashPass(pass, salt);
-        public void Register(User u, string password)
+        public void Register(RegistrationUserDTO user, string password)//User u, string password)
         {
-            
-            var users = _uow.GetRepo<User>();
+            var u = _mapper.Map<User>(user);
             string salt = GenerateSalt(64);
             string hash = GenerateHash(password, salt);
             u.Salt = salt;
             u.PassHash = hash;
-            //u.Roles = new List<WebRole>() { new WebRole() { Id = 3, Description = Role.Default.ToString() } };
-            
             
             Folder privateFolder = CreateRootFolder(u);
-            var folders = _uow.GetRepo<Folder>();
-            users.Add(u);
-            folders.Add(privateFolder);
-            (_uow.GetRepo<WebRole>() as IWebRoleRepository).AddRoleToUser(Role.Default, u);
-            _uow.SaveChanges();
             
+            _users.Add(u);
+            _folders.Add(privateFolder);
+            _roles.AddRoleToUser(Role.Default, u);
+            _users.SaveChanges();
+            _folders.SaveChanges();
+            _roles.SaveChanges();
+
         }
         private Folder CreateRootFolder(User u, FileAccess vis = FileAccess.Private) =>
             new Folder() { Name = u.Login, User = u, Visibility = vis, CreationTime = DateTime.Now };
 
-        public bool LoginExists(string login)
-        {
-            var users = _uow.GetRepo<User>();
-            return (users as UserRepository).UserWithLoginExists(login);
-            //users.
-        }
+        public bool LoginExists(string login) => _users.UserWithLoginExists(login);
 
     }
 }

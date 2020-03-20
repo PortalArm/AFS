@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 
 namespace ActualFileStorage.BLL.Services.Interfaces
 {
-    public interface IAdminService
+    public interface IRegistrationService
     {
-        IEnumerable<UserDTO> GetUsers();
-        //void UpdateRoles(int userId, Dictionary<Role, bool> roles);
-        void UpdateRoles(IEnumerable<ChangeRoleDTO> roles);
+        bool LoginExists(string login);
+        void Register(RegistrationUserDTO u, string password);
     }
 }
