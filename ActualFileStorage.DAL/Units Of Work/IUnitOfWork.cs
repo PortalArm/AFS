@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace ActualFileStorage.DAL.UOW
 {
-    public interface IUnitOfWork : IDisposable
-    {
-        IRepository<T> GetRepo<T>() where T : class;
-        void SaveChanges();
-    }
+    //public interface IUnitOfWork : IDisposable
+    //{
+    //    IRepository<T> GetRepo<T>() where T : class;
+    //    void SaveChanges();
+    //}
 }
