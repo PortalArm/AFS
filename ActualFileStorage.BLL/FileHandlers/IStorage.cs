@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace ActualFileStorage.BLL.FileHandlers
 {
     // from server
-    public interface IFileRoutine : IFileUpload, IFileDownload
+    public interface IStorage : IFileUpload, IFileDownload, IFileDelete
     {
     }
 }

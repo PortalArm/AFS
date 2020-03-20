@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace ActualFileStorage.BLL.FileHandlers
 {
-    public class LocalServerStorage : IFileRoutine
+    public class LocalServerStorage : IStorage
     {
         private string _root;
         public LocalServerStorage()//(string root)
         {
             _root = @"F:\Server_Data\";
-           // _root = root;
+            // _root = root;
         }
 
         public void SetRoot(string root)
@@ -44,6 +44,26 @@ namespace ActualFileStorage.BLL.FileHandlers
             //{
             //    //bw.Write()
             //}
+        }
+
+        public void UploadFile(User user, DAL.Models.File file, Stream data)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Stream DownloadFileAsStream(User user, DAL.Models.File file)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteFile(User user, DAL.Models.File file)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteFiles(User user, IEnumerable<DAL.Models.File> files)
+        {
+            throw new NotImplementedException();
         }
     }
 }

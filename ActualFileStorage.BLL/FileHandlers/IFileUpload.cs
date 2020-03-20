@@ -6,5 +6,6 @@ namespace ActualFileStorage.BLL.FileHandlers
     public interface IFileUpload
     {
         void UploadFile(User user, File file, byte[] data);
+        void UploadFile(User user, File file, System.IO.Stream data);
     }
 }

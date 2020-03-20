@@ -11,5 +11,7 @@ namespace ActualFileStorage.BLL.FileHandlers
     public interface IFileDownload
     {
         byte[] DownloadFile(User user, File file);
+        //Не совсем работает так, как хотелось бы
+        //System.IO.Stream DownloadFileAsStream(User user, File file);
     }
 }
