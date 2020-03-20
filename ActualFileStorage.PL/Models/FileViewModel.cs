@@ -8,8 +8,9 @@ namespace ActualFileStorage.PL.Models
     public class FileViewModel //: ObjectBaseViewModel
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Extension { get; set; }
+        public string FullName { get; set; }
+        //public string Name { get; set; }
+        //public string Extension { get; set; }
 
     }
 }
