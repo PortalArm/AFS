@@ -44,9 +44,7 @@
     cursor: pointer;
     background-color: lightgray;
 }
-/*.c-flex-item {
-    margin: 0 5px;
-}*/
+
 .object-info {
     display: none;
 }
@@ -64,14 +62,22 @@
     font-size: 16px;
 }
 
-.entered-text {
+.entered-text, .entered-text-link {
     background: transparent;
     border: none;
     outline: none;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-    /*color: transparent;*/
+}
+
+.drop-zone-active {
+    border: dotted 2px gray;
+}
+
+#infoDiv .row {
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 /*div {
     border-color: #ff0000;
