@@ -1,21 +1,37 @@
-﻿using System;
+﻿using ActualFileStorage.BLL.Services;
+using System;
 using System.Linq;
 using Xunit;
+using Moq;
+using ActualFileStorage.BLL.Hashers;
+using ActualFileStorage.BLL.Services.Interfaces;
 
 namespace ActualFileStorage.BLL.Tests
 {
-    public class UnitTest1
+    public class ServiceFixture : IDisposable
     {
-        [Fact]
-        public void TwoPlusThreeEqualFour()
+        IHash _hash;
+        public ServiceFixture()
         {
-            int a = 2;
-            int b = 3;
-            int expected = 5;
+            _hash = new SHA256Hash();
+        }
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class UnitTest1 : IClassFixture<ServiceFixture>
+    {
 
-            int actual = a + b;
 
-            Assert.Equal(expected, actual);
+        [Fact]
+        public void TwoPlusThreeEqualFive()
+        {
+            
+            IProfileService ps = new ProfileService(null,null,null,null,null,null,null);
+            int actual = ps.AddFolder(2, 2, "55");
+            int notExpected = 0;
+            Assert.NotEqual(notExpected, actual);
         }
     }
 }

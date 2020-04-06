@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=9.0.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,6 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Moq">
+      <Version>4.13.1</Version>
+    </PackageReference>
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.extensibility.core">
       <Version>2.4.1</Version>
@@ -51,6 +55,16 @@
   <ItemGroup>
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ActualFileStorage.BLL\ActualFileStorage.BLL.csproj">
+      <Project>{8a7e4429-d634-4a48-9fe6-41f66df95eb6}</Project>
+      <Name>ActualFileStorage.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ActualFileStorage.DAL\ActualFileStorage.DAL.csproj">
+      <Project>{C49E58F8-735F-4D97-90F8-B66917157073}</Project>
+      <Name>ActualFileStorage.DAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
