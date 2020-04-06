@@ -1,5 +1,4 @@
-﻿using ActualFileStorage.BLL.Links;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
@@ -22,6 +21,7 @@ namespace ActualFileStorage.PL
         {
             if (controllerType == null)
                 return null;
+            
             return _container.Resolve(controllerType) as Controller;
         }
     }

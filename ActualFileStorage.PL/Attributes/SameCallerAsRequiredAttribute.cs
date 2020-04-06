@@ -6,7 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Filters;
 
-namespace ActualFileStorage.PL
+namespace ActualFileStorage.PL.Attributes
 {
     public class SameCallerAsRequiredAttribute : ActionFilterAttribute, IAuthenticationFilter
     {
@@ -16,12 +16,22 @@ namespace ActualFileStorage.PL
 
         public void OnAuthenticationChallenge(AuthenticationChallengeContext filterContext)
         {
+            //???
             int? fromSessionId = (int?)filterContext.HttpContext.Session["userId"];
             if (!filterContext.HttpContext.User.Identity.IsAuthenticated || !fromSessionId.HasValue)
+            {
                 filterContext.Result = new HttpUnauthorizedResult("Неавторизованным запрещено это действие");
-            var callerId = int.Parse(((ClaimsIdentity)filterContext.HttpContext.User.Identity).FindFirst(ClaimTypes.NameIdentifier).Value);
-            if (callerId != fromSessionId)
-                filterContext.Result = new HttpUnauthorizedResult("Данное действие разрешено только создателю");
+                filterContext.HttpContext.Response.Redirect("/");
+                // return;
+            } else
+            {
+                var callerId = int.Parse(((ClaimsIdentity)filterContext.HttpContext.User.Identity).FindFirst(ClaimTypes.NameIdentifier).Value);
+                if (callerId != fromSessionId)
+                {
+                    filterContext.Result = new HttpUnauthorizedResult("Данное действие разрешено только создателю");
+                    filterContext.HttpContext.Response.Redirect("/");
+                }
+            }
             //
         }
     }

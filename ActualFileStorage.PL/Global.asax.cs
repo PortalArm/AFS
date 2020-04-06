@@ -1,4 +1,3 @@
-using ActualFileStorage.BLL.Links;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +15,8 @@ namespace ActualFileStorage.PL
         protected void Application_Start()
         {
             IUnityContainer cont = new IoCContainer();
-
-            //cont.RegisterInstance<IUnityContainer>(cont);
             DIControllerFactory factory = new DIControllerFactory(cont);
             ControllerBuilder.Current.SetControllerFactory(factory);
-            //(new Startup.OwinStartup())
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
