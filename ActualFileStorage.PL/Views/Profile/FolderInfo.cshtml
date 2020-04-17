@@ -1,0 +1,57 @@
+﻿@model ActualFileStorage.PL.Models.FolderInfoViewModel
+@{
+    if (Model == null) { return; }
+    
+}
+<script>
+    @if(!Model.ReadOnlyLink)
+        {
+            <text>
+            $("#linkBtn").on("click", e => {
+                 addLinkInput($(e.target));
+            });
+            $("#Visibility").on("change", e => {
+                sendDataOnAccessChange($(e.target));
+            });
+            </text>
+        }
+</script>
+
+<div id="infoDiv" class="container">
+    <hr />
+    <h6 class="text-center">Информация о папке</h6>
+    <hr />
+    <div id="folderIdDiv" class="d-none">@Model.Id</div>
+    <div class="row">
+        <div class="col-5 font-weight-bold">@Html.DisplayNameFor(model => model.Name)</div>
+        <div class="col my-auto-height">@Html.DisplayFor(model => model.Name)</div>
+    </div>
+    <div class="row">
+        <div class="col-12 font-weight-bold my-auto-height">@Html.DisplayNameFor(model => model.Visibility)</div>
+        @if (Model.ReadOnlyLink)
+        {
+            <div class="col my-auto-height">@Html.DisplayFor(model => model.Visibility)</div>
+        } else
+        {
+            Type fa = typeof(ActualFileStorage.DAL.Models.FileAccess);
+            <div class="col my-auto-height">@Html.DropDownListFor(model => model.Visibility, Enum.GetNames(fa).Select(i => new SelectListItem() { Text = i, Value = Convert.ToInt32(Enum.Parse(fa, i, true)).ToString() }), new { @class = "custom-select-sm" })</div>
+        }
+
+    </div>
+    <div class="row">
+        <div class="col-5 font-weight-bold my-auto-height">@Html.DisplayNameFor(model => model.ShortLink)</div>
+        @if (string.IsNullOrEmpty(Model.ShortLink))
+        {
+            if (!Model.ReadOnlyLink)
+            {
+                <div class="col-12 col-md-6 col-lg-7 font-weight-bold my-auto-height"><button id="linkBtn" class="my-auto-height btn-block btn-sm btn-dark">Создать</button></div>
+            } else
+            {
+                <div class="col my-auto-height">Ссылка отсутствует</div>
+            }
+        } else
+        {
+            <div class="col my-auto-height"><a href="/s/@Html.DisplayFor(model => model.ShortLink)">@Html.DisplayFor(model => model.ShortLink)</a></div>
+        }
+    </div>
+</div>

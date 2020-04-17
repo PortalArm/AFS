@@ -10,7 +10,6 @@ namespace ActualFileStorage.PL.Controllers
     {
         public ActionResult Index()
         {
-            var k = HttpContext.Request.Cookies;
             return View();
         }
 

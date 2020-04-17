@@ -64,11 +64,13 @@
     <Compile Include="DTOs\FileInfoDTO.cs" />
     <Compile Include="DTOs\FileUploadDTO.cs" />
     <Compile Include="DTOs\FolderDTO.cs" />
+    <Compile Include="DTOs\FolderInfoDTO.cs" />
     <Compile Include="DTOs\HistoryItemDTO.cs" />
     <Compile Include="DTOs\ObjectBase.cs" />
     <Compile Include="DTOs\ObjectsDTO.cs" />
     <Compile Include="DTOs\RegistrationUserDTO.cs" />
     <Compile Include="DTOs\UserDTO.cs" />
+    <Compile Include="DTOs\ViewIdDTO.cs" />
     <Compile Include="Extensions\LinqExtensions.cs" />
     <Compile Include="FileHandlers\AzureFileStorage.cs" />
     <Compile Include="FileHandlers\IFileDelete.cs" />
@@ -81,8 +83,6 @@
     <Compile Include="Passwords\IPasswordHasher.cs" />
     <Compile Include="Passwords\PasswordHasher.cs" />
     <Compile Include="Salts\ISaltBuilder.cs" />
-    <Compile Include="Links\CustomLink.cs" />
-    <Compile Include="Links\ILinkBuilder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Salts\SaltBuilder.cs" />
@@ -96,8 +96,12 @@
     <Compile Include="Services\Interfaces\IProfileService.cs" />
     <Compile Include="Services\Interfaces\IRoleGeneratePassHash.cs" />
     <Compile Include="Services\Interfaces\IRoleGenerateSalt.cs" />
+    <Compile Include="Services\Interfaces\IShortenerService.cs" />
     <Compile Include="Services\ProfileService.cs" />
     <Compile Include="Services\RegistrationService.cs" />
+    <Compile Include="Services\ShortenerService.cs" />
+    <Compile Include="Verifiers\AccessVerifier.cs" />
+    <Compile Include="Verifiers\IAccessVerifier.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -9,7 +9,7 @@ namespace ActualFileStorage.PL.Models
     {
         
         //public string[] Data { get; set; }
-        public int? id { get; set; }
-        public string value { get; set; }
+        public int? Id { get; set; }
+        public string Value { get; set; }
     }
 }

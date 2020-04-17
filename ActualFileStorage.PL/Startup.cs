@@ -6,14 +6,11 @@ using Microsoft.Owin.Security.Jwt;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
 
 //[assembly: OwinStartup(typeof(ActualFileStorage.PL.OwinStartup))]
 namespace ActualFileStorage.PL
@@ -22,20 +19,9 @@ namespace ActualFileStorage.PL
     {
         public void Configuration(IAppBuilder app)
         {
-            //app.UseCookieAuthentication(new CookieAuthenticationOptions {
-            //    AuthenticationType = .ApplicationCookie,
-            //    //CookieSecure = CookieSecureOption.Always,
-            //    ExpireTimeSpan = TimeSpan.FromMinutes(30),
-            //    LoginPath = new PathString("/Login/Index"),
-            //    SlidingExpiration = true
-            //});
-            //app.UseCookieAuthentication(new CookieAuthenticationOptions() { 
-
-            //});
-
             //app.UseOAuthAuthorizationServer(new MyOAuthOptions());
             app.UseCookieAuthentication(new CookieAuthenticationOptions() {
-                Provider = new CookieProvider1(),
+                //Provider = new CookieProvider1(),
                 CookieDomain = ConfigurationManager.AppSettings["validissuer"],
                 AuthenticationType = ConfigurationManager.AppSettings["authtype"],
                 AuthenticationMode = AuthenticationMode.Active,
@@ -47,7 +33,6 @@ namespace ActualFileStorage.PL
                 TicketDataFormat = new MyJwtFormat()
             }) ;
             app.UseJwtBearerAuthentication(new MyJwtOptions());
-
             //app.UseCookieAuthentication(new MyCookieOptions());
         }
     }
@@ -59,112 +44,112 @@ namespace ActualFileStorage.PL
 
     //    }
 
-    public class CookieProvider2 : ICookieAuthenticationProvider
-    {
-        public void ApplyRedirect(CookieApplyRedirectContext context)
-        {
-            throw new NotImplementedException();
-        }
+    //public class CookieProvider2 : ICookieAuthenticationProvider
+    //{
+    //    public void ApplyRedirect(CookieApplyRedirectContext context)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
 
-        public void Exception(CookieExceptionContext context)
-        {
-            throw new NotImplementedException();
-        }
+    //    public void Exception(CookieExceptionContext context)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
 
-        public void ResponseSignedIn(CookieResponseSignedInContext context)
-        {
-            throw new NotImplementedException();
-        }
+    //    public void ResponseSignedIn(CookieResponseSignedInContext context)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
 
-        public void ResponseSignIn(CookieResponseSignInContext context)
-        {
-            throw new NotImplementedException();
-        }
+    //    public void ResponseSignIn(CookieResponseSignInContext context)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
 
-        public void ResponseSignOut(CookieResponseSignOutContext context)
-        {
-            throw new NotImplementedException();
-        }
+    //    public void ResponseSignOut(CookieResponseSignOutContext context)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
 
-        public Task ValidateIdentity(CookieValidateIdentityContext context)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class CookieProvider1 : CookieAuthenticationProvider
-    {
-        public override void ResponseSignedIn(CookieResponseSignedInContext context)
-        {
-            base.ResponseSignedIn(context);
-        }
-
-        public override void ResponseSignOut(CookieResponseSignOutContext context)
-        {
-            base.ResponseSignOut(context);
-        }
-        public override void ResponseSignIn(CookieResponseSignInContext context)
-        {
-            base.ResponseSignIn(context);
-        }
-        public override Task ValidateIdentity(CookieValidateIdentityContext context)
-        {
-            //if(false)
-            //    context.RejectIdentity();
-            return base.ValidateIdentity(context);
-        }
-        public override void ApplyRedirect(CookieApplyRedirectContext context)
-        {
-            base.ApplyRedirect(context);
-        }
-        public override void Exception(CookieExceptionContext context)
-        {
-            base.Exception(context);
-        }
-    }
+    //    public Task ValidateIdentity(CookieValidateIdentityContext context)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
     //}
-    public class MyOAuthProvider : OAuthAuthorizationServerProvider
-    {
-        public override Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
-        {
-            var identity = new ClaimsIdentity(ConfigurationManager.AppSettings["ExternalBearer"]);
-            var username = context.OwinContext.Get<string>("username");
-            identity.AddClaim(new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", username));
-            identity.AddClaim(new Claim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "user"));
-            context.Validated(identity);
-            //if (!System.IO.File.Exists(@"F:\log.txt"))
-            //    System.IO.File.Create(@"F:\log.txt").Close();
-            //System.IO.File.AppendAllText(@"F:\log.txt", "granting creds");
-            //context.Response.Cookies.Append("ha","ha", new CookieOptions() { HttpOnly = true });
-            return Task.FromResult(0);
-        }
 
-        public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
-        {
+    //public class CookieProvider1 : CookieAuthenticationProvider
+    //{
+    //    public override void ResponseSignedIn(CookieResponseSignedInContext context)
+    //    {
+    //        base.ResponseSignedIn(context);
+    //    }
 
-            try
-            {
-                var username = context.Parameters["username"];
-                var password = context.Parameters["password"];
+    //    public override void ResponseSignOut(CookieResponseSignOutContext context)
+    //    {
+    //        base.ResponseSignOut(context);
+    //    }
+    //    public override void ResponseSignIn(CookieResponseSignInContext context)
+    //    {
+    //        base.ResponseSignIn(context);
+    //    }
+    //    public override Task ValidateIdentity(CookieValidateIdentityContext context)
+    //    {
+    //        //if(false)
+    //        //    context.RejectIdentity();
+    //        return base.ValidateIdentity(context);
+    //    }
+    //    public override void ApplyRedirect(CookieApplyRedirectContext context)
+    //    {
+    //        base.ApplyRedirect(context);
+    //    }
+    //    public override void Exception(CookieExceptionContext context)
+    //    {
+    //        base.Exception(context);
+    //    }
+    //}
+    //}
+    //public class MyOAuthProvider : OAuthAuthorizationServerProvider
+    //{
+    //    public override Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
+    //    {
+    //        var identity = new ClaimsIdentity(ConfigurationManager.AppSettings["ExternalBearer"]);
+    //        var username = context.OwinContext.Get<string>("username");
+    //        identity.AddClaim(new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name", username));
+    //        identity.AddClaim(new Claim("http://schemas.microsoft.com/ws/2008/06/identity/claims/role", "user"));
+    //        context.Validated(identity);
+    //        //if (!System.IO.File.Exists(@"F:\log.txt"))
+    //        //    System.IO.File.Create(@"F:\log.txt").Close();
+    //        //System.IO.File.AppendAllText(@"F:\log.txt", "granting creds");
+    //        //context.Response.Cookies.Append("ha","ha", new CookieOptions() { HttpOnly = true });
+    //        return Task.FromResult(0);
+    //    }
 
-                if (username == password)
-                {
-                    context.OwinContext.Set("username", username);
-                    context.Validated();
-                } else
-                {
-                    context.SetError("Invalid credentials");
-                    context.Rejected();
-                }
-            }
-            catch
-            {
-                context.SetError("Server error");
-                context.Rejected();
-            }
-            return Task.FromResult(0);
-        }
-    }
+    //    public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
+    //    {
+
+    //        try
+    //        {
+    //            var username = context.Parameters["username"];
+    //            var password = context.Parameters["password"];
+
+    //            if (username == password)
+    //            {
+    //                context.OwinContext.Set("username", username);
+    //                context.Validated();
+    //            } else
+    //            {
+    //                context.SetError("Invalid credentials");
+    //                context.Rejected();
+    //            }
+    //        }
+    //        catch
+    //        {
+    //            context.SetError("Server error");
+    //            context.Rejected();
+    //        }
+    //        return Task.FromResult(0);
+    //    }
+    //}
     public class MyJwtOptions : JwtBearerAuthenticationOptions
     {
         public MyJwtOptions()
@@ -180,20 +165,15 @@ namespace ActualFileStorage.PL
                  ValidAudiences = new[] { audience },
                  ValidIssuer = issuer
             };
-
         }
     }
-
-
     public class MyJwtFormat : ISecureDataFormat<AuthenticationTicket>
     {
         //private readonly OAuthAuthorizationServerOptions _options;
-
         public MyJwtFormat()//OAuthAuthorizationServerOptions options)
         {
             //_options = options;
         }
-
         public string SignatureAlgorithm
         {
             get { return "HS256"; } //"http://www.w3.org/2001/04/xmldsig-more#hmac-sha256"; }

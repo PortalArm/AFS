@@ -1,97 +1,109 @@
-﻿@model string
-
+﻿@model ActualFileStorage.PL.Models.ViewIdViewModel
+@using System.Security.Claims;
 <script>
-    var defUserId = @Model;
-    var hist, prevHist;
+    @{
+        var callerId = ((User.Identity.IsAuthenticated ?
+                    int.Parse(((ClaimsIdentity)User.Identity).FindFirst(ClaimTypes.NameIdentifier).Value) :
+                    (int?)null)).ToString();
+        string userId = Model.UserId.HasValue ? Model.UserId.Value.ToString() : "null";
+        string folderId = Model.FolderId.HasValue ? Model.FolderId.Value.ToString() : "null";
+    }
+    var defUserId = @userId;
+    var folder = @folderId;
+    var hist;//, prevHist;
 
 
     $(document).ready(function () {
-        loadFolder();
-        hist = getHistoryFromCrumbs();
-        //$(".c-file").on('click', e => {
-        $("#contentDiv").on('click','.c-file', e => {
-            toggleSelection(e);
-            //$(e.target).closest(".row").toggleClass("selected-object").siblings().removeClass("selected-object");
-            let newVal = $(e.target).attr("value");
-            if ($(".object-info").attr("data-id") == newVal || $(".object-info").is(":hidden"))
-                $(".object-info").toggle();
-            //$("html").append("clicked!");
-            if ($(".object-info").is(":visible")) {
-                //post request with data fetch about file
-                $(".object-info").attr("data-id", newVal);
-                $.ajax({
-                    url: "/Profile/GetFileInfo",
-                    data: { "id": newVal },
-                    method: "POST",
-                    success: data => $(".object-info").html(data)
-                });
-        }});
-        $("html").on("dragover", function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            $(e.target).css("background-color", "gray");
-        })
+        loadFolder(folder, defUserId);
+        $(".breadcrumb").on("click",".breadcrumb-item", e => {
+            clearInfo();
+            loadFolder($(e.target).attr("data-id"));
+        });
+        $("#contentDiv")
+            .on('click', '.c-file', e => {
+                toggleSelection(e);
+                let newVal = $(e.target).attr("value");
+                if ($(".object-info").attr("data-id") == newVal || $(".object-info").is(":hidden"))
+                    $(".object-info").toggle();
+                //$("html").append("clicked!");
+                if ($(".object-info").is(":visible")) {
+                    $(".object-info").attr("data-id", newVal);
+                    $.ajax({
+                        url: "/Profile/GetFileInfo",
+                        data: { "id": newVal },
+                        method: "POST",
+                        success: data => $(".object-info").html(data)
+                    });
+                }
+            })
+            .on('click', ".c-folder", e => {
+                toggleSelection(e);
+                //console.log(e.target);
+            })
+            .on('dblclick', ".c-folder", e => {
+                clearInfo();
+                loadFolder($(e.target).attr("value"));
+            })
+            .on("mousedown", ".c-folder", e => {
+                if (e.detail > 1)
+                    e.preventDefault();
+                })
             .on("drop", function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                let uploadFolder = $(e.target);
+
+                if (!uploadFolder.is(".c-folder"))
+                        uploadFolder = $(e.target).find(".c-folder");
+
+                let folderId = null;
+                if (uploadFolder)
+                    folderId = uploadFolder.attr("value");
+
+                var a = new FormData();
+                a.append("folderId", folderId);
+                for(let file of e.originalEvent.dataTransfer.files)
+                    a.append("files", file);
+
+                $.ajax({
+                    url: "/Profile/UploadFiles",
+                    data: a,
+                    contentType: false,
+                    processData: false,
+                    method: "POST",
+                    success: function (z) {
+                        $(e.target).trigger("dragleave");
+                    }
+                });
+        });;
+        $("html")
+            .on("dragover", e => {
+                e.preventDefault();
+                e.stopPropagation();
+                let target = $(e.target);
+                if (target.is("#contentDiv") || target.closest("#contentDiv").length > 0)
+                    target.css("background-color", "gray");
+            })
+            .on("drop", e => {
                 e.preventDefault();
             })
             .on("dragleave", e => {
                 $(e.target).css("background-color", "transparent");
             });
 
-        $("#contentDiv").on("drop", function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            //console.log(e.target);
-            let uploadFolder = $(e.target);
-            if (!uploadFolder.is(".c-folder"))
-                uploadFolder = $(e.target).find(".c-folder");
-            //console.log(uploadFolder);
-            let folderId = null;
-            if (uploadFolder)
-                folderId = uploadFolder.attr("value");
-            var a = new FormData();
-            a.append("folderId", folderId);
-            for(let file of e.originalEvent.dataTransfer.files)
-                a.append("files", file);
-            $.ajax({
-                url: "/Profile/UploadFiles",
-                data: a,
-                //dataType: 'json',
-                contentType: false,
-                processData: false,
-                success: function (z) { console.log(z); },
-                method: "POST"
-            });
-        });
 
-
-        //$(".c-folder").on('click', e => {
         $("#removeFile").on("click", e => {
             let fileToDelete = $(".selected-object .c-file");
             console.log(fileToDelete);
 
             if (fileToDelete.length != 1)
                 return;
-            //console.log(fileToDelete.attr("value"));
             $.ajax({
                 method: "POST",
                 url: "/Profile/RemoveFile",
                 data: { "id": fileToDelete.attr("value") },
                 success: d => { /*console.log("ayy");*/
-                    //console.log(fileToDelete);
-                    //console.log(fileToDelete.closest(".selected-object"));
                     fileToDelete.closest(".selected-object").remove();
-                }
-            });
-        });
-        $("#infoDiv").on("click", "#downloadBtn", e => {
-            let id = $(e.target).closest(".container").children("#fileIdDiv").html();
-            $.ajax({
-                method: "POST",
-                data: { "fileId": id },
-                url: "/Profile/DownloadFile",
-                success: d => {
-                    window.location.href = d.url;
                 }
             });
         });
@@ -107,61 +119,37 @@
                 url: "/Profile/RemoveFolder",
                 data: { "id": folderToDelete.attr("value") },
                 success: d => { /*console.log("ayy");*/
-                    console.log(folderToDelete);
-                    console.log(folderToDelete.closest(".selected-object"));
                     folderToDelete.closest(".selected-object").remove();
                 }
             });
         });
-        $("#contentDiv").on('click', ".c-folder", e => {
-            toggleSelection(e);
-        }).on('dblclick', ".c-folder", e => {
-            clearInfo();
-                //console.log("history passed from event: ");
-            //console.log(hist);
-            //history.pushState({ "history": hist, "userId": defUserId, "folderId": hist[hist.length - 1] }, hist.toString());
-            loadFolder($(e.target).attr("value"), hist);
-        }).on("mousedown", ".c-folder", e => {
-            if (e.detail > 1)
-                e.preventDefault();
+
+        window.addEventListener('popstate', e => {
+            state = e.state;
+            if(state != null && state != "null"){
+                loadFolder(state.folder, state.uId, true);
+            }
         });
-        window.addEventListener('popstate', function (e) {
-            state = event.state;
-        //console.log(state);
-        if(state != null && state != "null"){
-            // todo: update on back press
-            console.log("pressed back button");
-            loadFolder(state.folder, state.hist, state.uId, true);
-            console.log(state);
-        }
-        });
-    //    $().on('popstate', event => {
-    //        state = event.state;
-    //        console.log("pressed back button");
-    //    //console.log(state);
-    //    if(state != null && state != "null"){
-    //        // todo: update on back press
-    //        console.log("pressed back button");
-    //    }
-    //});
     });
-</script>
+</script> 
 <div class="container">
     <div class="row">
-        <div class="col-4 col-lg-3 d-flex bg-light flex-column tx-size-16">
-            <button id="addFile" class="btn tx-size-16 text-center" href="#">Добавить файл</button>
-            <button id="addFolder" onclick="addFolderInput()" class="btn tx-size-16 text-center" href="#">Добавить папку</button>
-            <button id="removeFile" class="btn tx-size-16 text-center" href="#">Удалить файл</button>
-            <button id="removeFolder" class="btn tx-size-16 text-center" href="#">Удалить папку</button>
-        </div>
+        @if (callerId.Equals(userId))
+        {
+            <div id="sidebar" class="col-4 col-lg-3 d-flex bg-light flex-column tx-size-16">
+                <button id="addFile" class="btn tx-size-16 text-center" href="#">Добавить файл</button>
+                <button id="addFolder" onclick="addFolderInput()" class="btn tx-size-16 text-center" href="#">Добавить папку</button>
+                <button id="removeFile" class="btn tx-size-16 text-center" href="#" disabled>Удалить файл</button>
+                <button id="removeFolder" class="btn tx-size-16 text-center" href="#" disabled>Удалить папку</button>
+            </div>
+        }
         <div class="col">
             <div class="row breadcrumb text-info">
-                <div class="breadcrumb-item" data-val="root" data-id="null">root</div>
             </div>
             <div id="contentDiv">
             </div>
         </div>
-        <div id="infoDiv" class="col-4 object-info text-justify">
+        <div @*id="infoDiv"*@class="col-4 object-info text-justify">
             Maecenas eu dignissim magna.
             Cras congue posuere mauris, et hendrerit diam mattis ac.
             Phasellus ut mattis ante.

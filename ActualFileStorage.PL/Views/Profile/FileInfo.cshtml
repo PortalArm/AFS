@@ -1,74 +1,92 @@
 ﻿@model ActualFileStorage.PL.Models.FileInfoViewModel
 
-    <div class="container">
-        <h4>Информация о файле</h4>
-        <hr />
-        <div id="fileIdDiv" class="d-none">@Model.Id</div>
-        <div class="row">
-            <div class="col-5 font-weight-bold">@Html.DisplayNameFor(model => model.FullName)</div>
-            <div class="col">@Html.DisplayFor(model => model.FullName)</div>
-        </div>
-        <div class="row">
-            <div class="col-5 font-weight-bold">@Html.DisplayNameFor(model => model.Size)</div>
-            <div class="col">@Html.DisplayFor(model => model.Size)</div>
-        </div>
-        <div class="row">
-            <div class="col-12 font-weight-bold">@Html.DisplayNameFor(model => model.CreationTime)</div>
-            <div class="col">@Html.DisplayFor(model => model.CreationTime)</div>
-        </div>
-        <div class="row no-gutters">
-            @{
+@if (Model == null)
+{
+    return;
+}
+
+<script>
+    $(document).ready(() => {
+        @if(!Model.ReadOnlyLink)
+        {
+            <text>
+            $("#linkBtn").on("click", e => {
+                 addLinkInput($(e.target));
+            });
+            $("#Visibility").on("change", e => {
+                sendDataOnAccessChange($(e.target));
+            });
+            </text>
+        }
+
+        $("#downloadBtn").on("click", e => {
+         let id = $(e.target).closest(".container").children("#fileIdDiv").html();
+            $.ajax({
+             method: "POST",
+                data: { "fileId": id },
+                url: "/Profile/DownloadFile",
+                success: d => {
+                    window.location.href = d.url;
+                }
+            });
+     });
+    });
+
+
+</script>
+<div id="infoDiv" class="container">
+    <h4>Информация о файле</h4>
+    <hr />
+    <div id="fileIdDiv" class="d-none">@Model.Id</div>
+    <div class="row">
+        <div class="col-5 font-weight-bold">@Html.DisplayNameFor(model => model.FullName)</div>
+        <div class="col my-auto-height">@Html.DisplayFor(model => model.FullName)</div>
+    </div>
+    <div class="row">
+        <div class="col-5 font-weight-bold">@Html.DisplayNameFor(model => model.Size)</div>
+        <div class="col my-auto-height">@Html.DisplayFor(model => model.Size)</div>
+    </div>
+    <div class="row">
+        <div class="col-5 font-weight-bold">@Html.DisplayNameFor(model => model.CreationTime)</div>
+        <div class="col my-auto-height">@Html.DisplayFor(model => model.CreationTime)</div>
+    </div>
+    <div class="row">
+        <div class="col-5 font-weight-bold">@Html.DisplayNameFor(model => model.Visibility)</div>
+        @if (Model.ReadOnlyLink)
+        {
+            <div class="col my-auto-height">@Html.DisplayFor(model => model.Visibility)</div>
+        } else
+        {
+            Type fa = typeof(ActualFileStorage.DAL.Models.FileAccess);
+            <div class="col my-auto-height">@Html.DropDownListFor(model => model.Visibility, Enum.GetNames(fa).Select(i => new SelectListItem() { Text = i, Value = Convert.ToInt32(Enum.Parse(fa, i, true)).ToString() }), new { @class = "custom-select" })</div>
+        }
+
+    </div>
+    <div class="row">
+        <div class="col-5 font-weight-bold my-auto-height">@Html.DisplayNameFor(model => model.ShortLink)</div>
+        @*<div class="col-12 col-md-8 col-lg-6 font-weight-bold my-auto-height">@Html.DisplayNameFor(model => model.ShortLink)</div>*@
+        @*@{
                Model.ShortLink = "https://localhost/privet.haa";
-            }
-            @if (string.IsNullOrEmpty(Model.ShortLink))
+            }*@
+        @if (string.IsNullOrEmpty(Model.ShortLink))
+        {
+            if (!Model.ReadOnlyLink)
             {
-                <div class="col-12 col-md-8 col-lg-6 font-weight-bold my-auto-height">@Html.DisplayNameFor(model => model.ShortLink)</div>
-                <div class="col-12 col-md-4 col-lg-6 font-weight-bold"><button class="my-auto-height btn-block btn-sm btn-dark">Создать</button></div>
+                <div class="col-12 col-md-4 col-lg-6 font-weight-bold my-auto-height"><button id="linkBtn" class="my-auto-height btn-block btn-sm btn-dark">Создать</button></div>
             } else
             {
-                <div class="col-12 col-md-8 col-lg-6 font-weight-bold my-auto-height">@Html.DisplayNameFor(model => model.ShortLink)</div>
-                <div class="col"><a href="@Html.DisplayFor(model => model.ShortLink)">@Html.DisplayFor(model => model.ShortLink)</a></div>
+                <div class="col my-auto-height">Ссылка отсутствует</div>
             }
+        } else
+        {
+            <div class="col my-auto-height"><a href="/s/@Html.DisplayFor(model => model.ShortLink)">@Html.DisplayFor(model => model.ShortLink)</a></div>
+        }
+    </div>
+    <div class="row">
+        <div class="col">
+            <button id="downloadBtn" class="btn-block btn-sm btn-dark mt-2">
+                Скачать файл
+            </button>
         </div>
-        <div class="row">
-            <div class="col">
-                <button id="downloadBtn" class="btn-block btn-sm btn-dark mt-2">
-                    Скачать файл
-                </button>
-            </div>
-        </div>
-            @*<dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.FullName)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.FullName)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Size)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Size)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.CreationTime)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.CreationTime)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.ShortLink)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.ShortLink)
-                </dd>
-
-            </dl>*@
-        </div>
+    </div>
+</div>

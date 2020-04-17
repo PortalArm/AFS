@@ -12,7 +12,7 @@ namespace ActualFileStorage.BLL.FileHandlers
 {
     public class AzureFileStorage : IStorage
     {
-        private static string storageConnectionString = new string(Convert.FromBase64String("RGVmYXVsdEVuZHBvaW50c1Byb3RvY29sPWh0dHBzO0FjY291bnROYW1lPWZzZmlsZXN0b3JhZ2UxO0FjY291bnRLZXk9SVBGK2hjOWdTZk42bjJpNGhXZXQxUjc2VDZPYnkzdkk3M1RNOEcrMytCWEVGYXhCVk83UmtEaHA2eS9nMmozeVdiQlpPT0JhOFBoc01iUk1CWGVDeFE9PTtFbmRwb2ludFN1ZmZpeD1jb3JlLndpbmRvd3MubmV0").Select(v => (char)v).ToArray());
+        private static string storageConnectionString = new string(Convert.FromBase64String("RGVmYXVsdEVuZHBvaW50c1Byb3RvY29sPWh0dHBzO0FjY291bnROYW1lPWZzZmlsZXN0b3JhZ2UxO0FjY291bnRLZXk9OWoyZzkzWFlhYzB2ZS9ndHhrOXBkSU0vTVBIYlUvd0ZGSGlFYTlRdTY3YXZoV2Q0U3hheVpITE05aG5nYUhvQlVkb1l4NUF2Smt4dVpaTlJVT2EycEE9PTtFbmRwb2ludFN1ZmZpeD1jb3JlLndpbmRvd3MubmV0").Select(v => (char)v).ToArray());
         private static string _blobName = "web-storage";
         private CloudStorageAccount _account;
         private CloudBlobClient _serviceClient;

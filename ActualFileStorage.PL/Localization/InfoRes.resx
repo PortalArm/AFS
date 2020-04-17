@@ -135,6 +135,9 @@
   <data name="FileSize" xml:space="preserve">
     <value>Размер файла</value>
   </data>
+  <data name="FolderName" xml:space="preserve">
+    <value>Имя папки</value>
+  </data>
   <data name="RegBDate" xml:space="preserve">
     <value>Дата рождения</value>
   </data>
@@ -146,6 +149,9 @@
   </data>
   <data name="RegErrorFirstName" xml:space="preserve">
     <value>Введите корректное имя</value>
+  </data>
+  <data name="RegErrorLoginOccupied" xml:space="preserve">
+    <value>Данный логин уже занят</value>
   </data>
   <data name="RegErrorSecondName" xml:space="preserve">
     <value>Введите корректную фамилию</value>

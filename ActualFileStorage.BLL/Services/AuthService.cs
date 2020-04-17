@@ -29,7 +29,6 @@ namespace ActualFileStorage.BLL.Services
         }
         public UserDTO Auth(string input, string password)
         {
-            
             var possibleUsers = _users.GetByPredicate(u => u.Login == input);
             if(possibleUsers == null || !possibleUsers.Any())
                 return null;

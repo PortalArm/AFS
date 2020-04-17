@@ -57,3 +57,35 @@ select * from Files where  Files.Folder_Id in (select * from getDescendantFolder
 --select * from cte_folders;
 
 
+create function getFoldersIdsToRoot(
+@basefolderid as int)
+returns @output table(Id int, Name varchar(max), Visibility int)
+as
+begin
+with cte_folders as (
+select Folders.Id, Folders.Name, Folders.Visibility, Folders.ParentFolder_Id from Folders where Folders.Id = @basefolderid
+union all
+select a.Id, a.Name, a.Visibility, a.ParentFolder_Id from Folders a inner join cte_folders b on b.ParentFolder_Id = a.Id)
+insert @output
+select Id, Name, Visibility from cte_folders;
+return
+end;
+go
+
+
+
+--нахождение Id хоз€ина папки
+create function getFolderOwnerId(
+@basefolderid as int)
+returns int
+as
+begin
+declare @userName varchar(max);
+with cte_folders as (
+select RowNum = 1, Folders.Name, Folders.ParentFolder_Id from Folders where Folders.Id = @basefolderid
+union all
+select RowNum + 1 as RowNum, a.Name, a.ParentFolder_Id  from Folders a inner join cte_folders b  on b.ParentFolder_Id = a.Id)
+select top 1 @userName = Name from cte_folders order by RowNum desc
+return (select Id from Users where Login = @userName)
+end;
+go

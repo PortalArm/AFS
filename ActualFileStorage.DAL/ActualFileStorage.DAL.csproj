@@ -102,6 +102,7 @@
     <Compile Include="Models\FileAccess.cs" />
     <Compile Include="Models\FileStorageContext.cs" />
     <Compile Include="Models\Folder.cs" />
+    <Compile Include="Models\ShortFolder.cs" />
     <Compile Include="Models\WebRole.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserCredential.cs" />

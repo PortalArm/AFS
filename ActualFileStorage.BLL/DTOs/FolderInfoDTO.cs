@@ -7,16 +7,11 @@ using System.Threading.Tasks;
 
 namespace ActualFileStorage.BLL.DTOs
 {
-    public class FileInfoDTO
+    public class FolderInfoDTO
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public long Size { get; set; }
-        public string Extension { get; set; }
-        //public int FolderId { get; set; }
         public FileAccess Visibility { get; set; }
-        public DateTime CreationTime { get; set; }
         public string ShortLink { get; set; }
-        public bool ReadOnly { get; set; }
     }
 }

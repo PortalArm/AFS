@@ -44,7 +44,7 @@ namespace ActualFileStorage.BLL.Services
                     else
                         _roles.RemoveRoleFromUser(role, user);
             }
-
+            _roles.SaveChanges();
         }
         public IEnumerable<UserDTO> GetUsers()
         {

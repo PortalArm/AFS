@@ -1,5 +1,4 @@
 ﻿using ActualFileStorage.BLL.DTOs;
-using ActualFileStorage.DAL.Models;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -9,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace ActualFileStorage.BLL.Services.Interfaces
 {
-    public interface IRegistrationService
+    public interface IShortenerService
     {
         IMapper Mapper { get; }
-        bool LoginExists(string login);
-        void Register(RegistrationUserDTO u, string password);
+
+        ViewIdDTO GetIdsByLink(int? callerId, string link);
     }
 }

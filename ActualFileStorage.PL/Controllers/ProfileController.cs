@@ -1,6 +1,8 @@
 ﻿using ActualFileStorage.BLL.DTOs;
 using ActualFileStorage.BLL.Salts;
 using ActualFileStorage.BLL.Services.Interfaces;
+using ActualFileStorage.DAL.Models;
+using ActualFileStorage.PL.Attributes;
 using ActualFileStorage.PL.Models;
 using AutoMapper;
 using System;
@@ -8,6 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 
@@ -15,41 +18,52 @@ namespace ActualFileStorage.PL.Controllers
 {
     public class ProfileController : Controller
     {
-
         private IProfileService _service;
         private ISaltBuilder _urlGenerator; 
         private IMapper _mapper {
             get => _service.Mapper;
         }
-        public ProfileController(IProfileService service, ISaltBuilder urlGenerator)//, IMapper mapper)
+        public ProfileController(IProfileService service, ISaltBuilder urlGenerator)
         {
             _service = service;
-            //_mapper = mapper;
             _urlGenerator = urlGenerator;
         }
-        // GET: Profile
         public ActionResult Index()
         {
             if (!User.Identity.IsAuthenticated)
-                return View(model: "null");
+                return View(model: new ViewIdViewModel());
             var claims = (ClaimsIdentity)User.Identity;
-            var id = claims.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return View(model: id);
+            var id = Convert.ToInt32(claims.FindFirst(ClaimTypes.NameIdentifier).Value);
+            return View(new ViewIdViewModel() { UserId = id });
         }
-        [Authorize]
+
+        //[HttpPost]
+        //[AcceptVerbs(HttpVerbs.Post)]
+        //public ActionResult IndexPost(ViewIdViewModel model)
+        //{
+        //    return View("Index", model);
+        //}
+
+        //public ActionResult Ogogo(int id)
+        //{
+        //    return RedirectToAction("IndexPost", new { model = new ViewIdViewModel() { UserId = id } });
+        //}
+        //[Authorize]
         [HttpPost]
-        public ActionResult GetContent(int? id, int? folderId, IEnumerable<HistoryItemViewModel> history)
+        public ActionResult GetContent(int? id, int? folderId)
         {
-            //userId это id, чьи файлы мы просматриваем
-            Session["userId"] = id;
-            //Session["parentId"] = folderId ?? _service.GetRootFolderIdByUserId(int );
             var callerId = (User.Identity.IsAuthenticated ?
                     int.Parse(((ClaimsIdentity)User.Identity).FindFirst(ClaimTypes.NameIdentifier).Value) :
                     (int?)null);
-            //var userId = id.HasValue ? id.Value : (int?) null;
-            var objectsUnmapped = _service.GetObjects(callerId, id, folderId, _mapper.Map<IEnumerable<HistoryItemDTO>>(history));
+           
+            var objectsUnmapped = _service.GetObjects(callerId, id, folderId);
             var objects = _mapper.Map<ObjectsViewModel>(objectsUnmapped);
-            Session["parentId"] = objects.ParentFolderId;
+            if (objects != null)
+            {
+                //userId это id, чьи файлы мы просматриваем
+                Session["userId"] = id;
+                Session["parentId"] = objects.ParentFolderId;
+            }
             return PartialView(objects);
         }
         [Authorize]
@@ -62,8 +76,31 @@ namespace ActualFileStorage.PL.Controllers
             var fileInfo = _mapper.Map<FileInfoViewModel>(_service.GetFileInfo(callerId, id));
             return PartialView("FileInfo", fileInfo);
         }
+
+        [HttpPost]
+        public ActionResult GetFolderInfo(int id)
+        {
+            var callerId = (User.Identity.IsAuthenticated ?
+                    int.Parse(((ClaimsIdentity)User.Identity).FindFirst(ClaimTypes.NameIdentifier).Value) :
+                    (int?)null);
+            int? sessionId = (int?)Session["userId"];
+            var folderInfo = _service.GetFolderInfo(callerId, id);
+            var viewInfo = _mapper.Map<FolderInfoViewModel>(folderInfo);
+            if (sessionId != callerId)
+                viewInfo.ReadOnlyLink = true;
+            return PartialView("FolderInfo", viewInfo);
+        }
         [Authorize]
         [HttpPost]
+        [SameCallerAsRequired]
+        public ActionResult ChangeAccess(int objectId,FileAccess level,bool isFile)
+        {
+            _service.ChangeAccess(objectId, level, isFile);
+            return Json(Console.In);
+        }
+        [Authorize]
+        [HttpPost]
+        [SameCallerAsRequired]
         public ActionResult AddFolder(string name)
         {
             int? fromSessionId = (int?)Session["userId"];
@@ -78,36 +115,30 @@ namespace ActualFileStorage.PL.Controllers
                 return Json(new { status = true, id = newId }, JsonRequestBehavior.AllowGet);
             return Json(new { status = false}, JsonRequestBehavior.AllowGet);
         }
-        [Authorize]
         [HttpPost]
+        [Authorize]
         [SameCallerAsRequired]
         public ActionResult UploadFiles(int? folderId, IEnumerable<HttpPostedFileBase> files)
         {
-            //int? fromSessionId = (int?)Session["userId"];
-            //if (!User.Identity.IsAuthenticated || !fromSessionId.HasValue)
-            //    return new HttpUnauthorizedResult("Неавторизованным пользователям запрещено загружать файлы");
-            //var callerId = int.Parse(((ClaimsIdentity)User.Identity).FindFirst(ClaimTypes.NameIdentifier).Value);
-            
-            //if (callerId != fromSessionId)
-            //    return new HttpUnauthorizedResult("Запрещено загружать файлы другим пользователям");
-            
             int callerId = int.Parse(((ClaimsIdentity)User.Identity).FindFirst(ClaimTypes.NameIdentifier).Value);
 
             _service.UploadFiles(callerId, folderId.HasValue ? folderId : (int?)Session["parentId"], _mapper.Map<IEnumerable<FileUploadDTO>>(files));
             return Json(new { status = "ok" }, JsonRequestBehavior.AllowGet);//RedirectToAction("Index");
         }
-
-        [Authorize]
         [HttpPost]
+        [Authorize]
+        [SameCallerAsRequired]
+        public ActionResult MakeLink(int objectId, string link, bool isFile = true)
+        {
+            if (!_service.TryCreateLink(objectId, link, isFile, out string error))
+                return Json(new { status = false, errorMessage = error });
+            return Json(new { link, status = true  });
+        }
+        [HttpPost]
+        [Authorize]
         [SameCallerAsRequired]
         public ActionResult RemoveFolder(int id)
         {
-            //int? fromSessionId = (int?)Session["userId"];
-            //if (!User.Identity.IsAuthenticated || !fromSessionId.HasValue)
-            //    return new HttpUnauthorizedResult("Неавторизованным пользователям запрещено удалять папки");
-            //var callerId = int.Parse(((ClaimsIdentity)User.Identity).FindFirst(ClaimTypes.NameIdentifier).Value);
-            //if (callerId != fromSessionId)
-            //    return new HttpUnauthorizedResult("Запрещено удалять папки другим пользователям");
             int callerId = int.Parse(((ClaimsIdentity)User.Identity).FindFirst(ClaimTypes.NameIdentifier).Value);
 
             _service.RemoveFolder(callerId, id);
@@ -118,14 +149,13 @@ namespace ActualFileStorage.PL.Controllers
         [HttpPost]
         public ActionResult DownloadFile(int fileId)
         {
-            int userId = (int)Session["userId"];
+            int? userId = (int?)Session["userId"];
             int? callerId = User.Identity.IsAuthenticated ?
                 int.Parse(((ClaimsIdentity)User.Identity).FindFirst(ClaimTypes.NameIdentifier).Value) :
                 (int?)null;
             string randUrl = _urlGenerator.GetSalt(32);
-            TempData[randUrl] = new int?[] { callerId, userId, fileId }; //_service.DownloadFile(callerId, userId, fileId);
-            //var file = _service.DownloadFile(callerId, userId, fileId);
-            return Json(new { url = "/download/" + randUrl });//File(file.Data, System.Net.Mime.MediaTypeNames.Application.Octet, file.FileName);
+            TempData[randUrl] = new int?[] { callerId, userId, fileId }; 
+            return Json(new { url = "/download/" + randUrl });
         }
 
         public ActionResult DownloadFile(string fileUrl)
@@ -141,14 +171,7 @@ namespace ActualFileStorage.PL.Controllers
                 TempData.Remove(fileUrl);
             } else
                 return new HttpNotFoundResult();
-            //Response.Headers
-            //Response.ContentType = System.Net.Mime.MediaTypeNames.Application.Octet;
-            //int userId = (int)Session["userId"];
-            //int? callerId = User.Identity.IsAuthenticated ?
-            //    int.Parse(((ClaimsIdentity)User.Identity).FindFirst(ClaimTypes.NameIdentifier).Value) :
-            //    (int?)null;
-            //string randUrl = _urlGenerator.GetSalt(32);
-            ////TempData[randUrl] = _service.DownloadFile(callerId, userId, fileId);
+
             var file = _service.DownloadFile(callerId, userId, fileId);
             if (file.IsPermitted)
                 return File(file.Data, System.Net.Mime.MediaTypeNames.Application.Octet, file.FileName);
@@ -156,7 +179,7 @@ namespace ActualFileStorage.PL.Controllers
                 return new HttpUnauthorizedResult();
         }
 
-
+         
         [Authorize]
         [HttpPost]
         [SameCallerAsRequired]

@@ -13,17 +13,17 @@ namespace ActualFileStorage.PL.Controllers
 {
     public class RegisterController : Controller
     {
-        IRegistrationService _service;
-        IMapper _mapper;
-        public RegisterController(IRegistrationService service, IMapper mapper)
+        private IRegistrationService _service;
+        private IMapper _mapper {
+            get => _service.Mapper;
+        }
+        public RegisterController(IRegistrationService service)
         {
             _service = service;
-            _mapper = mapper;
         }
         // GET: Register
         public ActionResult Index()
         {
-
             return View();
         }
 
@@ -34,7 +34,7 @@ namespace ActualFileStorage.PL.Controllers
         public JsonResult IsLoginPresent(string login)
         {
             if (_service.LoginExists(login))
-                return Json("This login is already occupied.", JsonRequestBehavior.AllowGet);
+                return Json(false, JsonRequestBehavior.AllowGet);
 
             return Json(true, JsonRequestBehavior.AllowGet);
         }
@@ -43,12 +43,12 @@ namespace ActualFileStorage.PL.Controllers
         public ActionResult RegAjaxForm(RegistrationUserViewModel model)
         {
             if (!ModelState.IsValid)
-                return new JsonResult() { ContentType = "application/json", Data = new { status = "error" } };
+                return Json(new { status = "error" }, JsonRequestBehavior.AllowGet);
 
-            //DAL.Models.User u = _mapper.Map<DAL.Models.User>(model);
             var u = _mapper.Map<RegistrationUserDTO>(model);
             _service.Register(u, model.Password);
-            return new JsonResult() { ContentType = "application/json", Data = new { status = "ok" } };
+
+            return Json(new { status = "ok" } , JsonRequestBehavior.AllowGet);
         }
 
     }

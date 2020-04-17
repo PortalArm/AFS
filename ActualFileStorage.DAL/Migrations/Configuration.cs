@@ -82,7 +82,7 @@ GO
         {
             File[] files = new File[count];
             for (int i = 0; i < count; ++i)
-                files[i] = new File() { Hash=(baseFolder.Id*16 + i+i).ToString(), Size = 64*i,  Name="file"+i, Ext = ".txt", CreationTime = UC, Folder = baseFolder, Visibility = FileAccess.Public };
+                files[i] = new File() { Hash=(baseFolder.Id*16 + i+i).ToString(), Size = 64*i,  Name="file"+i, Ext = ".txt", CreationTime = UC, Folder = baseFolder, Visibility = FileAccess.Private };
             return files;
         }
 
@@ -111,7 +111,7 @@ GO
         {
             Folder[] folders = new Folder[Users.Length];
             for (int i = 0; i < folders.Length; ++i)
-                folders[i] = new Folder() { Name = Users[i].Login, User = Users[i], Visibility = FileAccess.Public, CreationTime = UC };
+                folders[i] = new Folder() { Name = Users[i].Login, User = Users[i], Visibility = FileAccess.Private, CreationTime = UC };
 
             return folders;
         }

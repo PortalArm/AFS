@@ -4,7 +4,8 @@
     {
         Public,
         RegisteredUsers,
-        Shared,
+        //ugh
+        //Shared,
         Private
     }
 

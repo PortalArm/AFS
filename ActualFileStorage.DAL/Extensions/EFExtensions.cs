@@ -12,7 +12,18 @@ namespace ActualFileStorage.DAL.Extensions
     {
         public static IEnumerable<T> FindPredicate<T>(this DbSet<T> dbSet, Expression<Func<T, bool>> predicate) where T : class
         {
-            var local = dbSet.Local.Where(predicate.Compile()).ToList();
+            //если использовать local, то баг: если бы я подгрузил один файл в какой-либо папке с другими файлами через короткую
+            //ссылку, то в обычном списке был бы только один файл...
+            //использовать это, либо подправить кейсы использования, видимо где-то отваливается трекинг
+            return dbSet.Where(predicate).ToList();
+            
+            //var local = dbSet.Local.Where(predicate.Compile()).ToList();
+            //return local.Any()
+            //    ? local
+            //    : (dbSet.Where(predicate)).ToList();
+            
+            
+            
             //var b = a.Where(predicate.Compile());
 
             //var a = dbSet.Local.ToList().Where(predicate.Compile());
@@ -37,9 +48,7 @@ namespace ActualFileStorage.DAL.Extensions
             //    return fromDb.ToArray();
             //return null;
 
-            return local.Any()
-                ? local
-                : (dbSet.Where(predicate)).ToList();
+
         }
     }
 }

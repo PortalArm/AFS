@@ -12,5 +12,8 @@ namespace ActualFileStorage.DAL.Repositories
         IEnumerable<int> GetUserFoldersIds(int userId);
         bool IsFolderNameAvailable(int parentId, string name);
         IEnumerable<int> GetDescendantFoldersIds(int folderId);
+        IEnumerable<ShortFolder> GetHierarchyToRoot(int folderId);
+        Folder GetFolderByLink(string link);
+        int? GetUserIdByFolderId(int folderId);
     }
 }

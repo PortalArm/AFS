@@ -12,5 +12,6 @@ namespace ActualFileStorage.BLL.DTOs
         public IEnumerable<FileDTO> Files { get; set; }
         public IEnumerable<FolderDTO> Folders { get; set; }
         public IEnumerable<HistoryItemDTO> History { get; set; }
+        public FolderInfoDTO Parent { get; set; }
     }
 }

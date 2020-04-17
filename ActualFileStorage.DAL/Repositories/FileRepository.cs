@@ -20,5 +20,12 @@ namespace ActualFileStorage.DAL.Repositories
             return Adapter.ExecuteSqlAsTracked("select * from getDescendantFilesIds(@id)",
                 new System.Data.SqlClient.SqlParameter("@id", folderId)).Cast<File>();
         }
+
+        public File GetFileByLink(string link)
+        {
+            return Adapter.ExecuteSqlAsTracked("select * from Files where ShortLink = @l",
+                new System.Data.SqlClient.SqlParameter("@l", link)).Cast<File>().FirstOrDefault();
+        }
+
     }
 }

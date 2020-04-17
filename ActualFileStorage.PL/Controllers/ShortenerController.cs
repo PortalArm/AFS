@@ -1,5 +1,4 @@
-﻿using ActualFileStorage.BLL.Links;
-using ActualFileStorage.DAL.Models;
+﻿using ActualFileStorage.DAL.Models;
 using ActualFileStorage.DAL;
 using System;
 using System.Collections.Generic;
@@ -8,42 +7,51 @@ using System.Web;
 using System.Web.Mvc;
 using ActualFileStorage.DAL.Adapters;
 using ActualFileStorage.DAL.Repositories;
+using ActualFileStorage.BLL.Services.Interfaces;
+using ActualFileStorage.PL.Models;
+using AutoMapper;
+using System.Security.Claims;
 
 namespace ActualFileStorage.PL.Controllers
 {
     public class ShortenerController : Controller
     {
-        private ILinkBuilder _link;
-        //private IUnitOfWork _uow;
-        public ShortenerController(ILinkBuilder resolver)//, IUnitOfWork unitOfWork)
+        private IShortenerService _service;
+        private IProfileService _profileService;
+        private IMapper _mapper
         {
-            //System.IO.File.AppendAllLines(Properties.Resources.logfile, new[] { $"Constructor of {GetType()} controller invoked" });
-            _link = resolver;
-            //_uow = unitOfWork;
+            get => _service.Mapper;
         }
-        // GET: Shortener
-        public ActionResult Unpack(object id)
+        public ShortenerController(IShortenerService service, IProfileService profileService)
         {
-            //Console.WriteLine("{0} {1}", _link.Decode(id.ToString()), _link.Encode(_link.Decode(id.ToString())));
-            //Console.WriteLine($"Received {id}");
-
-            //SimpleViewModel svm = new SimpleViewModel() {
-            //    id = id
-            //};
-
-            //IRepository<Folder> repo = _uow.GetRepo<Folder>();
-            ////(repo as Repository<Folder>).ChangeType<Folder>();
-            //svm.single = repo.GetById(1);
-            //svm.hello = repo.GetAll().ToList();
-
-            return View();
+            _service = service;
+            _profileService = profileService;
         }
-
-        public class SimpleViewModel
+        public ActionResult Unpack(string id)
         {
-            public object id;
-            public IEnumerable<Folder> hello;
-            public Folder single;
+            if (string.IsNullOrEmpty(id))
+                return View("~/Views/Shared/Error.cshtml");
+
+            var callerId = (User.Identity.IsAuthenticated ?
+                int.Parse(((ClaimsIdentity)User.Identity).FindFirst(ClaimTypes.NameIdentifier).Value) :
+                (int?)null);
+
+            var objectFromService = _service.GetIdsByLink(callerId, id);
+            Session["userId"] = objectFromService.UserId;
+            if (objectFromService.IsFile)
+            {
+                var fileInfo = _mapper.Map<FileInfoViewModel>(_profileService.GetFileInfo(callerId, objectFromService.FileId.Value));
+                if (fileInfo == null)
+                    return View("~/Views/Shared/Error.cshtml");
+
+                if (callerId != objectFromService.UserId)
+                    fileInfo.ReadOnlyLink = true;
+
+                return View("~/Views/Profile/FileInfo.cshtml", fileInfo);
+            }
+            if (!objectFromService.Exists)
+                return View("~/Views/Shared/Error.cshtml");
+            return View("~/Views/Profile/Index.cshtml", _mapper.Map<ViewIdViewModel>(objectFromService));
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ActualFileStorage.PL.Attributes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace ActualFileStorage.PL.Models
     {
         [Required]
         [RegularExpression(@"[A-Za-z0-9]{2,}")]
-        [Remote("IsLoginPresent", "Register")]
+        [Remote("IsLoginPresent", "Register", ErrorMessageResourceName = "RegErrorLoginOccupied", ErrorMessageResourceType = typeof(Localization.InfoRes))]
         [Display( ResourceType = typeof(Localization.InfoRes), Name = "RegLoginValue")]
         public string Login { get; set; } // req 
         [Required]

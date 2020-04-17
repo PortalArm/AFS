@@ -115,6 +115,15 @@ namespace ActualFileStorage.PL.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Имя папки.
+        /// </summary>
+        public static string FolderName {
+            get {
+                return ResourceManager.GetString("FolderName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Дата рождения.
         /// </summary>
         public static string RegBDate {
@@ -147,6 +156,15 @@ namespace ActualFileStorage.PL.Localization {
         public static string RegErrorFirstName {
             get {
                 return ResourceManager.GetString("RegErrorFirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Данный логин уже занят.
+        /// </summary>
+        public static string RegErrorLoginOccupied {
+            get {
+                return ResourceManager.GetString("RegErrorLoginOccupied", resourceCulture);
             }
         }
         

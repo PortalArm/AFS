@@ -7,7 +7,7 @@ namespace ActualFileStorage.PL
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new JWTAuthenticateAttribute());
+            //filters.Add(new JWTAuthenticateAttribute());
             filters.Add(new HandleErrorAttribute());
             //(DefaultAuthenticationTypes.ExternalBearer)
             //filters.Add(new JWTAuthorizeAttribute());

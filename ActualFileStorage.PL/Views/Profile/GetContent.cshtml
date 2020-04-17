@@ -1,56 +1,69 @@
 ﻿@model ActualFileStorage.PL.Models.ObjectsViewModel
-
-<script>
+    <script>
     $(document).ready(function () {
-        document.getElementById("removeFile").disabled = true;
-        document.getElementById("removeFolder").disabled = true;
-        prevHist = hist;
-        hist = @Html.Raw(Json.Encode(Model.History));
-        constructCrumbs(hist);
-        $(".breadcrumb-item").on("click", function (event) {
-            clearInfo();
-            loadFolder($(event.target).attr("data-id"), hist);
+        //actBtns(["removeFolder", "removeFile"], false);
+        @*@{
+            @:console.log(`
+            Html.RenderPartial("FolderInfo",Model.ParentFolderInfo);
+            @:`);
+            Html.RenderAction()
+        }*@
+        $.post({
+            url: '@Url.Action("GetFolderInfo", "Profile")',
+            data: { "id":@Model.ParentFolderId},
+            success: d => {
+                let sb = $("#sidebar");
+                if (sb.length !== 0) {
+                    let infoDiv = sb.children("div");
+                    if (infoDiv.length === 0)
+                        sb.append(d);
+                    else
+                        infoDiv.html(d);
+                }
+                else {
+                    //console.log("no to sidebar");// $(".row").parent(".container")
+                    $(".container").children(".row").prepend('<div id="sidebar" class="col-4 col-lg-3 d-flex bg-light flex-column tx-size-16"></div>');
+                    $("#sidebar").append(d);
+                }
+            }
         });
-
-        //delegated event handling to resolve dynamic changes, но тогда должно быть в index.cshtml
-        //$(".c-folder").on('click', e => {
-        ////$("#contentDiv").on('click', ".c-folder", e => {
-        //    toggleSelection(e);
-        //}).on('dblclick', e => {
-        //    clearInfo();
-        //        //console.log("history passed from event: ");
-        //    //console.log(hist);
-        //    history.pushState({ "history": hist, "userId": defUserId, "folderId": hist[hist.length - 1] }, hist.toString());
-        //    loadFolder($(e.target).attr("value"), hist);
-        //}).on("mousedown", e => {
-        //    if (e.detail > 1)
-        //        e.preventDefault();
-        //});
-        
+        console.log('@Html.Raw(@Json.Encode(Model.ParentFolderInfo))');
+        //document.getElementById("removeFile")?.disabled = true;
+        //document.getElementById("removeFolder")?.disabled = true;
+        @if(Model != null)
+        {
+            @:hist = @Html.Raw(Json.Encode(Model.History));
+        }
+        else
+        {
+            @:hist = undefined;
+        }
+        constructCrumbs(hist);
+        $(".breadcrumb-item").on("click", e => {
+         clearInfo();
+         loadFolder($(e.target).attr("data-id"));
+        });
     });
-
-</script>
+    </script>
 <div>
-    @foreach (var item in Model.Folders)
+    @if (Model != null)
     {
-        <div class="row">
-            @*<div class="col-1" style="display: none;">@Html.DisplayFor(modelItem => item.Id)</div>*@
-            <div class="col">
-                <span class="c-folder" value="@item.Id">
-                    <img src="~/Content/folder-icon.png" width="12" />
-                    @Html.DisplayFor(modelItem => item.Name)
-                </span>
+        foreach (var item in Model.Folders)
+        {
+            <div class="row">
+                <div class="col">
+                    <span class="c-folder" value="@item.Id">
+                        <img src="~/Content/folder-icon.png" width="12" />
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </span>
+                </div>
             </div>
-        </div>
+        }
+        foreach (var item in Model.Files)
+        {
+            <div class="row">
+                <div class="col"><span class="c-file" value="@item.Id">@Html.DisplayFor(modelItem => item.FullName)</span></div>
+            </div>
+        }
     }
-    @foreach (var item in Model.Files)
-    {
-
-        <div class="row">
-            @*<div class="col-1" style="display: none;">@Html.DisplayFor(modelItem => item.Id)</div>*@
-            <div class="col"><span class="c-file" value="@item.Id">@Html.DisplayFor(modelItem => item.FullName)</span></div>
-        </div>
-
-    }
-
 </div>

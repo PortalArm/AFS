@@ -1,4 +1,5 @@
 ﻿using ActualFileStorage.BLL.DTOs;
+using ActualFileStorage.DAL.Models;
 using AutoMapper;
 using System;
 using System.Collections.Generic;
@@ -16,11 +17,14 @@ namespace ActualFileStorage.BLL.Services.Interfaces
 
         //IEnumerable<FileDTO> GetFiles(int userId, int? folderId);
         //IEnumerable<FolderDTO> GetFolders(int userId, int? folderId);
-        ObjectsDTO GetObjects(int? callerUserId, int? targetUserId, int? folderId, IEnumerable<HistoryItemDTO> history = null);
+        ObjectsDTO GetObjects(int? callerUserId, int? targetUserId, int? folderId);//, IEnumerable<HistoryItemDTO> history = null);
         //bool IsFolderNameAvailable(int parentId, string folderName);
         void UploadFiles(int userId, int? folderId, IEnumerable<FileUploadDTO> files);
         void RemoveFolder(int userId, int folderId);
         void RemoveFile(int userId, int fileId);
         FileDownloadDTO DownloadFile(int? callerId, int userId, int fileId);
+        bool TryCreateLink(int objectId, string link, bool isFile, out string error);
+        void ChangeAccess(int objectId, FileAccess level, bool isFile);
+        FolderInfoDTO GetFolderInfo(int? callerUserId, int fileId);
     }
 }

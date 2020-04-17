@@ -21,7 +21,7 @@ namespace ActualFileStorage.BLL.Services
         private IUserRepository _users;
         private IFolderRepository _folders;
         private IWebRoleRepository _roles;
-        private IMapper _mapper;
+        public IMapper Mapper { get; }
         public RegistrationService(ISaltBuilder saltGen, IPasswordHasher passHasher, IUserRepository users, IFolderRepository folders, IWebRoleRepository roles, IMapper mapper)
         {
             _saltGen = saltGen;
@@ -29,13 +29,13 @@ namespace ActualFileStorage.BLL.Services
             _users = users;
             _folders = folders;
             _roles = roles;
-            _mapper = mapper;
+            Mapper = mapper;
         }
         private string GenerateSalt(int size) => _saltGen.GetSalt(size);
         private string GenerateHash(string pass, string salt) => _passHasher.HashPass(pass, salt);
         public void Register(RegistrationUserDTO user, string password)//User u, string password)
         {
-            var u = _mapper.Map<User>(user);
+            var u = Mapper.Map<User>(user);
             string salt = GenerateSalt(64);
             string hash = GenerateHash(password, salt);
             u.Salt = salt;
@@ -49,7 +49,6 @@ namespace ActualFileStorage.BLL.Services
             _users.SaveChanges();
             _folders.SaveChanges();
             _roles.SaveChanges();
-
         }
         private Folder CreateRootFolder(User u, FileAccess vis = FileAccess.Private) =>
             new Folder() { Name = u.Login, User = u, Visibility = vis, CreationTime = DateTime.Now };

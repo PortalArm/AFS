@@ -21,5 +21,6 @@ namespace ActualFileStorage.PL.Models
         public DateTime CreationTime { get; set; }
         [Display(ResourceType = typeof(Localization.InfoRes),Name = "ShortLink")]
         public string ShortLink { get; set; }
+        public bool ReadOnlyLink { get; set; }
     }
 }
