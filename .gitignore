@@ -338,3 +338,8 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
+
+#custom ignore files
+ActualFileStorage.PL/Properties/PublishProfiles/*
+ActualFileStorage.BLL/FileHandlers/AzureStatic.cs
