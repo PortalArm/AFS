@@ -21,7 +21,6 @@ namespace ActualFileStorage.PL.Controllers
         {
             _service = service;
         }
-        // GET: Register
         public ActionResult Index()
         {
             return View();

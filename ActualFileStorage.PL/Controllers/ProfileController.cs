@@ -37,17 +37,6 @@ namespace ActualFileStorage.PL.Controllers
             return View(new ViewIdViewModel() { UserId = id });
         }
 
-        //[HttpPost]
-        //[AcceptVerbs(HttpVerbs.Post)]
-        //public ActionResult IndexPost(ViewIdViewModel model)
-        //{
-        //    return View("Index", model);
-        //}
-
-        //public ActionResult Ogogo(int id)
-        //{
-        //    return RedirectToAction("IndexPost", new { model = new ViewIdViewModel() { UserId = id } });
-        //}
         //[Authorize]
         [HttpPost]
         public ActionResult GetContent(int? id, int? folderId)
@@ -142,7 +131,7 @@ namespace ActualFileStorage.PL.Controllers
             int callerId = int.Parse(((ClaimsIdentity)User.Identity).FindFirst(ClaimTypes.NameIdentifier).Value);
 
             _service.RemoveFolder(callerId, id);
-            return Json(new { status = "ok" }, JsonRequestBehavior.AllowGet);//RedirectToAction("Index");
+            return Json(new { status = "ok" }, JsonRequestBehavior.AllowGet);
         }
 
         //[Authorize]
@@ -178,8 +167,7 @@ namespace ActualFileStorage.PL.Controllers
             else
                 return new HttpUnauthorizedResult();
         }
-
-         
+        
         [Authorize]
         [HttpPost]
         [SameCallerAsRequired]

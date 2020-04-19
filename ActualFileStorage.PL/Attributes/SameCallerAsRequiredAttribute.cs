@@ -16,7 +16,7 @@ namespace ActualFileStorage.PL.Attributes
 
         public void OnAuthenticationChallenge(AuthenticationChallengeContext filterContext)
         {
-            //???
+            // 
             int? fromSessionId = (int?)filterContext.HttpContext.Session["userId"];
             if (!filterContext.HttpContext.User.Identity.IsAuthenticated || !fromSessionId.HasValue)
             {
@@ -32,7 +32,6 @@ namespace ActualFileStorage.PL.Attributes
                     filterContext.HttpContext.Response.Redirect("/");
                 }
             }
-            //
         }
     }
 }

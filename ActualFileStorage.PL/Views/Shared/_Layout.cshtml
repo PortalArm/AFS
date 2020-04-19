@@ -16,9 +16,8 @@
           import '@@polymer/paper-spinner/paper-spinner.js';
         </script>*@
     @RenderSection("scripts", required: false)
-    @AjaxHelper.DatalessRequestOnClick("regLink", Url.Action("RegForm", "Register"))
-    @AjaxHelper.DatalessRequestOnClick("authLink", Url.Action("AuthForm", "Auth"))
-    @*@AjaxHelper.CreateScript("regLink", null, Url.Action("RegForm", "Register"))*@
+    @AjaxHelper.DatalessRequestOnClick("regLink", Url.Action("RegForm", "Register"), "GET")
+    @AjaxHelper.DatalessRequestOnClick("authLink", Url.Action("AuthForm", "Auth"), "GET")
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -32,7 +31,6 @@
                 <ul class="nav navbar-nav mr-auto">
                     <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link" })</li>
                     <li class="nav-item">@Html.ActionLink("About", "About", "Home", null, new { @class = "nav-link" })</li>
-                    <li class="nav-item">@Html.ActionLink("Contact", "Contact", "Home", null, new { @class = "nav-link" })</li>
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item">@Html.ActionLink("Admin panel", "", "Adminpanel", null, new { @class = "nav-link" })</li>
@@ -47,7 +45,7 @@
                     } else
                     {
                         <li class="nav-item">@Html.ActionLink("Register", "RegForm", "Register", null, new { id = "regLink", @class = "nav-link" })</li>
-                        <li class="nav-item">@Html.ActionLink("Login", "AuthForm", "Auth", null, new { id = "authLink", @class = "nav-link"  })</li>
+                        <li class="nav-item">@Html.ActionLink("Login", "AuthForm", "Auth", null, new { id = "authLink", @class = "nav-link" })</li>
                     }
 
                 </ul>
@@ -62,13 +60,12 @@
         </div>
         @*<paper-spinner>
 
-        </paper-spinner>*@
+            </paper-spinner>*@
         <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - File Storage</p>
         </footer>
     </div>
-
 
 </body>
 </html>

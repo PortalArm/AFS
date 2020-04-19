@@ -4,6 +4,7 @@ using ActualFileStorage.DAL.Configurations;
 
 namespace ActualFileStorage.DAL.Models
 {
+    //[DbConfigurationType(typeof(GlobalEFConfiguration))]
     public class FileStorageContext : DbContext
     {
         public FileStorageContext() : base("FileStorageDB")
@@ -16,9 +17,6 @@ namespace ActualFileStorage.DAL.Models
             modelBuilder.Configurations.Add(ConfigurationGetter.GetConfig<User>());
             modelBuilder.Configurations.Add(ConfigurationGetter.GetConfig<File>());
             modelBuilder.Configurations.Add(ConfigurationGetter.GetConfig<Folder>());
-
-            
-
         }
 
         //~FileStorageContext()

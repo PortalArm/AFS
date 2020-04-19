@@ -18,28 +18,18 @@ namespace ActualFileStorage.PL
     {
         public IoCContainer()
         {
-            var config = new MapperConfiguration(cfg => {
-                //!!!
-                //cfg.CreateMap<RegistrationUserViewModel, User>();
-                cfg.AddMaps(GetType().Assembly);
-            });
+            var config = new MapperConfiguration(cfg =>
+                cfg.AddMaps(GetType().Assembly)
+            );
             
             IMapper mapper = config.CreateMapper();
             this.RegisterInstance(mapper);
             this.RegisterType<DbContext, FileStorageContext>();
-            this.RegisterInstance<IAdapter>(this.Resolve<EFAdapter>());//new EFAdapter(new FileStorageContext()));
+            this.RegisterInstance<IAdapter>(this.Resolve<EFAdapter>());
             
-
             AddExtension(new ServicesExtension());
             AddExtension(new RepositoriesExtension());
             AddExtension(new BLLExtension());
-
-            //no
-            //this.RegisterType<IRepository<User>, UserRepository>();
-            //RegistrationService rs = this.Resolve<RegistrationService>();
-            //this.RegisterInstance<IRoleGenerateSalt>(rs);
-            //this.RegisterInstance<IRoleGeneratePassHash>(rs);
-
         }
     }
 }

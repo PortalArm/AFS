@@ -12,7 +12,6 @@ using System.Web.Mvc.Filters;
 
 namespace ActualFileStorage.PL.Attributes
 {
-
     //public class JWTAuthenticateAttribute : ActionFilterAttribute, IAuthenticationFilter
     //{
     //    public void OnAuthentication(AuthenticationContext filterContext)
@@ -20,7 +19,7 @@ namespace ActualFileStorage.PL.Attributes
     //        string token = string.Empty;
     //        filterContext.HttpContext.Request.Headers.Add("Authorization", $"Bearer {token}");
 
-    //    }
+    //    } 
 
     //    public void OnAuthenticationChallenge(AuthenticationChallengeContext filterContext)
     //    {

@@ -1,3 +1,5 @@
+drop procedure getAllUserFolders
+go
 create procedure getAllUserFolders(
 @userId as int)
 as
@@ -8,6 +10,8 @@ select a.Id, a.Name, a.CreationTime, a.ParentFolder_Id from Folders a inner join
 select cte_folders.Id from cte_folders;
 go
 
+drop function getDescendantFoldersIds
+go
 create function getDescendantFoldersIds(
 @basefolderid as int)
 returns @output table(Id int)
@@ -23,24 +27,27 @@ return
 end;
 go
 
-create function getDescendantFilesIds(
-@basefolderid as int)
-returns @output table(Id int)
-as
-begin
-insert @output
-select Files.Id from Files where  Files.Folder_Id in (select * from getDescendantFoldersIds(@basefolderid))
-return
-end;
-go
+--create function getDescendantFilesIds(
+--@basefolderid as int)
+--returns @output table(Id int)
+--as
+--begin
+--insert @output
+--select Files.Id from Files where  Files.Folder_Id in (select * from getDescendantFoldersIds(@basefolderid))
+--return
+--end;
+--go
 
 --nicer
+drop function getDescendantFilesIds
+go
 create function getDescendantFilesIds(
 @basefolderid as int)
 returns table
 as
 return
 select * from Files where  Files.Folder_Id in (select * from getDescendantFoldersIds(@basefolderid))
+go
 --от @folderId до корневой папки
 --;with cte_folders as (
 --select Folders.Id, Folders.Name, Folders.ParentFolder_Id from Folders where Folders.Id = @folderId
@@ -56,7 +63,8 @@ select * from Files where  Files.Folder_Id in (select * from getDescendantFolder
 --select a.Id, a.Name, a.ParentFolder_Id from Folders a inner join cte_folders b on a.ParentFolder_Id = b.Id)
 --select * from cte_folders;
 
-
+drop function getFoldersIdsToRoot
+go
 create function getFoldersIdsToRoot(
 @basefolderid as int)
 returns @output table(Id int, Name varchar(max), Visibility int)
@@ -73,7 +81,8 @@ end;
 go
 
 
-
+drop function getFolderOwnerId
+go
 --нахождение Id хоз€ина папки
 create function getFolderOwnerId(
 @basefolderid as int)

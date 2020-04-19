@@ -63,6 +63,7 @@
     <Compile Include="Configurations\ConfigurationGetter.cs" />
     <Compile Include="Configurations\FolderConfiguration.cs" />
     <Compile Include="Configurations\FileConfiguration.cs" />
+    <Compile Include="Configurations\GlobalEFConfiguration.cs" />
     <Compile Include="Configurations\UserConfiguration.cs" />
     <Compile Include="Extensions\EFExtensions.cs" />
     <Compile Include="Migrations\202001270643207_initial.cs" />

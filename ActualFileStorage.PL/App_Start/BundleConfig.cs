@@ -8,6 +8,7 @@ namespace ActualFileStorage.PL
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
+            BundleTable.EnableOptimizations = false;
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
@@ -35,8 +36,6 @@ namespace ActualFileStorage.PL
             //bundles.Add(new S("~/bundles/polymer").Include(
             //        "~/Content/polymer.html"
             //    ));
-
-
         }
     }
 }

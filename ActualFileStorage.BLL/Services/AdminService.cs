@@ -15,11 +15,11 @@ namespace ActualFileStorage.BLL.Services
     {
         private IUserRepository _users;
         private IWebRoleRepository _roles;
-        private IMapper _mapper;
+        public IMapper Mapper { get; }
         public AdminService(IUserRepository users, IWebRoleRepository roles, IMapper mapper)
         {
             _users = users;
-            _mapper = mapper;
+            Mapper = mapper;
             _roles = roles;
         }
 
@@ -48,7 +48,7 @@ namespace ActualFileStorage.BLL.Services
         }
         public IEnumerable<UserDTO> GetUsers()
         {
-            return _mapper.Map<IEnumerable<UserDTO>>(_users.GetAll());
+            return Mapper.Map<IEnumerable<UserDTO>>(_users.GetAll());
         }
 
     }

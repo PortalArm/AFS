@@ -1,15 +1,16 @@
 ﻿@model ActualFileStorage.PL.Models.ObjectsViewModel
+
+@{ 
+    string pId = string.Empty;
+    if (Model == null)
+        pId = "null";
+    else
+        pId = Model.ParentFolderId.ToString();
+}
     <script>
     $(document).ready(function () {
-        //actBtns(["removeFolder", "removeFile"], false);
-        @*@{
-            @:console.log(`
-            Html.RenderPartial("FolderInfo",Model.ParentFolderInfo);
-            @:`);
-            Html.RenderAction()
-        }*@
         $.post({
-            url: '@Url.Action("GetFolderInfo", "Profile")',
+        url: '@Url.Action("GetFolderInfo", "Profile")',
             data: { "id":@Model.ParentFolderId},
             success: d => {
                 let sb = $("#sidebar");
@@ -21,16 +22,15 @@
                         infoDiv.html(d);
                 }
                 else {
-                    //console.log("no to sidebar");// $(".row").parent(".container")
                     $(".container").children(".row").prepend('<div id="sidebar" class="col-4 col-lg-3 d-flex bg-light flex-column tx-size-16"></div>');
                     $("#sidebar").append(d);
                 }
             }
         });
-        console.log('@Html.Raw(@Json.Encode(Model.ParentFolderInfo))');
-        //document.getElementById("removeFile")?.disabled = true;
-        //document.getElementById("removeFolder")?.disabled = true;
-        @if(Model != null)
+    //console.log('@Html.Raw(@Json.Encode(Model.ParentFolderInfo))');
+    //document.getElementById("removeFile")?.disabled = true;
+    //document.getElementById("removeFolder")?.disabled = true;
+    @if(Model != null)
         {
             @:hist = @Html.Raw(Json.Encode(Model.History));
         }

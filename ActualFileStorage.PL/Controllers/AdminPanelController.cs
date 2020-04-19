@@ -13,12 +13,13 @@ namespace ActualFileStorage.PL.Controllers
 {
     public class AdminPanelController : Controller
     {
-        IAdminService _service;
-        IMapper _mapper;
-        public AdminPanelController(IAdminService service, IMapper mapper)
+        private IAdminService _service;
+        public IMapper _mapper {
+            get => _service.Mapper;
+        }
+        public AdminPanelController(IAdminService service)
         {
             _service = service;
-            _mapper = mapper;
         }
         [Authorize(Roles = "Administrator")]
         public ActionResult Index()
@@ -27,20 +28,13 @@ namespace ActualFileStorage.PL.Controllers
             var userInfos = _mapper.Map<IEnumerable<UserViewModel>>(_service.GetUsers());
             return View(userInfos);
         }
-
         [HttpPost]
         public ActionResult UpdateRoles(IEnumerable<ChangeRoleViewModel> Values)
         {
             _service.UpdateRoles(_mapper.Map<IEnumerable<ChangeRoleDTO>>(Values));
-            //if(Values != null)
-                //foreach(var vm in Values)
-                //     _service.UpdateRoles(vm.Id, vm.Roles.ToDictionary(k => (ActualFileStorage.DAL.Models.Role) k.Role, v => v.Enabled));
             return RedirectToAction("Index");
         }
-
     }
-
-    
 }
 
 ////"[{"id":"2","roles":[{"role":"Administrator","enabled":false},{"role":"Moderator","enabled":true},{"role":"Default","enabled":false},{"role":"Guest","enabled":false}]}]"

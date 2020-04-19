@@ -26,12 +26,11 @@ namespace ActualFileStorage.PL
                 AuthenticationType = ConfigurationManager.AppSettings["authtype"],
                 AuthenticationMode = AuthenticationMode.Active,
                 CookieHttpOnly = true,
-                 LoginPath = new PathString("/"), 
-                //LoginPath = new PathString("/Auth/AuthForm"),
-                //LogoutPath = new PathString("/Auth/Logout"),
+                LoginPath = new PathString("/"),
                 ExpireTimeSpan = TimeSpan.FromDays(7),
-                TicketDataFormat = new MyJwtFormat()
-            }) ;
+                TicketDataFormat = new MyJwtFormat(),
+                CookieSecure = CookieSecureOption.Never
+            });
             app.UseJwtBearerAuthentication(new MyJwtOptions());
             //app.UseCookieAuthentication(new MyCookieOptions());
         }
@@ -216,7 +215,7 @@ namespace ActualFileStorage.PL
                 IssuerSigningKey = signingKey,
                 ValidateLifetime = true,
                 ValidateAudience = true,
-                ValidateIssuer = true,
+                ValidateIssuer = false,
                 RequireSignedTokens = true,
                 RequireExpirationTime = true,
                 ValidateIssuerSigningKey = true
