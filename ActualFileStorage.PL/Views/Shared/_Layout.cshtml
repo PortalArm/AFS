@@ -16,8 +16,36 @@
           import '@@polymer/paper-spinner/paper-spinner.js';
         </script>*@
     @RenderSection("scripts", required: false)
-    @AjaxHelper.DatalessRequestOnClick("regLink", Url.Action("RegForm", "Register"), "GET")
-    @AjaxHelper.DatalessRequestOnClick("authLink", Url.Action("AuthForm", "Auth"), "GET")
+    @*@AjaxHelper.DatalessRequestOnClick("regLink", Url.Action("RegForm", "Register"), "GET")
+    @AjaxHelper.DatalessRequestOnClick("authLink", Url.Action("AuthForm", "Auth"), "GET")*@
+<script>
+        $(document).ready(function () {
+            $('#regLink').on('click', function () {
+                event.preventDefault();
+                $.get({
+                    url: "@Url.Action("RegForm", "Register")",
+                    success: function (data) {
+                        if ($("body > .blocking-div"))
+                            $("body > .blocking-div").remove();
+
+                        $("body").prepend("<div class='container-fluid blocking-div'><div class='container'>" + data + "</div>");
+                    }
+                })
+            });
+            $('#authLink').on('click', function () {
+                event.preventDefault();
+                $.get({
+                    url: "@Url.Action("AuthForm", "Auth")",
+                    success: function (data) {
+                        if ($("body > .blocking-div"))
+                            $("body > .blocking-div").remove();
+
+                        $("body").prepend("<div class='container-fluid blocking-div'><div class='container'>" + data + "</div>");
+                    }
+                })
+            });
+        });
+</script>
 </head>
 <body>
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">

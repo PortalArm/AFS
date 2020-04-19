@@ -43,9 +43,10 @@ namespace ActualFileStorage.PL.Controllers
         {
             if (!ModelState.IsValid)
                 return Json(new { status = "error" }, JsonRequestBehavior.AllowGet);
-
-            var u = _mapper.Map<RegistrationUserDTO>(model);
-            _service.Register(u, model.Password);
+            // RegistrationUserViewModel -> RegistrationUserDTO,
+            // RegistrationUserDTO -> User
+            //var u = _mapper.Map<RegistrationUserDTO>(model);
+            _service.Register(_mapper.Map<RegistrationUserDTO>(model), model.Password);
 
             return Json(new { status = "ok" } , JsonRequestBehavior.AllowGet);
         }

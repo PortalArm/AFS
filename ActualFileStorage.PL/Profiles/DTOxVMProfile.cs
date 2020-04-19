@@ -54,6 +54,8 @@ namespace ActualFileStorage.PL.Profiles
 
             CreateMap<HttpPostedFileBase, FileUploadDTO>()
                 .ForMember(m => m.Data, opt => opt.MapFrom(mf => mf.InputStream));
+
+            CreateMap<RegistrationUserViewModel, RegistrationUserDTO>();
         }
     }
 }

@@ -1,16 +1,7 @@
 ﻿@helper CreateScript(string btnId, string formId, string url, string method = "POST", string callbackUrl = null)
 {
-    <script>
+    <text>
         $(document).ready(function () {
-            
-                //form.validate({
-                //    onsubmit: true,
-                //    onkeyup: false,
-                //    onclick: false,
-                //    onfocusout: false
-                //});
-            //console.log(null);
-            //console.log("@callbackUrl");
             $('#@btnId').on('click', function () {
                 let form = $("#@formId");
                 event.preventDefault();
@@ -33,15 +24,13 @@
                             }
                             if (data) {
                                  $("body").prepend("<div class='container-fluid blocking-div'><div class='container'>" + data + "</div>");
-                                //$("body").prepend("<div><h1>Ошибка есть</h1></div>");
                                 return;
                             }
                             
-                                //$("body").prepend("<div class='blocking-div container'><div class='container'>" + data.data + "</div></div>");
                         }
                     });
             })});
-    </script>
+    </text>
 }
 
 @helper DatalessRequestOnClick(string btnId, string url, string method = "GET")

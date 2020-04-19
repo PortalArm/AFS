@@ -1,8 +1,33 @@
 ﻿@model ActualFileStorage.PL.Models.RegistrationUserViewModel
-@*@Scripts.Render("~/bundles/jquery")*@
 @Scripts.Render("~/bundles/jqueryval")
 @Scripts.Render("~/Scripts/blockingdivescape.js")
-@AjaxHelper.CreateScript("submitRegButton", "regForm", Url.Action("RegAjaxForm"), "POST", Url.Action("Index", controllerName: "Adminpanel"))
+<script>
+    $(document).ready(function () {
+            $('#submitRegButton').on('click', function () {
+                let form = $("#regForm");
+                event.preventDefault();
+                form.validate();
+                if (form.valid())
+                    $.ajax({
+                        url: "@Url.Action("RegAjaxForm")",
+                        method: "POST",
+                        data: form.serialize(),
+                        success: function (data) {
+                            if ($("body > .blocking-div"))
+                                $("body > .blocking-div").remove();
+                            if (data.status === "ok") {
+                                    window.location = "@Url.Action("Index", controllerName: "Adminpanel")";
+                                    return;
+                            }
+                            if (data) {
+                                 $("body").prepend("<div class='container-fluid blocking-div'><div class='container'>" + data + "</div>");
+                                return;
+                            }
+                        }
+                    });
+            })});
+</script>
+@*@AjaxHelper.CreateScript("submitRegButton", "regForm", Url.Action("RegAjaxForm"), "POST", Url.Action("Index", controllerName: "Adminpanel"))*@
 @{
     string labelClass = "control-label my-auto-height col-4";
     string itemClass = "col-8";

@@ -73,6 +73,7 @@
     <Compile Include="DTOs\ViewIdDTO.cs" />
     <Compile Include="Extensions\LinqExtensions.cs" />
     <Compile Include="FileHandlers\AzureFileStorage.cs" />
+    <Compile Include="FileHandlers\AzureStatic.cs" />
     <Compile Include="FileHandlers\IFileDelete.cs" />
     <Compile Include="FileHandlers\IStorage.cs" />
     <Compile Include="FileHandlers\IFileDownload.cs" />
@@ -114,9 +115,7 @@
       <Name>ActualFileStorage.DAL</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModels\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Snippets\DiCtor1.snippet" />
   </ItemGroup>

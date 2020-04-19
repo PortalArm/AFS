@@ -1,13 +1,16 @@
 ﻿@model ActualFileStorage.PL.Models.ObjectsViewModel
 
-@{ 
+@{
     string pId = string.Empty;
     if (Model == null)
+    {
         pId = "null";
-    else
+    } else
+    {
         pId = Model.ParentFolderId.ToString();
+    }
 }
-    <script>
+<script>
     $(document).ready(function () {
         $.post({
         url: '@Url.Action("GetFolderInfo", "Profile")',
@@ -44,7 +47,7 @@
          loadFolder($(e.target).attr("data-id"));
         });
     });
-    </script>
+</script>
 <div>
     @if (Model != null)
     {

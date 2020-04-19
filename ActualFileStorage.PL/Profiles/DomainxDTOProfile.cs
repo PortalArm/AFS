@@ -17,6 +17,8 @@ namespace ActualFileStorage.PL.Profiles
                 .ForMember(m => m.Extension, opt => opt.MapFrom(mf => mf.Ext));
             CreateMap<ShortFolder, HistoryItemDTO>()
                 .ForMember(m => m.Value, opt => opt.MapFrom(mf => mf.Name));
+
+            CreateMap<RegistrationUserDTO, User>();
         }
     }
 }

@@ -2,7 +2,33 @@
 @*@Scripts.Render("~/bundles/jquery")*@
 @*@Scripts.Render("~/bundles/jqueryval")*@
 @Scripts.Render("~/Scripts/blockingdivescape.js")
-@AjaxHelper.CreateScript("submitAuthButton", "authForm", Url.Action("AuthAjaxForm"), "POST", Url.Action("Index", controllerName: "Adminpanel"))
+    <script>
+    $(document).ready(function () {
+        $('#submitAuthButton').on('click', function () {
+            let form = $("#authForm");
+                event.preventDefault();
+                form.validate();
+                if (form.valid())
+                    $.ajax({
+                        url: "@Url.Action("AuthAjaxForm")",
+                        method: "POST",
+                        data: form.serialize(),
+                        success: function (data) {
+                            if ($("body > .blocking-div"))
+                                $("body > .blocking-div").remove();
+                            if (data.status === "ok") {
+                                    window.location = "@Url.Action("Index", controllerName: "Adminpanel")";
+                                    return;
+                            }
+                            if (data) {
+                                 $("body").prepend("<div class='container-fluid blocking-div'><div class='container'>" + data + "</div>");
+                                return;
+                            }
+                        }
+                    });
+            })});
+    </script>
+@*@AjaxHelper.CreateScript("submitAuthButton", "authForm", Url.Action("AuthAjaxForm"), "POST", Url.Action("Index", controllerName: "Adminpanel"))*@
 
 @{
     string labelClass = "control-label my-auto-height col-4";

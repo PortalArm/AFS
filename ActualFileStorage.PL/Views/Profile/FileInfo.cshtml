@@ -10,10 +10,10 @@
         @if(!Model.ReadOnlyLink)
         {
             <text>
-            $("#linkBtn").on("click", e => {
+        $(".object-info").on("click", "#linkBtn", e => {
                  addLinkInput($(e.target));
             });
-            $("#Visibility").on("change", e => {
+        $(".object-info").on("change", "#Visibility", e => {
                 sendDataOnAccessChange($(e.target));
             });
             </text>
@@ -31,8 +31,6 @@
             });
      });
     });
-
-
 </script>
 <div id="infoDiv" class="container">
     <h4>Информация о файле</h4>
