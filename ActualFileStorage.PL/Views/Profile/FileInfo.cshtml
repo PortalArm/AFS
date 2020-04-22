@@ -5,34 +5,8 @@
     return;
 }
 
-<script>
-    $(document).ready(() => {
-        @if(!Model.ReadOnlyLink)
-        {
-            <text>
-        $(".object-info").on("click", "#linkBtn", e => {
-                 addLinkInput($(e.target));
-            });
-        $(".object-info").on("change", "#Visibility", e => {
-                sendDataOnAccessChange($(e.target));
-            });
-            </text>
-        }
-
-        $("#downloadBtn").on("click", e => {
-         let id = $(e.target).closest(".container").children("#fileIdDiv").html();
-            $.ajax({
-             method: "POST",
-                data: { "fileId": id },
-                url: "/Profile/DownloadFile",
-                success: d => {
-                    window.location.href = d.url;
-                }
-            });
-     });
-    });
-</script>
-<div id="infoDiv" class="container">
+    
+<div id="infoDiv" class="container file-info">
     <h4>Информация о файле</h4>
     <hr />
     <div id="fileIdDiv" class="d-none">@Model.Id</div>
@@ -58,14 +32,10 @@
             Type fa = typeof(ActualFileStorage.DAL.Models.FileAccess);
             <div class="col my-auto-height">@Html.DropDownListFor(model => model.Visibility, Enum.GetNames(fa).Select(i => new SelectListItem() { Text = i, Value = Convert.ToInt32(Enum.Parse(fa, i, true)).ToString() }), new { @class = "custom-select" })</div>
         }
-
     </div>
     <div class="row">
         <div class="col-5 font-weight-bold my-auto-height">@Html.DisplayNameFor(model => model.ShortLink)</div>
-        @*<div class="col-12 col-md-8 col-lg-6 font-weight-bold my-auto-height">@Html.DisplayNameFor(model => model.ShortLink)</div>*@
-        @*@{
-               Model.ShortLink = "https://localhost/privet.haa";
-            }*@
+
         @if (string.IsNullOrEmpty(Model.ShortLink))
         {
             if (!Model.ReadOnlyLink)
@@ -88,3 +58,37 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(() => {
+        @if(!Model.ReadOnlyLink)
+        {
+            <text>
+        //$("#linkBtn").on("click", e => {
+        $(".file-info").on("click", "#linkBtn", e => {
+            addLinkInput($(e.target));
+            //$(e.target).css("background-color", "pink");
+            //console.log("wwww");
+
+            });
+        //$("#Visibility").on("change" , e => {
+        $(".file-info").on("change", "#Visibility", e => {
+            sendDataOnAccessChange($(e.target));
+            //$(e.target).css("background-color", "orange");
+            //console.log("w2www");
+            });
+            </text>
+        }
+
+        $("#downloadBtn").on("click", e => {
+         let id = $(e.target).closest(".container").children("#fileIdDiv").html();
+            $.ajax({
+             method: "POST",
+                data: { "fileId": id },
+                url: "/Profile/DownloadFile",
+                success: d => {
+                    window.location.href = d.url;
+                }
+            });
+     });
+    });
+</script>

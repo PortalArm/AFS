@@ -37,12 +37,12 @@ namespace ActualFileStorage.BLL
         //private static RRR rr = new RRR();
         //private static IinterfaceA intA;
         //private static IinterfaceB intB;
-
-
-
         //convert to dll
         static void Main(string[] args)
         {
+            //var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(conn);
+            //string dd = System.Convert.ToBase64String(plainTextBytes);
+            //System.IO.File.WriteAllText(@"C:\Users\Tom\Desktop\testfiles\user3\yo.txt", dd);
             //AzureFileStorage afs = new AzureFileStorage();
             //User u = new User() {
             //    Login = "privet",

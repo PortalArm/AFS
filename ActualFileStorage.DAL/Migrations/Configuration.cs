@@ -56,7 +56,6 @@ GO
             context.Set<File>().AddOrUpdate(w => w.Hash, GetFiles(fold, 6));
             context.Set<Folder>().AddOrUpdate(f => f.Name, moreFolders);
 
-            //9	simple	fes3ts4t	343rwef	    2020-03-03 00:00:00.000	9a678c4f59769fe8cc0da3f3a024e64783d3d37566bad2b78bbb1cab00eea469	evg@ae.ee	15	        fzUBH5u4AwA0BH8yMz4I7J4sq0qHqigzvunQMkD5eIdisFFrVHrTzJ9HwlI0hPAm
             var adminRole = context.Set<WebRole>().First(w => w.Id == 1);//Where(w => w.Description.Equals(Role.Administrator.ToString())).First();
             User admin = new User()
             {
@@ -70,11 +69,7 @@ GO
                 Roles = new List<WebRole>() { adminRole }
             };
             context.Users.AddOrUpdate(w => w.Login, admin);
-            //var role = new WebRole() { Description = adminRole.Description };
-            //adminRole.Id = 0;
-            //context.Set<User>().Attach(admin).Roles = new List<WebRole>();
             Folder adminFolder = GetFolderForSuperUser(admin);
-            //context.Set<User>().AddOrUpdate(w => w.Login, admin);
             context.Set<Folder>().AddOrUpdate(w => w.Name, adminFolder);
             context.SaveChanges();
         }
