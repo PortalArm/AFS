@@ -342,4 +342,7 @@ healthchecksdb
 
 #custom ignore files
 ActualFileStorage.PL/Properties/PublishProfiles/*
+ActualFileStorage.PL/*.config
 ActualFileStorage.BLL/FileHandlers/AzureStatic.cs
+ActualFileStorage.DAL/*.config
+
